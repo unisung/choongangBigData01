@@ -45,7 +45,20 @@
    	   		</entry>
    	   </map>
    </property>
+</bean>
+
+<bean id="collectionBean4"
+   class="org.zerock.polymorphism8.CollectionBean4">
+   <property name="addressList">
+   		<props>
+   				<prop key="고길동">서울시 강남구 역삼동</prop>
+                <prop key="일지매">서울시 강서구 화곡동</prop>   		
+   		</props>
+   </property>
+   
 
 </bean>
+
+
 
 </beans>

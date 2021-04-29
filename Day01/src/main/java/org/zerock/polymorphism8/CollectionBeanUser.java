@@ -3,6 +3,7 @@ package org.zerock.polymorphism8;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.context.support.AbstractApplicationContext;
@@ -48,9 +49,19 @@ AbstractApplicationContext factory =
     	  System.out.println(name+":" +address);
       }
       
+    System.out.println("================");
+    CollectionBean4 bean4
+      = (CollectionBean4)factory.getBean("collectionBean4");
       
-      
-      
+    Properties addressP=bean4.getAddressList();
+    Set<Object> names2=addressP.keySet();
+    Iterator<Object> itor2 = names2.iterator();
+    while(itor2.hasNext()) {
+    	String name =(String)itor2.next();
+    	String addr = addressP.getProperty(name);
+    	System.out.println(name+":"+addr);
+    }
+    
 	}
 
 }
