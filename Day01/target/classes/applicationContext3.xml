@@ -7,6 +7,12 @@
  
 					
 <!-- <bean id ="tv" class="org.zerock.polymorphism.SamsungTV"/> -->
-<bean id ="tv" class="org.zerock.polymorphism.LgTV"/>
+
+<!--  spring컨테이너가 생성자 아규먼트의 갯수 파악해서 맞는 생성자를 호출 하여 주입. -->
+<bean id ="tv" class="org.zerock.polymorphism2.SamsungTV">
+ <constructor-arg ref="speaker"></constructor-arg>
+</bean>
+
+<bean id="speaker" class="org.zerock.polymorphism2.SonySpeaker"/>
 
 </beans>

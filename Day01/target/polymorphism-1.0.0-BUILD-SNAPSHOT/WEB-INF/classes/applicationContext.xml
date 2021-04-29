@@ -5,8 +5,7 @@
 	                             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
  
-					
-<!-- <bean id ="tv" class="org.zerock.polymorphism.SamsungTV"/> -->
-<bean id ="tv" class="org.zerock.polymorphism.LgTV"/>
-
+ 
+ <bean id="tv" class="org.zerock.polymorphism.LgTV"/>
+ 
 </beans>

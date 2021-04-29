@@ -7,6 +7,14 @@
  
 					
 <!-- <bean id ="tv" class="org.zerock.polymorphism.SamsungTV"/> -->
-<bean id ="tv" class="org.zerock.polymorphism.LgTV"/>
+
+<!--  spring컨테이너가 setter메소드 를 이용해서 객체를 주입. -->
+<bean id ="tv" class="org.zerock.polymorphism6.SamsungTV">
+  <constructor-arg ref="apple"></constructor-arg>
+  <constructor-arg value="2700000"></constructor-arg>
+</bean>
+
+<bean id="apple" class="org.zerock.polymorphism6.AppleSpeaker"/>
+<bean id="sony" class="org.zerock.polymorphism6.SonySpeaker"/>
 
 </beans>
