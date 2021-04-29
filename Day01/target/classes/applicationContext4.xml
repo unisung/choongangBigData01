@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	                             http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
  
 					
 <!-- <bean id ="tv" class="org.zerock.polymorphism.SamsungTV"/> -->
 
 <!--  spring컨테이너가 setter메소드 를 이용해서 객체를 주입. -->
-<bean id ="tv" class="org.zerock.polymorphism3.SamsungTV">
+<!-- <bean id ="tv" class="org.zerock.polymorphism3.SamsungTV">
    <property name="speaker" ref="speaker"></property>
-</bean>
+</bean> -->
+
+<bean id ="tv" class="org.zerock.polymorphism3.SamsungTV"  p:speaker-ref="speaker"/>
+
 
 <bean id="speaker" class="org.zerock.polymorphism3.SonySpeaker"/>
 

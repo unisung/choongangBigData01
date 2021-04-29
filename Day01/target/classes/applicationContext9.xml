@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                             http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+ 					
+<bean id ="collectionBean" 
+     class="org.zerock.polymorphism8.CollectionBean1">
+     <property name="addressList">
+     	<list>
+     		 <value>서울시 강남구 역삼동</value>
+     		 <value>서울시 성동구 성수동</value>
+     	</list>
+     </property>
+</bean>
+
+<bean id="collectionBean2"
+  class="org.zerock.polymorphism8.CollectionBean2">
+    <property name="addressList">
+         <set value-type="java.lang.String">
+             <value>서울시 강남구 역삼동</value>
+             <value>서울시 강동구 성수동</value>
+             <value>서울시 성동구 성수동</value>
+         </set>
+    </property>
+</bean>
+
+
+</beans>

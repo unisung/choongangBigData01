@@ -4,8 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	                             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
- 
-					
+ 					
 <!-- <bean id ="tv" class="org.zerock.polymorphism.SamsungTV"/> -->
 
 <!--  spring컨테이너가 setter메소드 를 이용해서 객체를 주입. -->
