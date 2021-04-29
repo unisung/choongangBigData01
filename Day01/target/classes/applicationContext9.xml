@@ -27,4 +27,25 @@
 </bean>
 
 
+<bean id="collectionBean3"
+   class="org.zerock.polymorphism8.CollectionBean3">
+   <property name="addressList">
+   	   <map>
+   	   		<entry>
+   	   			<key><value>고길동</value></key>
+   	   			<value>서울시 강남구 역삼동</value>
+   	   		</entry>
+   	         <entry>
+   	   			<key><value>일지매</value></key>
+   	   			<value>서울시 성동구 111</value>
+   	   		</entry>
+   	        <entry>
+   	   			<key><value>임꺽정</value></key>
+   	   			<value>수원시 영통구 123</value>
+   	   		</entry>
+   	   </map>
+   </property>
+
+</bean>
+
 </beans>

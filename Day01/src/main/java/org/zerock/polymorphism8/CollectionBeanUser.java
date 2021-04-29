@@ -1,6 +1,8 @@
 package org.zerock.polymorphism8;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.context.support.AbstractApplicationContext;
@@ -31,7 +33,24 @@ AbstractApplicationContext factory =
 		for(String addr:addrlist)
 			System.out.println(addr);
 		 
-
+      System.out.println("---------------------------");
+      
+      CollectionBean3 bean3
+        = (CollectionBean3)factory.getBean("collectionBean3");
+      Map<String,String> addressMap = bean3.getAddressList();
+      
+      Set<String> names=addressMap.keySet();
+      Iterator<String> itor = names.iterator();
+      
+      while(itor.hasNext()) {
+    	  String name=itor.next();
+    	  String address=addressMap.get(name);
+    	  System.out.println(name+":" +address);
+      }
+      
+      
+      
+      
 	}
 
 }

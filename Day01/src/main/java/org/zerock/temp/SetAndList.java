@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 public class SetAndList {
 	public static void main(String[] args) {
@@ -16,7 +17,7 @@ public class SetAndList {
 		System.out.println("----------");
 		
 		Set<String> setList = new HashSet<String>();
-		
+				
 		setList.add("홍길동");
 		setList.add("일지매");
 		setList.add("임꺽정");
@@ -25,9 +26,6 @@ public class SetAndList {
 		for(String name:setList)
 			System.out.println(name);
 		
-		
-		
 
 	}
-
 }
