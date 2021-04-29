@@ -1,5 +1,7 @@
 package org.zerock.polymorphism5;
 
+import org.springframework.stereotype.Component;
+
 public class SamsungTV implements TV{
 	
 	//속성(property)
