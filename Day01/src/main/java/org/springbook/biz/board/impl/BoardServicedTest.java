@@ -33,6 +33,27 @@ AbstractApplicationContext factory =
 	for(BoardVO vo:list)
 		 System.out.println(vo);
 	
+	System.out.println("---------------------------------");
+	board.setSeq(3);
+	
+	//한 건 조회
+	BoardVO boardVO = service.getBoard(board);
+	
+	System.out.println(boardVO);
+	
+	//수정
+	board.setSeq(3);
+	board.setTitle("테스트 글 3번 수정");
+	board.setContent("테스트 글 3번 수정 내용");
+	//수정 처리
+	service.updateBoard(board);
+	
+	System.out.println("-------------------------------------");
+	//수정결과 조회
+	boardVO = service.getBoard(board);
+	System.out.println(boardVO);
+	
+	
 	
     //자원해제
 	factory.close();
