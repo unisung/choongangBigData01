@@ -27,6 +27,13 @@ AbstractApplicationContext factory =
 	
 	System.out.println("완료");
 	
+	
+	//게시글 리스트
+	List<BoardVO> list = service.getBoardList(board);
+	for(BoardVO vo:list)
+		 System.out.println(vo);
+	
+	
     //자원해제
 	factory.close();
 	}
