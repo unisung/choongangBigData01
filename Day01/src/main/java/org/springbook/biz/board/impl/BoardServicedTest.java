@@ -53,7 +53,17 @@ AbstractApplicationContext factory =
 	boardVO = service.getBoard(board);
 	System.out.println(boardVO);
 	
+	//삭제
+	board.setSeq(1);
+	//삭제 처리
+	service.deleteBoard(board);
 	
+	//결과 보기
+	list = service.getBoardList(board);
+	for(BoardVO vo:list)
+		 System.out.println(vo);
+	
+	System.out.println("---------------------------------");
 	
     //자원해제
 	factory.close();

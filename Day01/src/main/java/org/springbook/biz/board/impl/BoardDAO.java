@@ -120,7 +120,32 @@ public class BoardDAO {
 	}
 
 	public void delete(BoardVO vo) {
-		// TODO Auto-generated method stub
+		System.out.println("===> JDBC로 deleteBoard() 기능 처리" );
+		 conn=JDBCUtil.getConnetcion();
+		 try {
+			    //연결
+			     conn=JDBCUtil.getConnetcion();
+			     conn.setAutoCommit(false);
+			    stmt =conn.prepareStatement(BOARD_DELETE);
+			    stmt.setInt(1, vo.getSeq());
+			    
+			    stmt.executeUpdate();
+			    conn.commit();
+		 }catch(Exception e) {
+			  try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			 e.printStackTrace();
+		 }finally {
+			 try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			 JDBCUtil.close(stmt, conn);
+		 }
 		
 	}
 
