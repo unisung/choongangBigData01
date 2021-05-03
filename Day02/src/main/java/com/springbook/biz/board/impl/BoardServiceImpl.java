@@ -22,8 +22,7 @@ public class BoardServiceImpl
 	public void insertBoard(BoardVO vo) {
       // if(vo.getSeq()==0)
       //   throw new IllegalArgumentException("0번 글은 등록 할 수 없습니다.");
-		
-		dao.insertBoard(vo);
+	 dao.insertBoard(vo);
 	}
 
 	@Override
