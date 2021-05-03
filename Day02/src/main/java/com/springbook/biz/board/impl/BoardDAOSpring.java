@@ -33,6 +33,14 @@ public class BoardDAOSpring {
 	private final String BOARD_GET="select * from board where seq=?";
 	private final String BOARD_UPDATE="update board set title=?, content=? where seq=?";
 	private final String BOARD_DELETE="delete board where seq=?";
+	private final String BOARD_COUNT_UPDATE = "update board set cnt=cnt+1 where seq=?";
+	
+	/* 게시글 조회 건수 증가*/
+	public void updateBoardCount(BoardVO vo) {
+		System.out.println("===>SPRING JDBC로 updateBoardCount() 기능 처리" );
+		
+		jdbcTemplate.update(BOARD_COUNT_UPDATE, vo.getSeq());
+	}
 	
 	/* 게시글 입력 메소드 */
 	public void insertBoard(BoardVO vo) {
@@ -62,6 +70,7 @@ public class BoardDAOSpring {
 	/* 게시글 상세 보기 */
 	public BoardVO getBoard(BoardVO vo) {
 		System.out.println("===> SPRING JDBC로 getBoard() 기능 처리" );
+		updateBoardCount(vo);
 		Object[] args = {vo.getSeq()};
 		return jdbcTemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
 	}

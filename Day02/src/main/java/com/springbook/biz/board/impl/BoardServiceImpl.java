@@ -46,7 +46,7 @@ public class BoardServiceImpl
 
 	@Override
 	public BoardVO getBoard(BoardVO vo) {
-
+       //  dao.updateBoardCount(vo);
 		return dao.getBoard(vo);
 	}
 
