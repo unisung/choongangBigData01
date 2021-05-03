@@ -14,7 +14,7 @@ import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.common.JDBCUtil;
 
 //@Component("dao")
-@Repository("dao")
+//@Repository("dao")
 public class BoardDAO {
 	private Connection conn=null;
 	private PreparedStatement stmt=null;

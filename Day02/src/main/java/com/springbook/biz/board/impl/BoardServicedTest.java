@@ -35,7 +35,7 @@ AbstractApplicationContext factory =
 		 System.out.println(vo);
 	
 	System.out.println("---------------------------------");
-	board.setSeq(3);
+	board.setSeq(2);
 	
 	//한 건 조회
 	BoardVO boardVO = service.getBoard(board);
@@ -43,9 +43,9 @@ AbstractApplicationContext factory =
 	System.out.println(boardVO);
 	
 	//수정
-	board.setSeq(3);
-	board.setTitle("테스트 글 3번 수정");
-	board.setContent("테스트 글 3번 수정 내용");
+	board.setSeq(2);
+	board.setTitle("테스트 글 333번 수정");
+	board.setContent("테스트 글 3333번 수정 내용");
 	//수정 처리
 	service.updateBoard(board);
 	
@@ -55,7 +55,7 @@ AbstractApplicationContext factory =
 	System.out.println(boardVO);
 	
 	//삭제
-	board.setSeq(1);
+	board.setSeq(4);
 	//삭제 처리
 	service.deleteBoard(board);
 	
