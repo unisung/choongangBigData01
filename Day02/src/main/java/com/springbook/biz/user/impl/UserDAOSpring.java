@@ -28,6 +28,7 @@ public class UserDAOSpring {//POJO
 	private final String USER_CNT ="select count(*) from users where id=?";
 	private final String USER_LOGIN ="select * from users where id=? and password=?";
 	private final String USER_CHANGE_PASS="update users set password=? where id=?";
+	private final String USER_CNT_BYPASS ="select count(*) from users where id=? and password=?";
 	
 	public void insertUser(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 insertUser() 기능 처리" );
@@ -45,6 +46,12 @@ public class UserDAOSpring {//POJO
 		return jdbcTemplate.queryForInt(USER_CNT,vo.getId());
 	}
 	
+	public int getUserCntByPass(UserVO vo) {
+		System.out.println("===> SPRING JDBC로 getUserCntByPass() 기능 처리" );
+		return jdbcTemplate.queryForInt(USER_CNT_BYPASS,vo.getId(),vo.getPassword());
+	}
+	
+	
 	public UserVO getLogin(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 getLogin() 기능 처리" );
 		Object[] args= {vo.getId(),vo.getPassword()};
@@ -53,6 +60,5 @@ public class UserDAOSpring {//POJO
 
 	public void updateUser(UserVO vo) {
 		jdbcTemplate.update(USER_CHANGE_PASS, vo.getPassword(), vo.getId());
-		
 	}
 }

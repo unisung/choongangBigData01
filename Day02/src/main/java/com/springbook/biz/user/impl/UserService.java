@@ -22,5 +22,8 @@ public interface UserService {
     
     //회원 로그인 처리
     public UserVO getLogin(UserVO vo);
+    
+    //아이디 패스로 회원 존재 여부확인
+    public int getUserCntByPass(UserVO vo);
 	
 }

@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.getLogin(vo);
 	}
 
+	@Override
+	public int getUserCntByPass(UserVO vo) {
+		return userDao.getUserCntByPass(vo);
+	}
+
 }

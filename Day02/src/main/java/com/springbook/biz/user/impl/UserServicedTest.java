@@ -47,7 +47,7 @@ AbstractApplicationContext factory =
 	user.setPassword("1234");
 	
 	//객체 -UserVO 혹은 null
-	if(service.getLogin(user)!=null) {
+	if(service.getUserCntByPass(user)==1) {
 		System.out.println("로그인 성공!");
 		//세션에 저장.
 	}else {
@@ -55,7 +55,7 @@ AbstractApplicationContext factory =
 	}
 	
 	//비밀번호 변경
-	if(service.getLogin(user)!=null) {
+	if(service.getUserCntByPass(user)==1) {
 		  //변경할 비밀번호 
 		user.setPassword("5678");
 		service.updateUser(user);//변경처리
