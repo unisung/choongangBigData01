@@ -1,6 +1,7 @@
 package com.springbook.biz.user.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int getUserCntByPass(UserVO vo) {
 		return userDao.getUserCntByPass(vo);
+	}
+
+	@Override
+	public List<UserVO> getUsers(UserVO vo) {
+		return userDao.getUsers(vo);
 	}
 
 }

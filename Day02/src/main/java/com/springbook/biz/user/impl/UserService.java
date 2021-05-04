@@ -1,6 +1,7 @@
 package com.springbook.biz.user.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.springbook.biz.user.UserVO;
 
@@ -25,5 +26,8 @@ public interface UserService {
     
     //아이디 패스로 회원 존재 여부확인
     public int getUserCntByPass(UserVO vo);
+    
+    //회원 리스트
+	public List<UserVO> getUsers(UserVO vo);
 	
 }

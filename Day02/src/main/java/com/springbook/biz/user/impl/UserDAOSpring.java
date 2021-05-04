@@ -3,6 +3,7 @@ package com.springbook.biz.user.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,6 +30,7 @@ public class UserDAOSpring {//POJO
 	private final String USER_LOGIN ="select * from users where id=? and password=?";
 	private final String USER_CHANGE_PASS="update users set password=? where id=?";
 	private final String USER_CNT_BYPASS ="select count(*) from users where id=? and password=?";
+	private final String USER_LIST="select * from users order by id";
 	
 	public void insertUser(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 insertUser() 기능 처리" );
@@ -51,7 +53,6 @@ public class UserDAOSpring {//POJO
 		return jdbcTemplate.queryForInt(USER_CNT_BYPASS,vo.getId(),vo.getPassword());
 	}
 	
-	
 	public UserVO getLogin(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 getLogin() 기능 처리" );
 		Object[] args= {vo.getId(),vo.getPassword()};
@@ -60,5 +61,9 @@ public class UserDAOSpring {//POJO
 
 	public void updateUser(UserVO vo) {
 		jdbcTemplate.update(USER_CHANGE_PASS, vo.getPassword(), vo.getId());
+	}
+
+	public List<UserVO> getUsers(UserVO vo) {
+		return jdbcTemplate.query(USER_LIST, new UserRowMapper());
 	}
 }

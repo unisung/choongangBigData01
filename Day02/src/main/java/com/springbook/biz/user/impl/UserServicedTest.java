@@ -1,5 +1,6 @@
 package com.springbook.biz.user.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.support.AbstractApplicationContext;
@@ -67,7 +68,13 @@ AbstractApplicationContext factory =
 	userVO = service.getUser(user);
 	System.out.println(userVO);
 	
+	System.out.println("----------- 회원리스트 -------------");
+	//회원 리스트 출력
+	List<UserVO> list = new ArrayList<UserVO>();
+	list = service.getUsers(userVO);
 	
+	for(UserVO vo:list)
+		System.out.println(vo);
 	
 	
     //자원해제
