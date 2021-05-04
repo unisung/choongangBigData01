@@ -2,22 +2,24 @@ package com.springbook.biz.user.impl;
 
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.springbook.biz.user.UserVO;
 
-//
+@Service
 public class UserServiceImpl implements UserService {
-
+     @Autowired
+     private UserDAOSpring dao;
 	
 	@Override
 	public void insertUser(UserVO vo) throws Exception {
-		// TODO Auto-generated method stub
-
+	    dao.insertUser(vo);
 	}
 
 	@Override
 	public UserVO getUser(UserVO vo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getUser(vo);
 	}
 
 	@Override
