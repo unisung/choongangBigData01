@@ -13,7 +13,7 @@ public interface UserService {
 	//회원 조회
 	public UserVO getUser(UserVO vo) throws SQLException;
 	//회원탈퇴
-	public void deleteUser(UserVO vo) throws SQLException;
+	public int deleteUser(UserVO vo) throws SQLException;
 	
 	//회원수정
 	public void updateUser(UserVO vo) throws Exception;

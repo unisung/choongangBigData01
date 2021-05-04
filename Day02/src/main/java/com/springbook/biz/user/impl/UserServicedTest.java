@@ -77,6 +77,25 @@ AbstractApplicationContext factory =
 		System.out.println(vo);
 	
 	
+	//회원정보 설정
+	user.setId("kim");
+	user.setPassword("5678");
+	
+	//회원 탈퇴
+	if(service.getUserCntByPass(userVO)==1) {
+		 int resultCnt = service.deleteUser(userVO);
+		   if(resultCnt>0) System.out.println("탈퇴 완료");
+		   else System.out.println("처리중 오류 발생");
+	}else {
+		System.out.println("id 혹은 password를 확인하세요");
+	}
+	
+	//결과 조회
+	list = service.getUsers(userVO);
+	
+	for(UserVO vo:list)
+		System.out.println(vo);
+	
     //자원해제
 	factory.close();
 	}

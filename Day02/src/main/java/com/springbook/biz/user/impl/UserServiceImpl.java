@@ -24,9 +24,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(UserVO vo) throws SQLException {
-		// TODO Auto-generated method stub
-
+	public int deleteUser(UserVO vo) throws SQLException {
+		return userDao.deleteUser(vo);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ public class UserDAOSpring {//POJO
 	private final String USER_CHANGE_PASS="update users set password=? where id=?";
 	private final String USER_CNT_BYPASS ="select count(*) from users where id=? and password=?";
 	private final String USER_LIST="select * from users order by id";
+	private final String USER_DELETE="delete from users where id=?";
 	
 	public void insertUser(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 insertUser() 기능 처리" );
@@ -65,5 +66,9 @@ public class UserDAOSpring {//POJO
 
 	public List<UserVO> getUsers(UserVO vo) {
 		return jdbcTemplate.query(USER_LIST, new UserRowMapper());
+	}
+	
+	public int deleteUser(UserVO vo) {
+		return jdbcTemplate.update(USER_DELETE,vo.getId());//삭제된 행의 수
 	}
 }
