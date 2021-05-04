@@ -12,7 +12,7 @@ import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardRowMapper;
 import com.springbook.biz.user.UserVO;
 
-@Repository("dao")
+@Repository("userDao")
 public class UserDAOSpring {//POJO
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

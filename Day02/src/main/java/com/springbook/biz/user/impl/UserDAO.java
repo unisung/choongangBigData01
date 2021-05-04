@@ -3,6 +3,7 @@ package com.springbook.biz.user.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import com.springbook.biz.board.common.JDBCUtil;
 import com.springbook.biz.user.UserVO;
@@ -48,7 +49,10 @@ public class UserDAO {
 					    stmt.setString(1, user.getId());
 					  
 					   rs= stmt.executeQuery();
-					  if(rs.next()) {
+					   
+					 
+					 while(rs.next()) {
+
 						  userVo = new UserVO();
 						  userVo.setId(rs.getString(1));
 						  userVo.setPassword(rs.getString(2));

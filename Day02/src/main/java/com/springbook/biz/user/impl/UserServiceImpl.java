@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.springbook.biz.user.UserVO;
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
      @Autowired
-     private UserDAOSpring dao;
+     private UserDAOSpring userDao;
 	
 	@Override
 	public void insertUser(UserVO vo) throws Exception {
-	    dao.insertUser(vo);
+		userDao.insertUser(vo);
 	}
 
 	@Override
 	public UserVO getUser(UserVO vo) throws SQLException {
-		return dao.getUser(vo);
+		return userDao.getUser(vo);
 	}
 
 	@Override

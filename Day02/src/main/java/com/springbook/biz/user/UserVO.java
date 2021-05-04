@@ -31,6 +31,11 @@ public class UserVO {
 		this.role = role;
 	}
 	
+	@Override
+	public String toString() {
+		return "UserVO [id=" + id + ", password=" + password + ", name=" + name + ", role=" + role + "]";
+	}
+	
 	
 
 }
