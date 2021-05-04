@@ -30,14 +30,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(UserVO vo) throws Exception {
-		// TODO Auto-generated method stub
-
+		userDao.updateUser(vo);
 	}
 
 	@Override
 	public int getUserCnt(UserVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.getUserCnt(vo);
+	}
+
+	@Override
+	public UserVO getLogin(UserVO vo) {
+		return userDao.getLogin(vo);
 	}
 
 }

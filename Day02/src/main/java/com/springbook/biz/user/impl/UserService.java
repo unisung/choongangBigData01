@@ -19,5 +19,8 @@ public interface UserService {
 	
 	//동일아이디 존재 체크
     public int getUserCnt(UserVO vo);
+    
+    //회원 로그인 처리
+    public UserVO getLogin(UserVO vo);
 	
 }
