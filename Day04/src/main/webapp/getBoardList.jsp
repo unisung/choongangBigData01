@@ -45,7 +45,8 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<br> <a href="insertBoard.jsp">새글 등록</a>
+		<br> <!-- <a href="insertBoard.jsp">새글 등록</a> -->
+		<a href="/insertBoard.do">새글 등록</a>
 	</center>
 </body>
 </html>
