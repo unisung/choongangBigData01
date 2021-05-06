@@ -14,8 +14,8 @@ import com.springbook.biz.board.impl.BoardDAO;
 @Controller
 public class BoardController {
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVO vo, Model model) {
-	     BoardDAO boardDAO =new BoardDAO();
+	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
+
 	   List<BoardVO> boardList = boardDAO.getBoardList(vo);
 	     
 	     for(BoardVO board:boardList)
