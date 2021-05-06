@@ -1,5 +1,6 @@
 package com.springbook.view.board;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
@@ -51,19 +53,31 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
-	public String insertBoard(@ModelAttribute("board")BoardVO board,BoardDAO dao) {
+	public String insertBoard(@ModelAttribute("board")BoardVO board,	BoardDAO dao) throws Exception {
 		System.out.println("board:"+board);
+		//파일업로드 
+		MultipartFile uploadFile = board.getUploadFile();
+		//클라이언트에서 파일을 전송했으면
+		if(!uploadFile.isEmpty()) {
+			String fileName = uploadFile.getOriginalFilename();//pc에서 업로드시 파일명
+			uploadFile.transferTo(new File("c:/upload/"+fileName));
+		}
+
 		dao.insertBoard(board);
+		
 		return "redirect:getBoardList.do";
 	}
 	
 	
-	@RequestMapping(value="/deleteBoard.do",method=RequestMethod.GET)
-	public String deleteBoard(@ModelAttribute("board")BoardVO board,BoardDAO dao) {
+	@RequestMapping(value="/deleteBoard.do",
+			method=RequestMethod.GET)
+	public String deleteBoard(@ModelAttribute("board")BoardVO board,
+			BoardDAO dao) {
 		System.out.println("board:"+board);
 		dao.deleteBoard(board);
 		return "redirect:getBoardList.do";
 	}
+	
 	
 	
 

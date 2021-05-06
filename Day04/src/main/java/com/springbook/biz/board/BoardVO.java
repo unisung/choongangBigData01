@@ -2,6 +2,8 @@ package com.springbook.biz.board;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardVO {
 	private int seq;
 	private String title;
@@ -9,7 +11,15 @@ public class BoardVO {
 	private String content;
 	private Date regdate;
 	private int cnt;
+	private MultipartFile uploadFile;
 	
+	
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	public int getSeq() {
 		return seq;
 	}
@@ -49,7 +59,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regdate="
-				+ regdate + ", cnt=" + cnt + "]";
+				+ regdate + ", cnt=" + cnt + ", uploadFile=" + uploadFile + "]";
 	}
 	
 	
