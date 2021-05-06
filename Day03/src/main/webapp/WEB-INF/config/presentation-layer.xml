@@ -25,7 +25,7 @@
 <bean id="login" class="com.springbook.view.user.LoginController"/>
 <bean id="logout" class="com.springbook.view.user.LogoutController"/>
 <bean id="getBoardList" class="com.springbook.view.board.GetBoardListController"/>
- <bean id="getBoard" class="com.springbook.view.board.GetBoardController"/>
+<bean id="getBoard" class="com.springbook.view.board.GetBoardController"/>
 <bean id="insertBoard" class="com.springbook.view.board.InsertBoardController"/>
 <bean id="updateBoard" class="com.springbook.view.board.UpdateBoardController"/>
 <bean id="deleteBoard" class="com.springbook.view.board.DeleteBoardController"/>

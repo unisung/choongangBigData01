@@ -10,7 +10,8 @@ import org.springframework.web.servlet.mvc.Controller;
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
 
-public class GetBoardController implements Controller {
+public class GetBoardController 
+         implements Controller {
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
