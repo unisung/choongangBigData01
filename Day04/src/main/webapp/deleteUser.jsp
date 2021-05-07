@@ -5,16 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>비밀번호 변경</title>
+<title>회원탈퇴</title>
 </head>
 <body>
 
 	<center>
-		<h1>비밀번호 변경 인증</h1>
-		
-		
+		<h1>회원탈퇴</h1>
 		<hr>
-		<form action="idPassCheck.do" method="post">
+		<form action="deleteUser.do" method="post">
 			<table border="1" cellpadding="0" cellspacing="0">
 				<tr>
 					<td bgcolor="orange">id</td>
@@ -26,13 +24,21 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-					<input type="submit" value="비밀번호변경" />
-					<input type="button" onclick="javascript:location.href='deleteUser.do'" value="탈퇴">
+					<input type="submit" value="탈퇴"  onclick="return check()"/>
 					</td>
 				</tr>
 			</table>
 		</form>
 		<hr>
 	</center>
+	
+	
+<script>
+function check(){
+	if(!confirm("정말 탈퇴하시겠습니까?")) return false
+	else true;
+}
+
+</script>	
 </body>
 </html>

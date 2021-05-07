@@ -83,5 +83,23 @@ public class UserController {
 	public String changepassInputForm() {
 		return "changePassForm.jsp";
 	}
+ 
+
+ @RequestMapping(value="deleteUser.do",
+		                     method=RequestMethod.GET)
+	public String deleteUser() {
+		return "deleteUser.jsp";
+	}
+ 
+ @RequestMapping(value="deleteUser.do",
+         method=RequestMethod.POST)
+public String deleteUser(UserVO user) throws Exception{
+	 if(service.getUserCntByPass(user)>0) {
+		 service.deleteUser(user);
+			return "redirect:login.do";
+	 }else {
+			return "redirect:deleteUser.do";
+	 }
+}
 		
 }
