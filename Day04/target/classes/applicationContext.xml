@@ -36,7 +36,6 @@
 			<property name="dataSource" ref="dataSource"/>
 </bean>
 
-
 <!--  transactionManager -->
 <bean id="txManager"
 	     class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

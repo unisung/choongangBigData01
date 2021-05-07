@@ -21,7 +21,6 @@ public class BoardDAOSpring {
 	//private JdbcTemplate spring;
 	private JdbcTemplate jdbcTemplate;
 	
-	
 	private Connection conn=null;
 	private PreparedStatement stmt=null;
 	private ResultSet rs=null;

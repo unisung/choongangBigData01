@@ -3,6 +3,7 @@ package com.springbook.view.board;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,14 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
+import com.springbook.biz.board.impl.BoardDAOSpring;
+import com.springbook.biz.board.impl.BoardService;
 import com.springbook.biz.user.UserVO;
 
 /* POJO 클래스*/
 @Controller
 public class BoardController {
+	@Autowired
+	private BoardService service;
+	
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
-	   List<BoardVO> boardList = boardDAO.getBoardList(vo);
+	   //List<BoardVO> boardList = boardDAO.getBoardList(vo);
+	   List<BoardVO> boardList = service.getBoardList(vo);
 	     for(BoardVO board:boardList)  System.out.println(board);	     
 	     model.addAttribute("boardList", boardList);
 	     return "getBoardList.jsp";
@@ -29,7 +36,8 @@ public class BoardController {
 	public String getBoard(BoardVO vo, Model model, BoardDAO boardDAO) {
 		System.out.println("vo:"+vo);
 		
-		vo = boardDAO.getBoard(vo);
+		//vo = boardDAO.getBoard(vo);
+		vo = service.getBoard(vo);
 		
 		System.out.println("vo:"+vo);
 		
@@ -42,7 +50,8 @@ public class BoardController {
 	public String updateBoard(BoardVO vo, BoardDAO dao) {
 		//request.setCharacterEncoding("utf-8");
 		System.out.println("board:"+vo);
-		dao.updateBoard(vo);
+		//dao.updateBoard(vo);
+		service.updateBoard(vo);
 		return "redirect:getBoardList.do";
 	}
 	
@@ -63,7 +72,8 @@ public class BoardController {
 			uploadFile.transferTo(new File("c:/upload/"+fileName));
 		}
 
-		dao.insertBoard(board);
+		//dao.insertBoard(board);
+		service.insertBoard(board);
 		
 		return "redirect:getBoardList.do";
 	}
@@ -74,7 +84,8 @@ public class BoardController {
 	public String deleteBoard(@ModelAttribute("board")BoardVO board,
 			BoardDAO dao) {
 		System.out.println("board:"+board);
-		dao.deleteBoard(board);
+		//dao.deleteBoard(board);
+		service.deleteBoard(board);
 		return "redirect:getBoardList.do";
 	}
 	
