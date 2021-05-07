@@ -27,8 +27,11 @@ Login Page-----
 					<td><input type="password" name="password"  value="${user.password}"/></td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="로그인" /></td>
+					<td colspan="2" align="center">
+					<input type="submit" value="로그인" />
+					<input type="button" onclick="javascript:location.href='membership.do'" value="회원가입" />
+					<input type="button" onclick="javascript:location.href='changePass.do'" value="비밀번호변경" />		
+						</td>
 				</tr>
 			</table>
 		</form>

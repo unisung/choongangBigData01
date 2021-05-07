@@ -24,7 +24,9 @@ public class UserDAOSpring {//POJO
 	
 	String str;
 	
-	private final String USER_INSERT = "insert into users(id, password,name,role) values(?,?,?,?)";
+	//private final String USER_INSERT = "insert into users(id, password,name,role) values(?,?,?,?)";
+	private final String USER_INSERT = "insert into users(id, password,name,postcode, roadAddress,jubunAddress,detailAddress,extraAddress) "
+			                                            + " values(?,?,?,?,?,?,?,?)";
 	private final String USER_GET = "select * from users where id=?";
 	private final String USER_CNT ="select count(*) from users where id=?";
 	private final String USER_LOGIN ="select * from users where id=? and password=?";
@@ -35,7 +37,9 @@ public class UserDAOSpring {//POJO
 	
 	public void insertUser(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 insertUser() 기능 처리" );
-		jdbcTemplate.update(USER_INSERT, vo.getId(),vo.getPassword(),vo.getName(),vo.getRole());
+		jdbcTemplate.update(USER_INSERT, vo.getId(),vo.getPassword(),vo.getName(),
+				                      vo.getPostcode(), vo.getRoadAddress(), vo.getJubunAddress(),
+				                      vo.getDetailAddress(), vo.getExtraAddress());
 	}
 
 	public UserVO getUser(UserVO vo) {

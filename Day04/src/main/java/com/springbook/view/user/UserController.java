@@ -27,14 +27,17 @@ public class UserController {
 	public String login(UserVO user, HttpSession session) {
 		UserVO vo;
 		try {
-			vo =service.getLogin(user);
+		if(service.getUserCntByPass(user)>0) {
+			    vo =service.getLogin(user);
 			
-			if(vo!=null) {
-				session.setAttribute("user", vo);
-				return "redirect:getBoardList.do";
-			}else {
+				if(vo!=null) {
+					session.setAttribute("user", vo);
+					return "redirect:getBoardList.do";
+				}else {
+					return "redirect:login.do";
+				 }
+			}else
 				return "redirect:login.do";
-			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -48,5 +51,37 @@ public class UserController {
 		return "redirect:getBoardList.do";
 	}
 
+	@RequestMapping(value="membership.do",method=RequestMethod.GET)
+	public String membership() {
+		return "membership.jsp";
+	}
+	
+	
+	@RequestMapping(value="insertMember.do",method=RequestMethod.POST)
+	public String insertMember(UserVO user) throws Exception {
+		service.insertUser(user);
+		return "redirect:login.do";
+	}
+	
+	
+		@RequestMapping(value="changePass.do",method=RequestMethod.GET)
+	public String changepassForm() {
+		return "changePass.jsp";
+	}
+		
+		@RequestMapping(value="idPassCheck.do",method=RequestMethod.POST)
+  public String idPassCheck(UserVO user) {
+				if(service.getUserCntByPass(user)>0) {
+							return "redirect:changePassForm.do";
+				}else {
+							return "redirect:changePass.do";
+				}
+		  }	//idPassCheck()끝.
+		
 
+ @RequestMapping(value="changePassForm.do",method=RequestMethod.GET)
+	public String changepassInputForm() {
+		return "changePassForm.jsp";
+	}
+		
 }
