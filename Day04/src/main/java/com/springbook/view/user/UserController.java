@@ -41,6 +41,12 @@ public class UserController {
 		//return new ModelAndView("login.jsp");
 		return null;
 }
+	
+	@RequestMapping(value="logout.do",method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();//세션정보 삭제
+		return "redirect:getBoardList.do";
+	}
 
 
 }

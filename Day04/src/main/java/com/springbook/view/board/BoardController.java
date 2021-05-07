@@ -56,8 +56,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.GET)
-	public String insertBoardForm(@ModelAttribute("user") UserVO user) {
-		user.setName("홍길동");
+	public String insertBoardForm() {
+		//user.setName("홍길동");
 		return "insertBoard.jsp";
 	}
 	
