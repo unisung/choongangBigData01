@@ -11,7 +11,19 @@
 	<center>
 		<h1>글 목록</h1>
 		<h3>
-			테스트님 환영합니다...<a href="logout.do">Log-out</a>
+			<c:if test="${not empty user}">
+			${user.name}님 환영합니다...
+			</c:if>
+			<c:if test="${empty user}">
+			 guest님 환영합니다...
+			</c:if>
+			
+			<c:if test="${not empty user}">
+			<a href="logout.do">Log-out</a>
+			</c:if>
+			<c:if test="${empty user}">
+			<a href="login.do">Log-In</a>
+			</c:if>
 		</h3>
 		<!-- 검색 시작 -->
 		<form action="getBoardList.jsp" method="post">
