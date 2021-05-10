@@ -39,7 +39,7 @@ public class BoardController {
 	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
 	   //List<BoardVO> boardList = boardDAO.getBoardList(vo);
 	   List<BoardVO> boardList = service.getBoardList(vo);
-	     for(BoardVO board:boardList)  System.out.println(board);	
+	   //  for(BoardVO board:boardList)  System.out.println(board);	
 	     
 	     
 	    // Map<String,String> conditionMap=new HashMap<String,String>();	
@@ -89,7 +89,19 @@ public class BoardController {
 		if(!uploadFile.isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();//pc에서 업로드시 파일명
 			//UUID.randomUUID();
-			uploadFile.transferTo(new File("c:/upload/"+fileName+UUID.randomUUID()));
+			fileName=fileName.substring(0,fileName.lastIndexOf("."));
+		     String fileName2=uploadFile.getOriginalFilename();
+		     
+			String extend=fileName2.substring(fileName2.indexOf(".")+1);//파일명.jpg
+			
+			System.out.println("파일명:"+fileName);
+			System.out.println("확장자:"+extend);
+			
+			fileName=fileName+"-"+UUID.randomUUID()+"."+extend;
+			System.out.println("파일명:"+fileName);
+			
+			uploadFile.transferTo(new File("c:/upload/"+fileName));
+			board.setImg(fileName);
 		}
 
 		//dao.insertBoard(board);

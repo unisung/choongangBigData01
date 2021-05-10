@@ -50,7 +50,7 @@ public class BoardDAOSpring {
 		 System.out.println("===>SPRING JDBC로 insert() 기능 처리" );
 		 //jdbcTemplate.update(BOARD_INSERT,vo.getTitle(),vo.getWriter(), vo.getContent());	
 		 jdbcTemplate.update(BOARD_INSERT,vo.getTitle(),vo.getWriter(), vo.getContent(),
-				                         vo.getUploadFile().getOriginalFilename());
+				                         /*vo.getUploadFile().getOriginalFilename()*/vo.getImg());
 	}
 
 	/* 게시글 리스트 출력 */
