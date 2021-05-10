@@ -100,6 +100,7 @@ public class BoardController {
 			System.out.println("파일명:"+fileName);
 			System.out.println("확장자:"+extend);
 			
+			//파일명 중복방지 처리 UUID.randomUUID()
 			fileName=fileName+"-"+UUID.randomUUID()+"."+extend;
 			System.out.println("파일명:"+fileName);
 			

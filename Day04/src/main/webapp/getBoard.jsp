@@ -38,6 +38,13 @@
 					<td align="left">${board.cnt }</td>
 				</tr>
 				<tr>
+				 <td bgcolor="orange">이미지</td>
+				 <td>
+				 	<img alt="" src="/img/${board.img}"  width="20%" height="200px">
+				 </td>
+				</tr>
+				
+				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="글 수정" /></td>
 				</tr>
