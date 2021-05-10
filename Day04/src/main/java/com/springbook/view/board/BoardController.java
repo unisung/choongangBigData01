@@ -1,7 +1,9 @@
 package com.springbook.view.board;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,15 +15,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
-import com.springbook.biz.board.impl.BoardDAOSpring;
 import com.springbook.biz.board.impl.BoardService;
-import com.springbook.biz.user.UserVO;
 
 /* POJO 클래스*/
 @Controller
 public class BoardController {
 	@Autowired
 	private BoardService service;
+	
+	@ModelAttribute("conditionMap")
+	public Map<String,String> searchConditionMap(){
+		Map<String,String> conditionMap=new HashMap<String,String>();	
+		conditionMap.put("제목","TITLE");	
+		conditionMap.put("내용","CONTENT");	
+		return conditionMap;
+	}
 	
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
