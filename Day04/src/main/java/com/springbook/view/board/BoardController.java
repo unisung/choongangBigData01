@@ -92,7 +92,10 @@ public class BoardController {
 			fileName=fileName.substring(0,fileName.lastIndexOf("."));
 		     String fileName2=uploadFile.getOriginalFilename();
 		     
-			String extend=fileName2.substring(fileName2.indexOf(".")+1);//파일명.jpg
+		     
+			String extend=fileName2.substring(fileName2.lastIndexOf(".")+1);//파일명.jpg
+		//	String extend = 
+//uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf(".")+1);
 			
 			System.out.println("파일명:"+fileName);
 			System.out.println("확장자:"+extend);
