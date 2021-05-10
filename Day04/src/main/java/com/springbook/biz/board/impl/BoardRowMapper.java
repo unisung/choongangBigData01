@@ -18,6 +18,8 @@ public class BoardRowMapper implements RowMapper<BoardVO> {
 		board.setContent(rs.getString("content"));
 		board.setRegdate(rs.getDate("regdate"));
 		board.setCnt(rs.getInt("cnt"));
+		//board.setUploadFile(null);
+		board.setImg(rs.getString("uploadfile"));
 		
 		return board;
 	}

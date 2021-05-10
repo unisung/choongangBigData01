@@ -25,8 +25,12 @@ public class BoardDAOSpring {
 	private PreparedStatement stmt=null;
 	private ResultSet rs=null;
 	
-	private final String BOARD_INSERT="insert into board(seq, title, writer,content) "
-			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?)";
+	//private final String BOARD_INSERT="insert into board(seq, title, writer,content) "
+	//		                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?)";
+	
+	/* 파일명 저장 추가 */
+	private final String BOARD_INSERT="insert into board(seq, title, writer,content,uploadfile) "
+			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?,?)";
 	
 	private final String BOARD_LIST="select * from board order by seq";
 	private final String BOARD_GET="select * from board where seq=?";
@@ -45,7 +49,8 @@ public class BoardDAOSpring {
 	public void insertBoard(BoardVO vo) {
 		 System.out.println("===>SPRING JDBC로 insert() 기능 처리" );
 		 //jdbcTemplate.update(BOARD_INSERT,vo.getTitle(),vo.getWriter(), vo.getContent());	
-		 jdbcTemplate.update(BOARD_INSERT,vo.getTitle(),vo.getWriter(), vo.getContent());
+		 jdbcTemplate.update(BOARD_INSERT,vo.getTitle(),vo.getWriter(), vo.getContent(),
+				                         vo.getUploadFile().getOriginalFilename());
 	}
 
 	/* 게시글 리스트 출력 */

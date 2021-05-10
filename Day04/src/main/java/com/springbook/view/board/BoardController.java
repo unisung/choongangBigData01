@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,19 +24,29 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	@ModelAttribute("conditionMap")
-	public Map<String,String> searchConditionMap(){
-		Map<String,String> conditionMap=new HashMap<String,String>();	
-		conditionMap.put("제목","TITLE");	
-		conditionMap.put("내용","CONTENT");	
-		return conditionMap;
-	}
+
+	  @ModelAttribute("conditionMap") 
+	  public Map<String,String>searchConditionMap(){ 
+		  Map<String,String> conditionMap=new
+	  HashMap<String,String>(); 
+		conditionMap.put("제목","TITLE");
+	  conditionMap.put("내용","CONTENT"); 
+	  return conditionMap; 
+	  }
+	 
 	
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
 	   //List<BoardVO> boardList = boardDAO.getBoardList(vo);
 	   List<BoardVO> boardList = service.getBoardList(vo);
-	     for(BoardVO board:boardList)  System.out.println(board);	     
+	     for(BoardVO board:boardList)  System.out.println(board);	
+	     
+	     
+	    // Map<String,String> conditionMap=new HashMap<String,String>();	
+		//	conditionMap.put("제목","TITLE");	
+		//	conditionMap.put("내용","CONTENT");	
+			
+		// model.addAttribute("conditionMap", conditionMap);
 	     model.addAttribute("boardList", boardList);
 	     return "getBoardList.jsp";
 	}
@@ -77,7 +88,8 @@ public class BoardController {
 		//클라이언트에서 파일을 전송했으면
 		if(!uploadFile.isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();//pc에서 업로드시 파일명
-			uploadFile.transferTo(new File("c:/upload/"+fileName));
+			//UUID.randomUUID();
+			uploadFile.transferTo(new File("c:/upload/"+fileName+UUID.randomUUID()));
 		}
 
 		//dao.insertBoard(board);

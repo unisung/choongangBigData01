@@ -12,8 +12,14 @@ public class BoardVO {
 	private Date regdate;
 	private int cnt;
 	private MultipartFile uploadFile;
+	private String img;
 	
-	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
@@ -56,11 +62,13 @@ public class BoardVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+	
 	@Override
 	public String toString() {
 		return "BoardVO [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regdate="
-				+ regdate + ", cnt=" + cnt + ", uploadFile=" + uploadFile + "]";
+				+ regdate + ", cnt=" + cnt + ", uploadFile=" + uploadFile + ", img=" + img + "]";
 	}
+	
 	
 	
 	
