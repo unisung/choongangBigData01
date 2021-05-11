@@ -2,6 +2,8 @@ package com.springbook.view.board;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,7 +139,11 @@ public class BoardController {
 		
 	//dao.updateBoard(vo);
 		service.updateBoard(board);
-		return "redirect:getBoardList.do";
+		
+	  System.out.println("-----------------------------업데이트 후 board: "+board);
+		return "redirect:getBoardList.do?pageNum="+board.getPageNum()
+		           +"&searchCondition="+board.getSearchCondition()
+		           +"&searchKeyword="+URLEncoder.encode(board.getSearchKeyword(), "UTF-8");
 	}
 	
 	
@@ -186,14 +192,13 @@ public class BoardController {
 	@RequestMapping(value="/deleteBoard.do",
 			method=RequestMethod.GET)
 	public String deleteBoard(@ModelAttribute("board")BoardVO board,
-			BoardDAO dao) {
+			BoardDAO dao) throws UnsupportedEncodingException {
 		System.out.println("board:"+board);
 		//dao.deleteBoard(board);
 		service.deleteBoard(board);
-		return "redirect:getBoardList.do";
+		return "redirect:getBoardList.do?pageNum="+board.getPageNum() 
+				   +"&searchCondition="+board.getSearchCondition() 
+				   +"&searchKeyword="+URLEncoder.encode(board.getSearchKeyword(), "UTF-8");
 	}
 	
-	
-	
-
 }
