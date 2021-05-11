@@ -68,11 +68,20 @@
 		<br>
 		  전체페이지:${total}<br>
 		  <c:forEach var="i" begin="1" end="${total}">
-		      <a href="getBoardList.do?pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">${i}</a>
+		      <a href="javascript:go('${i}','${searchCondition}','${searchKeyword}')">${i}</a>
+		      <%-- <a href="getBoardList.do?pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">${i}</a> --%>
 		  </c:forEach>
 		  
 		<br> <!-- <a href="insertBoard.jsp">새글 등록</a> -->
 		<a href="/insertBoard.do">새글 등록</a>
 	</center>
 </body>
+<script>
+  function go(pageNum, searchCondition, searchKeyword){
+	  alert(pageNum+":"+searchCondition+":"+searchKeyword);
+	  location.href='getBoardList.do?pageNum='+pageNum+'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
+  }
+
+
+</script>
 </html>
