@@ -32,9 +32,36 @@ public class BoardDAOSpring {
 	private final String BOARD_INSERT="insert into board(seq, title, writer,content,uploadfile) "
 			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?,?)";
 	
-	private final String BOARD_LIST="select * from board order by seq desc";
-	private final String BOARD_LIST_TITLE="select * from board where title like '%'||?||'%' order by seq desc";
-	private final String BOARD_LIST_CONTENT="select * from board where content like '%'||?||'%' order by seq desc";
+	//private final String BOARD_LIST="select * from board order by seq desc";
+	//private final String BOARD_LIST_TITLE="select * from board where title like '%'||?||'%' order by seq desc";
+	//private final String BOARD_LIST_CONTENT="select * from board where content like '%'||?||'%' order by seq desc";
+	
+	private final String BOARD_LIST="select *"
+													+ "  from"
+													+ " (select rownum rn, a.*"
+													+ "  from "
+													+ " (select * "
+													+ "  from board "
+													+ "  order by seq desc) a)"
+													+ " where rn between ? and ?";
+	private final String BOARD_LIST_TITLE="select *"
+																+ " from"
+																+ "(select rownum rn, a.*"
+																+ " from "
+																+ "(select * "
+																+ "  from board "
+																+ "  where title like '%'||?||'%'"
+																+ "  order by seq desc) a)"
+																+ " where rn between ? and ?";
+	private final String BOARD_LIST_CONTENT="select *"
+																	+ " from"
+																	+ "(select rownum rn, a.*"
+																	+ " from "
+																	+ "(select * "
+																	+ "  from board "
+																	+ "  where content like '%'||?||'%'"
+																	+ "  order by seq desc) a)"
+																	+ " where rn between ? and ?";
 
 	
 	private final String BOARD_GET="select * from board where seq=?";

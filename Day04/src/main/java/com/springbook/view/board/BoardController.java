@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,17 +40,19 @@ public class BoardController {
 	 
 	
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVO vo, Model model, BoardDAO boardDAO) {
-	   //List<BoardVO> boardList = boardDAO.getBoardList(vo);
+	public String getBoardList(BoardVO vo, Model model, 
+			                                BoardDAO boardDAO	) {
+		System.out.println("페이지번호: " +vo.getPageNum());
+		if(vo.getPageNum()==null) vo.setPageNum("1");
+		
+		int startRow= (Integer.parseInt(vo.getPageNum()) -1 )*10 +1;
+		int endRow = startRow + 9;
+		vo.setStartRow(startRow);
+		vo.setEndRow(endRow);
+		
 	   List<BoardVO> boardList = service.getBoardList(vo);
-	   //  for(BoardVO board:boardList)  System.out.println(board);	
 	     
 	     System.out.println("검색조건:"+vo.getSearchCondition());
-	    // Map<String,String> conditionMap=new HashMap<String,String>();	
-		//	conditionMap.put("제목","TITLE");	
-		//	conditionMap.put("내용","CONTENT");	
-			
-		// model.addAttribute("conditionMap", conditionMap);
 	     model.addAttribute("boardList", boardList);
 	     return "getBoardList.jsp";
 	}
