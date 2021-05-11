@@ -1,44 +1,48 @@
-<%@page contentType="text/html; charset=EUC-KR"%>
+<%@page contentType="text/html; charset=UTF-8"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>±Û »ó¼¼</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ê¸€ ìƒì„¸</title>
 </head>
 <body>
 	<center>
-		<h1>±Û »ó¼¼</h1>
+		<h1>ê¸€ ìƒì„¸</h1>
 		<a href="logout.do">Log-out</a>
 		<hr>
 		<form action="updateBoard.do" method="post" enctype="multipart/form-data">
 			<input name="seq" type="hidden" value="${board.seq}" />
+			<input name="pageNum" type="hidden" value="${board.pageNum}">
+			<input name="searchCondition" type="hidden" value="${board.searchCondition}">
+			<input name="searchKeyword" type="hidden" value="${board.searchKeyword}">
+			
 			<table border="1" cellpadding="0" cellspacing="0">
 				<tr>
-					<td bgcolor="orange" width="70">Á¦¸ñ</td>
+					<td bgcolor="orange" width="70">ì œëª©</td>
 					<td align="left"><input name="title" type="text"
 						value="${board.title }" /></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">ÀÛ¼ºÀÚ</td>
+					<td bgcolor="orange">ì‘ì„±ì</td>
 					<td align="left">${board.writer }</td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">³»¿ë</td>
+					<td bgcolor="orange">ë‚´ìš©</td>
 					<td align="left"><textarea name="content" cols="40" rows="10">
 						${board.content }</textarea></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">µî·ÏÀÏ</td>
-					<td align="left">${board.regdate }</td><!-- EL - ¼Ó¼º¸íÀÇ °ª BoardVOÀÇ getRegdate()-->
+					<td bgcolor="orange">ë“±ë¡ì¼</td>
+					<td align="left">${board.regdate }</td><!-- EL - ì†ì„±ëª…ì˜ ê°’ BoardVOì˜ getRegdate()-->
 				</tr>
 				<tr>
-					<td bgcolor="orange">Á¶È¸¼ö</td>
+					<td bgcolor="orange">ì¡°íšŒìˆ˜</td>
 					<td align="left">${board.cnt }</td>
 				</tr>
 				<tr>
-				 <td bgcolor="orange">ÀÌ¹ÌÁö</td>
+				 <td bgcolor="orange">ì´ë¯¸ì§€</td>
 				 <td>
 				 	<img alt="" src="/img/${board.img}"  width="20%" height="200px">
 				 	<%-- <input type="hidden" name="img" value="${board.img}"> --%>
@@ -48,14 +52,14 @@
 				
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
-						value="±Û ¼öÁ¤" /></td>
+						value="ê¸€ ìˆ˜ì •" /></td>
 				</tr>
 			</table>
 		</form>
 		<hr>
-		<a href="insertBoard.jsp">±Ûµî·Ï</a>&nbsp;&nbsp;&nbsp; 
-		<a href="deleteBoard.do?seq=${board.seq }">±Û»èÁ¦</a>&nbsp;&nbsp;&nbsp;
-		<a href="getBoardList.do">±Û¸ñ·Ï</a>
+		<a href="insertBoard.do">ê¸€ë“±ë¡</a>&nbsp;&nbsp;&nbsp; 
+		<a href="deleteBoard.do?seq=${board.seq }&pageNum=${board.pageNum}&searchCondition=${board.searchCondition}&searchKeyword=${board.searchKeyword}">ê¸€ì‚­ì œ</a>&nbsp;&nbsp;&nbsp;
+		<a href="getBoardList.do?pageNum=${board.pageNum}&searchCondition=${board.searchCondition}&searchKeyword=${board.searchKeyword}">ê¸€ëª©ë¡</a>
 	</center>
 </body>
 </html>

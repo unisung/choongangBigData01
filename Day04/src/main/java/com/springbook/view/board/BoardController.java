@@ -94,6 +94,10 @@ public class BoardController {
 		//vo = boardDAO.getBoard(vo);
 		vo = service.getBoard(vo);
 		
+		vo.setPageNum(pageNum);
+		vo.setSearchCondition(searchCondition);
+		vo.setSearchKeyword(searchKeyword);
+		
 		System.out.println("vo:"+vo);
 		
 		/* model저장시 sessionAttributes에도 저장 */
