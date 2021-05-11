@@ -51,9 +51,11 @@ public class BoardController {
 		vo.setEndRow(endRow);
 		
 	   List<BoardVO> boardList = service.getBoardList(vo);
-	     
+	   int totalCount = service.getTotalCount(vo);
+	   int total=(int)Math.ceil(totalCount / 10.0);//정수/실수=>실수 10.0->10, 10.3->11
 	     System.out.println("검색조건:"+vo.getSearchCondition());
 	     model.addAttribute("boardList", boardList);
+	     model.addAttribute("total",total);
 	     return "getBoardList.jsp";
 	}
 	

@@ -10,5 +10,6 @@ public interface BoardService {
 	void updateBoard(BoardVO vo);
 	void deleteBoard(BoardVO vo);
 	BoardVO getBoard(BoardVO vo);
+	int getTotalCount(BoardVO vo);
 
 }

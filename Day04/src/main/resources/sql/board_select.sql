@@ -41,3 +41,7 @@ where rn >= 11 and rn <= 20
  3:        (3-1)*10 +1=21,  30: 21 + 9 =30
         (페이지번호 -1)*페이지당 글 갯수 + 1, 끝 글 번호 = 시작글 번호 + 9 
 
+        전체 페이지:     
+select count(*)/10  from board; -- 10으로 나눈 나머지가 있으면 + 1 
+select count(*) from board where content like '%'||'파일'||'%';  
+select count(*) from board where title like '%'||'파일'||'%'; 

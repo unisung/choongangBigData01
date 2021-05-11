@@ -49,4 +49,9 @@ public class BoardServiceImpl
 		return dao.getBoard(vo);
 	}
 
+	@Override
+	public int getTotalCount(BoardVO vo) {
+		return dao.getTotalCount(vo);
+	}
+
 }

@@ -64,6 +64,12 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<br>
+		  전체페이지:${total}
+		  <c:forEach var="i" begin="1" end="${total}">
+		      <a href="getBoardList.do?pageNum=${i}">${i}</a>
+		  </c:forEach>
+		  
 		<br> <!-- <a href="insertBoard.jsp">새글 등록</a> -->
 		<a href="/insertBoard.do">새글 등록</a>
 	</center>
