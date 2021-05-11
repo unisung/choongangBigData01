@@ -42,7 +42,17 @@ public class BoardController {
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, 
 			                                BoardDAO boardDAO	) {
+		System.out.println("x");
 		System.out.println("페이지번호: " +vo.getPageNum());
+		
+		//System.out.println("searchCondition: " +vo.getSearchCondition()==null?"null":vo.getSearchCondition().length());
+		//System.out.println("searchKeyword: " +vo.getSearchKeyword()==null?"null":vo.getSearchKeyword().length());
+		
+		System.out.println("-----searchKeyword: "+vo.getSearchKeyword());
+		
+		if(vo.getSearchCondition()==null || vo.getSearchCondition().length()==0)  
+			   vo.setSearchCondition(null);
+		
 		if(vo.getPageNum()==null) vo.setPageNum("1");
 		
 		int startRow= (Integer.parseInt(vo.getPageNum()) -1 )*10 +1;
@@ -56,6 +66,9 @@ public class BoardController {
 	     System.out.println("검색조건:"+vo.getSearchCondition());
 	     model.addAttribute("boardList", boardList);
 	     model.addAttribute("total",total);
+	     model.addAttribute("searchCondition",vo.getSearchCondition());
+	     model.addAttribute("searchKeyword",vo.getSearchKeyword());
+	     
 	     return "getBoardList.jsp";
 	}
 	
