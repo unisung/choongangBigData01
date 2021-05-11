@@ -22,7 +22,7 @@ import com.springbook.biz.board.impl.BoardService;
 
 /* POJO 클래스*/
 @Controller
-//@SessionAttributes("board")
+@SessionAttributes("board")
 public class BoardController {
 	@Autowired
 	private BoardService service;
@@ -63,6 +63,7 @@ public class BoardController {
 		
 		System.out.println("vo:"+vo);
 		
+		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
 		
 		return "getBoard.jsp";

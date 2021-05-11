@@ -41,7 +41,7 @@
 				 <td bgcolor="orange">¿ÃπÃ¡ˆ</td>
 				 <td>
 				 	<img alt="" src="/img/${board.img}"  width="20%" height="200px">
-				 	<input type="hidden" name="img" value="${board.img}">
+				 	<%-- <input type="hidden" name="img" value="${board.img}"> --%>
 				 	<input type="file" name="uploadFile">
 				 </td>
 				</tr>
