@@ -68,13 +68,28 @@ public class BoardController {
 	     model.addAttribute("total",total);
 	     model.addAttribute("searchCondition",vo.getSearchCondition());
 	     model.addAttribute("searchKeyword",vo.getSearchKeyword());
+	     model.addAttribute("pageNum",vo.getPageNum());
 	     
 	     return "getBoardList.jsp";
 	}
 	
 	@RequestMapping("/getBoard.do")
-	public String getBoard(BoardVO vo, Model model, BoardDAO boardDAO) {
+	public String getBoard(
+			@RequestParam("pageNum") String pageNum,
+			@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			BoardVO vo, Model model, BoardDAO boardDAO) {
+		
+		System.out.println("pageNum:"+pageNum);
+		System.out.println("searchCondition:"+searchCondition);
+		System.out.println("searchKeyword:"+searchKeyword);
+		
+		 vo.setPageNum(pageNum);
+		 vo.setSearchCondition(searchCondition);
+		 vo.setSearchCondition(searchCondition);
+		 
 		System.out.println("vo:"+vo);
+		
 		
 		//vo = boardDAO.getBoard(vo);
 		vo = service.getBoard(vo);

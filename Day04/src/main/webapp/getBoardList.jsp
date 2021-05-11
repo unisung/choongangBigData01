@@ -57,7 +57,7 @@
 				<tr>
 					<td>${board.seq }</td>
 					<td align="left">
-<a href="getBoard.do?seq=${board.seq }&pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">
+<a href="getBoard.do?seq=${board.seq }&pageNum=${pageNum}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">
 							${board.title }</a></td>
 					<td>${board.writer }</td>
 					<td>${board.regdate }</td>
