@@ -32,7 +32,11 @@ public class BoardDAOSpring {
 	private final String BOARD_INSERT="insert into board(seq, title, writer,content,uploadfile) "
 			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?,?)";
 	
-	private final String BOARD_LIST="select * from board order by seq";
+	private final String BOARD_LIST="select * from board order by seq desc";
+	private final String BOARD_LIST_TITLE="select * from board where title like '%'||?||'%' order by seq desc";
+	private final String BOARD_LIST_CONTENT="select * from board where content like '%'||?||'%' order by seq desc";
+
+	
 	private final String BOARD_GET="select * from board where seq=?";
 	private final String BOARD_UPDATE="update board set title=?, content=? , uploadfile=? where seq=?";
 	private final String BOARD_DELETE="delete board where seq=?";
@@ -54,7 +58,14 @@ public class BoardDAOSpring {
 	/* 게시글 리스트 출력 */
 	public List<BoardVO> getBoardList(BoardVO vo) {
 		System.out.println("===>SPRING JDBC로 getBoardList() 기능 처리" );
-		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
+		if(vo.getSearchCondition()==null) {
+		  return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
+		}else if(vo.getSearchCondition().equals("TITLE")) {
+		  return jdbcTemplate.query(BOARD_LIST_TITLE, new Object[] {vo.getSearchKeyword()}, new BoardRowMapper());
+		}else if(vo.getSearchCondition().equals("CONTENT")) {
+		 return jdbcTemplate.query(BOARD_LIST_CONTENT, new Object[] {vo.getSearchKeyword()}, new BoardRowMapper());
+		}else
+			return null;
 	}
 
 	/* 게시글 수정 */

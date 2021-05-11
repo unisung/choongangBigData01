@@ -44,7 +44,7 @@ public class BoardController {
 	   List<BoardVO> boardList = service.getBoardList(vo);
 	   //  for(BoardVO board:boardList)  System.out.println(board);	
 	     
-	     
+	     System.out.println("검색조건:"+vo.getSearchCondition());
 	    // Map<String,String> conditionMap=new HashMap<String,String>();	
 		//	conditionMap.put("제목","TITLE");	
 		//	conditionMap.put("내용","CONTENT");	
