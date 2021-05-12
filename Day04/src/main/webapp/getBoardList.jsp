@@ -68,12 +68,17 @@
 		</table>
 		<br>
 		  전체페이지:${total}<br>
-
-		  <c:forEach var="i" begin="1" end="${lastPage}">
+		
+        <c:if test="${startPage != 1 }">
+			<a href="/getBoardList.do?pageNum=${startPage - 1 }&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">&lt;</a>
+		</c:if>
+		  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 		      <a href="javascript:go('${i}','${searchCondition}','${searchKeyword}')">${i}</a>
 		    <%--   <a href="getBoardList.do?pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">${i}</a>  --%>
 		  </c:forEach>
-		 
+		 <c:if test="${endPage != lastPage}">
+			<a href="/getBoardList.do?pageNum=${endPage+1 }&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">&gt;</a>
+		</c:if>
 		  
 		<br> <!-- <a href="insertBoard.jsp">새글 등록</a> -->
 		<a href="/insertBoard.do">새글 등록</a>

@@ -66,8 +66,12 @@ public class BoardController {
 	   int totalCount = service.getTotalCount(vo);
 	   int total=(int)Math.ceil(totalCount / 10.0);//정수/실수=>실수 10.0->10, 10.3->11
 	   
-	   int lastPage = (int) Math.ceil(totalCount / (double)10);
-	   int endPage = ((int)Math.ceil((double)Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;
+	   int lastPage = (int) Math.ceil(totalCount / (double)10);// 554/10 =>55
+	    
+	   //if(totalCount%10==0) totalCount/10;// 50/10 =5;
+	   // else if(totalCount%10!=0) totalCount/10 +1;//52/10 =5*10+2;
+	    
+	   int endPage = ((int)Math.ceil(Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;// 4/10=0, 23
 	   
 	   if(lastPage < endPage) endPage =lastPage;
 	   int startPage =(((int)((Integer.parseInt(vo.getPageNum())-1)/(double)10) + 1) -1)*10 +1;
@@ -215,5 +219,11 @@ public class BoardController {
 				   +"&searchCondition="+board.getSearchCondition() 
 				   +"&searchKeyword="+URLEncoder.encode(board.getSearchKeyword(), "UTF-8");
 	}
+	
+	@RequestMapping(value="replyBoard.do", method=RequestMethod.GET)
+	public String replyBoard() {
+		return "replyBoard.jsp";
+	}
+	
 	
 }

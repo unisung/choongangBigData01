@@ -45,3 +45,4 @@ where rn >= 11 and rn <= 20
 select count(*)/10  from board; -- 10으로 나눈 나머지가 있으면 + 1 
 select count(*) from board where content like '%'||'파일'||'%';  
 select count(*) from board where title like '%'||'파일'||'%'; 
+

@@ -57,6 +57,7 @@
 			</table>
 		</form>
 		<hr>
+		<a href="replyBoard.do?seq=${board.seq}">답글</a>
 		<a href="insertBoard.do">글등록</a>&nbsp;&nbsp;&nbsp; 
 		<a href="javascript:go2('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}')">글삭제</a>&nbsp;&nbsp;&nbsp;
 		<a href="javascript:go('${board.pageNum}','${board.searchCondition}','${board.searchKeyword}')">글목록</a>
