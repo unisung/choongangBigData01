@@ -170,7 +170,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
-	public String insertBoard(@ModelAttribute("board")BoardVO board,	BoardDAO dao) throws Exception {
+	public String insertBoard(BoardVO board,	BoardDAO dao) throws Exception {
 		System.out.println("board:"+board);
 		//파일업로드 
 		MultipartFile uploadFile = board.getUploadFile();
