@@ -234,17 +234,16 @@ public class BoardController {
 	
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.POST)
 	public String replyBoard(BoardVO vo) throws UnsupportedEncodingException {
-		System.out.println("답변 VO:"+vo);
+		System.out.println("------------- 답변 VO:"+vo);
 		System.out.println("페이지번호:"+vo.getPageNum());
 		System.out.println("조회조건:"+vo.getSearchCondition());
 		System.out.println("조회키워드:"+vo.getSearchKeyword());//"", null
 		
-		//if(vo.getRe_seq()==0) vo.setRe_ref(vo.getSeq());//re_seq==0은 부모글(원글).
+		vo.setRe_ref(vo.getSeq());//부모글의 글번호를 re_ref에 저장
+		vo.setRe_lev(vo.getRe_lev()+1);//부모글에 대비 들여쓰기 레벨 증가
+		vo.setRe_seq(vo.getRe_seq()+1);//부모글 대비 등록 순서 + 1
 		
-		service.insertBoard(vo);
-		
-		
-		
+		service.insertReplyBoard(vo);
 		
 		return "redirect:getBoardList.do?pageNum="+vo.getPageNum()
         +"&searchCondition="+vo.getSearchCondition()

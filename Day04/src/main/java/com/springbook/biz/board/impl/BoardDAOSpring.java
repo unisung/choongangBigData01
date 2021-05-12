@@ -31,39 +31,40 @@ public class BoardDAOSpring {
 	/* 파일명 저장 추가 */
 	private final String BOARD_INSERT="insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) "
 			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?,?,(select nvl(max(seq),0)+1 from board),?,?)";
-	
+	/* 답변 저장 */
+	private final String BOARD_REPLY_INSERT="insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) "
+                                                                   + " values((select nvl(max(seq),0)+1 from board),?,?,?,?,?,?,?)";
+
 	//private final String BOARD_LIST="select * from board order by seq desc";
 	//private final String BOARD_LIST_TITLE="select * from board where title like '%'||?||'%' order by seq desc";
 	//private final String BOARD_LIST_CONTENT="select * from board where content like '%'||?||'%' order by seq desc";
 	
-	private final String BOARD_LIST="select *"
-													+ "  from"
-													+ " (select rownum rn, a.*"
-													+ "  from "
-													+ " (select * "
-													+ "  from board "
-													+ "  order by seq desc) a)"
-													+ " where rn between ? and ?";
+	private final String BOARD_LIST
+	         ="select *from "
+			+ " (select rownum rn, a.* "
+			+ " from "
+			+ " (select * "
+			+ " from board "
+			+ " order by re_ref desc, re_seq asc) a) "
+			+ " where rn between ? and ?";
 	
-	private final String BOARD_LIST_TITLE="select *"
-																+ " from"
-																+ "(select rownum rn, a.*"
-																+ " from "
-																+ "(select * "
-																+ "  from board "
-																+ "  where title like '%'||?||'%'"
-																+ "  order by seq desc) a)"
-																+ " where rn between ? and ?";
+	private final String BOARD_LIST_TITLE
+	        ="select * from "
+			+ " (select rownum rn, a.* "
+			+ " from "
+			+ " (select * "
+			+ " from board where title like '%'||?||'%' "
+			+ " order by re_ref desc, re_seq asc) a) "
+			+ " where rn between ? and ?";
 	
-	private final String BOARD_LIST_CONTENT="select *"
-																	+ " from"
-																	+ "(select rownum rn, a.*"
-																	+ " from "
-																	+ "(select * "
-																	+ "  from board "
-																	+ "  where content like '%'||?||'%'"
-																	+ "  order by seq desc) a)"
-																	+ " where rn between ? and ?";
+	private final String BOARD_LIST_CONTENT
+	        ="select * from "
+			+ " (select rownum rn, a.* "
+			+ " from "
+			+ " (select * "
+			+ " from board where content like '%'||?||'%' "
+			+ " order by re_ref desc, re_seq asc) a) "
+			+ " where rn between ? and ?";
 
 	/*전체 건수 */
 	private final String GET_TOTAL_CNT="select count(*)  from board"; //-- 10으로 나눈 나머지가 있으면 + 1 
@@ -141,6 +142,12 @@ public class BoardDAOSpring {
 		updateBoardCount(vo);
 		Object[] args = {vo.getSeq()};
 		return jdbcTemplate.queryForObject(BOARD_GET, args, new BoardRowMapper());
+	}
+
+	public void insertReplyBoard(BoardVO vo) {
+		System.out.println("===> SPRING JDBC로 insertReplyBoard() 기능 처리" );
+		jdbcTemplate.update(BOARD_REPLY_INSERT, vo.getTitle(),vo.getWriter(), vo.getContent(),vo.getImg(), 
+				                        vo.getRe_ref(), vo.getRe_lev(), vo.getRe_seq());
 	}
 
 	

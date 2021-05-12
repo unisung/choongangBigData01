@@ -57,8 +57,14 @@
 				<tr>
 					<td>${board.seq }</td>
 					<td align="left">
+					<c:if test="${board.re_lev>0}">
+						   <c:forEach begin="1" end="${board.re_lev}">
+						        &nbsp;&nbsp;
+						   </c:forEach>	
+					</c:if>
 					<a href="javascript:go2('${board.seq }','${pageNum}','${searchCondition}','${searchKeyword}')">
 <%-- <a href="getBoard.do?seq=${board.seq }&pageNum=${pageNum}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}"> --%>
+						
 							${board.title }</a></td>
 					<td>${board.writer }</td>
 					<td>${board.regdate }</td>

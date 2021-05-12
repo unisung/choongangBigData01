@@ -20,6 +20,10 @@ public class BoardRowMapper implements RowMapper<BoardVO> {
 		board.setCnt(rs.getInt("cnt"));
 		//board.setUploadFile(null);
 		board.setImg(rs.getString("uploadfile"));
+		//댓글 그룹, 댓글 레벨, 댓글 순번
+		board.setRe_ref(rs.getInt("re_ref"));
+		board.setRe_lev(rs.getInt("re_lev"));
+		board.setRe_seq(rs.getInt("re_seq"));
 		
 		return board;
 	}

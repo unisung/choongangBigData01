@@ -11,5 +11,6 @@ public interface BoardService {
 	void deleteBoard(BoardVO vo);
 	BoardVO getBoard(BoardVO vo);
 	int getTotalCount(BoardVO vo);
+	void insertReplyBoard(BoardVO vo);
 
 }

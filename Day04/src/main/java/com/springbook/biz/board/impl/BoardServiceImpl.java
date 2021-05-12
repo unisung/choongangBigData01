@@ -54,4 +54,9 @@ public class BoardServiceImpl
 		return dao.getTotalCount(vo);
 	}
 
+	@Override
+	public void insertReplyBoard(BoardVO vo) {
+	  dao.insertReplyBoard(vo);
+	  
+	}
 }
