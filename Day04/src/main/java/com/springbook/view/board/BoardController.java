@@ -199,8 +199,10 @@ public class BoardController {
 			uploadFile.transferTo(new File("c:/upload/"+fileName));
 			board.setImg(fileName);
 		}
-
-		//dao.insertBoard(board);
+        //부모글(원글)인 경우 re_lev=0, re_seq=0
+		board.setRe_lev(0);
+		board.setRe_seq(0);
+		
 		service.insertBoard(board);
 		
 		return "redirect:getBoardList.do";
