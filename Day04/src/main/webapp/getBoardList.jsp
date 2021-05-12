@@ -57,7 +57,8 @@
 				<tr>
 					<td>${board.seq }</td>
 					<td align="left">
-<a href="getBoard.do?seq=${board.seq }&pageNum=${pageNum}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">
+					<a href="javascript:go2('${board.seq }','${pageNum}','${searchCondition}','${searchKeyword}')">
+<%-- <a href="getBoard.do?seq=${board.seq }&pageNum=${pageNum}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}"> --%>
 							${board.title }</a></td>
 					<td>${board.writer }</td>
 					<td>${board.regdate }</td>
@@ -67,10 +68,16 @@
 		</table>
 		<br>
 		  전체페이지:${total}<br>
-		  <c:forEach var="i" begin="1" end="${total}">
+		  <c:if test="${startPage != 1 }">
+			<a href="/getBoardList.do?pageNum=${startPage - 1 }&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">&lt;</a>
+		</c:if>
+		  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 		      <a href="javascript:go('${i}','${searchCondition}','${searchKeyword}')">${i}</a>
-		      <%-- <a href="getBoardList.do?pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">${i}</a> --%>
+		    <%--   <a href="getBoardList.do?pageNum=${i}&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">${i}</a>  --%>
 		  </c:forEach>
+		 <c:if test="${endPage != lastPage}">
+			<a href="/getBoardList.do?pageNum=${endPage+1 }&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}">&gt;</a>
+		</c:if>
 		  
 		<br> <!-- <a href="insertBoard.jsp">새글 등록</a> -->
 		<a href="/insertBoard.do">새글 등록</a>
@@ -78,10 +85,12 @@
 </body>
 <script>
   function go(pageNum, searchCondition, searchKeyword){
-	  alert(pageNum+":"+searchCondition+":"+searchKeyword);
-	  location.href='getBoardList.do?pageNum='+pageNum+'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
+	  location.href='getBoardList.do?pageNum='+pageNum+'&searchCondition='+searchCondition
+			            +'&searchKeyword='+encodeURIComponent(searchKeyword);
   }
-
-
+  function go2(seq, pageNum, searchCondition, searchKeyword){
+	 location.href='getBoard.do?seq='+seq+'&pageNum='+pageNum
+			           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
+  }
 </script>
 </html>

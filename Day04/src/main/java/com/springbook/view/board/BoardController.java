@@ -61,16 +61,31 @@ public class BoardController {
 		int endRow = startRow + 9;
 		vo.setStartRow(startRow);
 		vo.setEndRow(endRow);
-		
+
 	   List<BoardVO> boardList = service.getBoardList(vo);
 	   int totalCount = service.getTotalCount(vo);
 	   int total=(int)Math.ceil(totalCount / 10.0);//정수/실수=>실수 10.0->10, 10.3->11
+	   
+	   int lastPage = (int) Math.ceil(totalCount / (double)10);
+	   int endPage = ((int)Math.ceil((double)Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;
+	   
+	   if(lastPage < endPage) endPage =lastPage;
+	   int startPage =(((int)((Integer.parseInt(vo.getPageNum())-1)/(double)10) + 1) -1)*10 +1;
+	   if(startPage < 1) startPage=1;
+	   
 	     System.out.println("검색조건:"+vo.getSearchCondition());
+	     System.out.println("startPage: " + startPage);
+	     System.out.println("endPage: " +endPage);
+	     System.out.println("lastPage: " + lastPage);
+	     
 	     model.addAttribute("boardList", boardList);
 	     model.addAttribute("total",total);
 	     model.addAttribute("searchCondition",vo.getSearchCondition());
 	     model.addAttribute("searchKeyword",vo.getSearchKeyword());
 	     model.addAttribute("pageNum",vo.getPageNum());
+	     model.addAttribute("startPage",startPage);
+	     model.addAttribute("endPage",endPage);
+	     model.addAttribute("lastPage",lastPage);
 	     
 	     return "getBoardList.jsp";
 	}

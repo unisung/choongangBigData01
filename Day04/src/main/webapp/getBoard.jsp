@@ -58,8 +58,18 @@
 		</form>
 		<hr>
 		<a href="insertBoard.do">글등록</a>&nbsp;&nbsp;&nbsp; 
-		<a href="deleteBoard.do?seq=${board.seq }&pageNum=${board.pageNum}&searchCondition=${board.searchCondition}&searchKeyword=${board.searchKeyword}">글삭제</a>&nbsp;&nbsp;&nbsp;
-		<a href="getBoardList.do?pageNum=${board.pageNum}&searchCondition=${board.searchCondition}&searchKeyword=${board.searchKeyword}">글목록</a>
+		<a href="javascript:go2('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}')">글삭제</a>&nbsp;&nbsp;&nbsp;
+		<a href="javascript:go('${board.pageNum}','${board.searchCondition}','${board.searchKeyword}')">글목록</a>
 	</center>
 </body>
+<script>
+  function go(pageNum, searchCondition, searchKeyword){
+	  location.href='getBoardList.do?pageNum='+pageNum+'&searchCondition='+searchCondition
+			            +'&searchKeyword='+encodeURIComponent(searchKeyword);
+  }
+  function go2(seq, pageNum, searchCondition, searchKeyword){
+	 location.href='deleteBoard.do?seq='+seq+'&pageNum='+pageNum
+			           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
+  }
+</script>
 </html>
