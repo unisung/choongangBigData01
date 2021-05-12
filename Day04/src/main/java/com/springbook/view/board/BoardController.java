@@ -96,21 +96,20 @@ public class BoardController {
 	
 	@RequestMapping("/getBoard.do")
 	public String getBoard(
-			@RequestParam("pageNum") String pageNum,
-			@RequestParam("searchCondition") String searchCondition,
-			@RequestParam("searchKeyword") String searchKeyword,
+			//@RequestParam("pageNum") String pageNum,
+			//@RequestParam("searchCondition") String searchCondition,
+			//@RequestParam("searchKeyword") String searchKeyword,
 			BoardVO vo, Model model, BoardDAO boardDAO) {
 		
-		System.out.println("pageNum:"+pageNum);
-		System.out.println("searchCondition:"+searchCondition);
-		System.out.println("searchKeyword:"+searchKeyword);
-		
-		 vo.setPageNum(pageNum);
-		 vo.setSearchCondition(searchCondition);
-		 vo.setSearchCondition(searchCondition);
+		System.out.println("pageNum:"+vo.getPageNum());
+		System.out.println("searchCondition:"+vo.getSearchCondition());
+		System.out.println("searchKeyword:"+vo.getSearchKeyword());
 		 
 		System.out.println("vo:"+vo);
 		
+		String pageNum=vo.getPageNum();
+		String searchCondition=vo.getSearchCondition();
+		String searchKeyword=vo.getSearchKeyword();
 		
 		//vo = boardDAO.getBoard(vo);
 		vo = service.getBoard(vo);
@@ -220,10 +219,36 @@ public class BoardController {
 				   +"&searchKeyword="+URLEncoder.encode(board.getSearchKeyword(), "UTF-8");
 	}
 	
+	/* replyForm으로 이동 */
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.GET)
-	public String replyBoard() {
+	public String replyBoard(BoardVO vo, Model model) {
+		//service.getBoard(vo);
+		//vo.setRe_ref(1);
+		//vo.setRe_lev(2);
+		//vo.setRe_seq(3);
+		model.addAttribute("board",vo);
 		return "replyBoard.jsp";
 	}
+	
+	@RequestMapping(value="replyBoard.do", method=RequestMethod.POST)
+	public String replyBoard(BoardVO vo) throws UnsupportedEncodingException {
+		System.out.println("답변 VO:"+vo);
+		System.out.println("페이지번호:"+vo.getPageNum());
+		System.out.println("조회조건:"+vo.getSearchCondition());
+		System.out.println("조회키워드:"+vo.getSearchKeyword());//"", null
+		
+		//if(vo.getRe_seq()==0) vo.setRe_ref(vo.getSeq());//re_seq==0은 부모글(원글).
+		
+		service.insertBoard(vo);
+		
+		
+		
+		
+		return "redirect:getBoardList.do?pageNum="+vo.getPageNum()
+        +"&searchCondition="+vo.getSearchCondition()
+        +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8");
+	}
+	
 	
 	
 }
