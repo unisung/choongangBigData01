@@ -57,7 +57,7 @@
 			</table>
 		</form>
 		<hr>
-		<a href="javascript:go3('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}')">답글</a>
+		<a href="javascript:go3('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}','${board.re_ref }','${board.re_lev }','${board.re_seq}')">답글</a>
 		<a href="insertBoard.do">글등록</a>&nbsp;&nbsp;&nbsp; 
 		<a href="javascript:go2('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}')">글삭제</a>&nbsp;&nbsp;&nbsp;
 		<a href="javascript:go('${board.pageNum}','${board.searchCondition}','${board.searchKeyword}')">글목록</a>
@@ -72,9 +72,9 @@
 	 location.href='deleteBoard.do?seq='+seq+'&pageNum='+pageNum
 			           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
   }
-  function go3(seq, pageNum, searchCondition, searchKeyword){
+  function go3(seq, pageNum, searchCondition, searchKeyword,re_ref,re_lev,re_seq){
 		 location.href='replyBoard.do?seq='+seq+'&pageNum='+pageNum
-				           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword);
+				           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword)+'&re_ref='+re_ref+'&re_lev='+re_lev+"&re_seq="+re_seq;
 	  }
 </script>
 </html>
