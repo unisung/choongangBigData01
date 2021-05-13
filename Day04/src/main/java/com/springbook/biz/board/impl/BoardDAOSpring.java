@@ -28,6 +28,11 @@ public class BoardDAOSpring {
 	//private final String BOARD_INSERT="insert into board(seq, title, writer,content) "
 	//		                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?)";
 	
+	/* ref와 seq를 확인하여 원본 글에 다른 답변 글이 있으면, 
+	 * 답변 글 중 답변 글보다 상위에 있는 글의 seq보다 높은 글의 seq값을 1씩 증가 시킨다.
+	 */
+	private final String BOARD_SEQ_UPDATE="update board set re_seq=re_seq+1 where re_ref=? and re_seq > ?";
+	
 	/* 파일명 저장 추가 */
 	private final String BOARD_INSERT="insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) "
 			                                             + " values((select nvl(max(seq),0)+1 from board),?,?,?,?,(select nvl(max(seq),0)+1 from board),?,?)";
@@ -45,7 +50,7 @@ public class BoardDAOSpring {
 			+ " from "
 			+ " (select * "
 			+ " from board "
-			+ " order by re_ref desc, re_seq asc) a) "
+			+ " order by re_ref desc, re_seq ) a) "
 			+ " where rn between ? and ?";
 	
 	private final String BOARD_LIST_TITLE
@@ -54,7 +59,7 @@ public class BoardDAOSpring {
 			+ " from "
 			+ " (select * "
 			+ " from board where title like '%'||?||'%' "
-			+ " order by re_ref desc, re_seq asc) a) "
+			+ " order by re_ref desc, re_seq ) a) "
 			+ " where rn between ? and ?";
 	
 	private final String BOARD_LIST_CONTENT
@@ -63,7 +68,7 @@ public class BoardDAOSpring {
 			+ " from "
 			+ " (select * "
 			+ " from board where content like '%'||?||'%' "
-			+ " order by re_ref desc, re_seq asc) a) "
+			+ " order by  re_ref desc, re_seq ) a) "
 			+ " where rn between ? and ?";
 
 	/*전체 건수 */
@@ -148,6 +153,11 @@ public class BoardDAOSpring {
 		System.out.println("===> SPRING JDBC로 insertReplyBoard() 기능 처리" );
 		jdbcTemplate.update(BOARD_REPLY_INSERT, vo.getTitle(),vo.getWriter(), vo.getContent(),vo.getImg(), 
 				                        vo.getRe_ref(), vo.getRe_lev(), vo.getRe_seq());
+	}
+
+	public void updateReSeq(BoardVO vo) {
+		System.out.println("===> SPRING JDBC로 insertReplyBoard() 기능 처리" );
+		jdbcTemplate.update(BOARD_SEQ_UPDATE, vo.getRe_ref(), vo.getRe_seq());
 	}
 
 	

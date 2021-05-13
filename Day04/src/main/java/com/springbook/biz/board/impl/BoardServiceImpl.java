@@ -59,4 +59,10 @@ public class BoardServiceImpl
 	  dao.insertReplyBoard(vo);
 	  
 	}
+
+	@Override
+	public void updateReSeq(BoardVO vo) {
+		dao.updateReSeq(vo);
+		
+	}
 }

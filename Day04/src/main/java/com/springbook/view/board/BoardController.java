@@ -66,15 +66,16 @@ public class BoardController {
 	   int totalCount = service.getTotalCount(vo);
 	   int total=(int)Math.ceil(totalCount / 10.0);//정수/실수=>실수 10.0->10, 10.3->11
 	   
-	   int lastPage = (int) Math.ceil(totalCount / (double)10);// 554/10 =>55
+	   int lastPage = (int) Math.ceil(totalCount / (double)10);// 125=> 125/1.0 =>13
 	    
 	   //if(totalCount%10==0) totalCount/10;// 50/10 =5;
 	   // else if(totalCount%10!=0) totalCount/10 +1;//52/10 =5*10+2;
 	    
-	   int endPage = ((int)Math.ceil(Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;// 4/10=0, 23
+	   int endPage = ((int)Math.ceil(Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;
+	   // 12/10.0 =>1.2=>2*10=>20
 	   
 	   if(lastPage < endPage) endPage =lastPage;
-	   int startPage =(((int)((Integer.parseInt(vo.getPageNum())-1)/(double)10) + 1) -1)*10 +1;
+	   int startPage =(((int)((Integer.parseInt(vo.getPageNum())-1)/(double)10) + 1) -1)*10 +1;// 12/10.0=>1.2=>(1+1-1)*10=10+1=>11
 	   if(startPage < 1) startPage=1;
 	   
 	     System.out.println("검색조건:"+vo.getSearchCondition());
@@ -239,7 +240,11 @@ public class BoardController {
 		System.out.println("조회조건:"+vo.getSearchCondition());
 		System.out.println("조회키워드:"+vo.getSearchKeyword());//"", null
 		
-		vo.setRe_ref(vo.getSeq());//부모글의 글번호를 re_ref에 저장
+		//답글 중 가장 최근 답글이 위로 올라가게 처리한다.
+		//답글의 순서인 seq를 1증가시킴.
+		service.updateReSeq(vo);
+		
+		vo.setRe_ref(vo.getRe_ref());//부모글의 re_ref번호를 답변글의 re_ref에 저장
 		vo.setRe_lev(vo.getRe_lev()+1);//부모글에 대비 들여쓰기 레벨 증가
 		vo.setRe_seq(vo.getRe_seq()+1);//부모글 대비 등록 순서 + 1
 		
