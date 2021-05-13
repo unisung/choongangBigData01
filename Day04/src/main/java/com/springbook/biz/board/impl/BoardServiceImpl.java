@@ -65,4 +65,9 @@ public class BoardServiceImpl
 		dao.updateReSeq(vo);
 		
 	}
+
+	@Override
+	public List<BoardVO> getReplies(BoardVO vo) {
+		return dao.getReplies(vo);
+	}
 }

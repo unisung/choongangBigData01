@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -56,6 +56,23 @@
 				</tr>
 			</table>
 		</form>
+		<hr>
+		<c:if test="${not empty replies }">
+		<table border=1>
+		<tr><td>글번호</td><td>제목</td><td>작성자</td> </tr>
+		  <c:forEach var="reply" items="${replies}">
+		  <tr>
+		        <td> ${reply.seq }</td>
+		        <td>
+		         <a href="getBoard.do?seq=${reply.seq }&pageNum=${board.pageNum}&searchCondition=${board.searchCondition}&searchKeyword=${board.searchKeyword}">
+		          ${reply.title }
+		         </a>
+		         </td>
+		         <td> ${reply.writer }</td>
+		  </tr>
+		  </c:forEach>
+		  </table>
+		  </c:if>
 		<hr>
 		<a href="javascript:go3('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}','${board.re_ref }','${board.re_lev }','${board.re_seq}')">답글</a>
 		<a href="insertBoard.do">글등록</a>&nbsp;&nbsp;&nbsp; 

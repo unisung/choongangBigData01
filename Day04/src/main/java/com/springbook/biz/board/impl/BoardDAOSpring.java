@@ -160,5 +160,11 @@ public class BoardDAOSpring {
 		jdbcTemplate.update(BOARD_SEQ_UPDATE, vo.getRe_ref(), vo.getRe_seq());
 	}
 
-	
+	 private final String BOARD_REPLIES ="select * from board where re_ref=? and seq != re_ref";
+	 
+	public List<BoardVO> getReplies(BoardVO vo) {
+		System.out.println("===> SPRING JDBC로 getReplies() 기능 처리" );
+		return jdbcTemplate.query(BOARD_REPLIES,new Object[]{vo.getRe_ref()} , new BoardRowMapper());
+	}
+
 }

@@ -13,5 +13,6 @@ public interface BoardService {
 	int getTotalCount(BoardVO vo);
 	void insertReplyBoard(BoardVO vo);
 	void updateReSeq(BoardVO vo);
+	List<BoardVO> getReplies(BoardVO vo);
 
 }

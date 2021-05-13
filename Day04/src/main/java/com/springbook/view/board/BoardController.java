@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -121,9 +121,14 @@ public class BoardController {
 		
 		System.out.println("vo:"+vo);
 		
+		//
+		List<BoardVO> replies=new ArrayList<BoardVO>();
+		if(vo.getRe_seq()==0) {
+			replies = service.getReplies(vo);
+		}
 		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
-		
+		model.addAttribute("replies",replies);
 		return "getBoard.jsp";
 	}
 	
@@ -254,7 +259,4 @@ public class BoardController {
         +"&searchCondition="+vo.getSearchCondition()
         +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8");
 	}
-	
-	
-	
 }
