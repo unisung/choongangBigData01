@@ -52,6 +52,7 @@
 				<th bgcolor="orange" width="150">작성자</th>
 				<th bgcolor="orange" width="150">등록일</th>
 				<th bgcolor="orange" width="100">조회수</th>
+				<th bgcolor="orange" width="100">좋아요/싫어요</th>
 			</tr>
 			<c:forEach items="${boardList }" var="board">
 				<tr>
@@ -69,6 +70,7 @@
 					<td>${board.writer }</td>
 					<td>${board.regdate }</td>
 					<td>${board.cnt }</td>
+					<td>${board.good } / ${board.bad }</td>
 				</tr>
 			</c:forEach>
 		</table>

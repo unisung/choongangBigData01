@@ -167,4 +167,17 @@ public class BoardDAOSpring {
 		return jdbcTemplate.query(BOARD_REPLIES,new Object[]{vo.getRe_ref()} , new BoardRowMapper());
 	}
 
+	private final String BOARD_GOOD_UP="update board set good=good+1 where seq=?";
+	private final String BOARD_BAD_UP="update board set bad=bad+1 where seq=?";
+	
+	public void upGood(BoardVO vo) {
+		System.out.println("===> SPRING JDBC로 upGood() 기능 처리" );
+		jdbcTemplate.update(BOARD_GOOD_UP, vo.getSeq());
+		
+	}
+	public void upBad(BoardVO vo) {
+		System.out.println("===> SPRING JDBC로 upGood() 기능 처리" );
+		jdbcTemplate.update(BOARD_BAD_UP, vo.getSeq());
+	}
+
 }

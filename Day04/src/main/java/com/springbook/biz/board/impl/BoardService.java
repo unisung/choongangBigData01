@@ -14,5 +14,7 @@ public interface BoardService {
 	void insertReplyBoard(BoardVO vo);
 	void updateReSeq(BoardVO vo);
 	List<BoardVO> getReplies(BoardVO vo);
+	void upGood(BoardVO vo);
+	void upBad(BoardVO vo);
 
 }

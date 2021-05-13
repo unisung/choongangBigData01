@@ -25,6 +25,10 @@ public class BoardRowMapper implements RowMapper<BoardVO> {
 		board.setRe_lev(rs.getInt("re_lev"));
 		board.setRe_seq(rs.getInt("re_seq"));
 		
+		//좋아요/싫어요
+		board.setGood(rs.getInt("good"));
+		board.setBad(rs.getInt("bad"));
+		
 		return board;
 	}
 

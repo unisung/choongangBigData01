@@ -39,7 +39,10 @@
 				</tr>
 				<tr>
 					<td bgcolor="orange">조회수</td>
-					<td align="left">${board.cnt }</td>
+					<td align="left">${board.cnt } 
+					                       <button type="button" onclick="upGood('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}','${board.re_ref }','${board.re_lev }','${board.re_seq}')">좋아요${board.good }</button>
+					                       <button type="button" onclick="upBad('${board.seq}','${board.pageNum}','${board.searchCondition }','${board.searchKeyword}','${board.re_ref }','${board.re_lev }','${board.re_seq}')">싫어요${board.bad }</button>
+					                       </td>
 				</tr>
 				<tr>
 				 <td bgcolor="orange">이미지</td>
@@ -93,5 +96,16 @@
 		 location.href='replyBoard.do?seq='+seq+'&pageNum='+pageNum
 				           +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword)+'&re_ref='+re_ref+'&re_lev='+re_lev+"&re_seq="+re_seq;
 	  }
+  
+ function upGood(seq, pageNum, searchCondition, searchKeyword, re_ref, re_lev, re_seq){
+	 location.href='updateGoodBad.do?seq='+seq+"&flag=good"+'&pageNum='+pageNum
+     +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword)
+     +'&re_ref='+re_ref+'&re_lev='+re_lev+"&re_seq="+re_seq;
+ }
+ function upBad(seq, pageNum, searchCondition, searchKeyword, re_ref, re_lev, re_seq){
+	 location.href='updateGoodBad.do?seq='+seq+"&flag=bad"+'&pageNum='+pageNum
+     +'&searchCondition='+searchCondition+'&searchKeyword='+encodeURIComponent(searchKeyword)
+     +'&re_ref='+re_ref+'&re_lev='+re_lev+"&re_seq="+re_seq;
+ }
 </script>
 </html>

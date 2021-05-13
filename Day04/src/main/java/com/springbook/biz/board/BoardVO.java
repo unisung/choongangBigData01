@@ -23,8 +23,22 @@ public class BoardVO {
 	private int re_ref;
 	private int re_lev;
 	private int re_seq;
-		
 	
+	private int good;
+	private int bad;
+	
+	public int getGood() {
+		return good;
+	}
+	public void setGood(int good) {
+		this.good = good;
+	}
+	public int getBad() {
+		return bad;
+	}
+	public void setBad(int bad) {
+		this.bad = bad;
+	}
 	public int getRe_ref() {
 		return re_ref;
 	}
@@ -128,8 +142,10 @@ public class BoardVO {
 				+ regdate + ", cnt=" + cnt + ", uploadFile=" + uploadFile + ", img=" + img + ", searchCondition="
 				+ searchCondition + ", searchKeyword=" + searchKeyword + ", pageNum=" + pageNum + ", startRow="
 				+ startRow + ", endRow=" + endRow + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq=" + re_seq
-				+ "]";
+				+ ", good=" + good + ", bad=" + bad + "]";
 	}
+	
+
 	
 	
 	

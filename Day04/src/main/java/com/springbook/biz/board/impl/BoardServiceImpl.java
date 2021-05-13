@@ -70,4 +70,14 @@ public class BoardServiceImpl
 	public List<BoardVO> getReplies(BoardVO vo) {
 		return dao.getReplies(vo);
 	}
+
+	@Override
+	public void upGood(BoardVO vo) {
+		dao.upGood(vo);
+	}
+
+	@Override
+	public void upBad(BoardVO vo) {
+	   dao.upBad(vo);
+	}
 }

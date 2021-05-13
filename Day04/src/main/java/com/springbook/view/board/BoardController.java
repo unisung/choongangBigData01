@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -171,7 +172,6 @@ public class BoardController {
 	}
 	
 	
-	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.GET)
 	public String insertBoardForm() {
 		//user.setName("홍길동");
@@ -259,4 +259,24 @@ public class BoardController {
         +"&searchCondition="+vo.getSearchCondition()
         +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8");
 	}
+	
+	@RequestMapping("updateGoodBad.do")
+	public String updateGoodBad(@RequestParam("seq") String seq, 
+			                                    @RequestParam("flag") String flag,
+			                                    BoardVO vo                                    
+			) throws UnsupportedEncodingException {
+		System.out.println("seq:"+seq);
+		System.out.println("flag:" + flag);
+		System.out.println("vo: " +vo);
+
+		if(flag.equals("good")) service.upGood(vo);
+		else if(flag.equals("bad")) service.upBad(vo);
+		
+	  
+		return "redirect:getBoard.do?seq="+vo.getSeq()
+		+"&pageNum="+vo.getPageNum()
+        +"&searchCondition="+vo.getSearchCondition()
+        +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8");
+	}
+	
 }
