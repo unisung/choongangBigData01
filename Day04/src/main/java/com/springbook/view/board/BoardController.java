@@ -44,8 +44,15 @@ public class BoardController {
 	
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, 
-			                                BoardDAO boardDAO	) {
+			                                BoardDAO boardDAO	) throws  Exception{
+		
+	
 		System.out.println("x");
+		//vo=null;
+		
+		//String msg=null;
+	    //System.out.println(msg.length());
+		
 		System.out.println("페이지번호: " +vo.getPageNum());
 		
 		//System.out.println("searchCondition: " +vo.getSearchCondition()==null?"null":vo.getSearchCondition().length());
@@ -93,7 +100,11 @@ public class BoardController {
 	     model.addAttribute("endPage",endPage);
 	     model.addAttribute("lastPage",lastPage);
 	     
-	     return "getBoardList.jsp";
+	    // boolean test=true;
+	    // if(test) 
+	 	//throw new Exception("일반오류");
+	    
+	     return "getBoardList.jsp.jsp";
 	}
 	
 	@RequestMapping("/getBoard.do")

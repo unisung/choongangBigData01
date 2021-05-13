@@ -85,13 +85,13 @@ public class BoardDAOSpring {
 	public int getTotalCount(BoardVO vo) {
 		System.out.println("===>SPRING JDBC로 getTotalCount() 기능 처리" );
 		if(vo.getSearchCondition()==null) {
-		  return jdbcTemplate.queryForInt(GET_TOTAL_CNT);
+		  return jdbcTemplate.queryForObject(GET_TOTAL_CNT,Integer.class);
 		  
 		}else if(vo.getSearchCondition().equals("TITLE")) {
-		  return jdbcTemplate.queryForInt(GET_TOTAL_TITLE,vo.getSearchKeyword() );
+		  return jdbcTemplate.queryForObject(GET_TOTAL_TITLE,new String[] {vo.getSearchKeyword()}, Integer.class );
 		  
 		}else if(vo.getSearchCondition().equals("CONTENT")) {
-			  return jdbcTemplate.queryForInt(GET_TOTAL_CONTENT,vo.getSearchKeyword() );
+			  return jdbcTemplate.queryForObject(GET_TOTAL_CONTENT,new String[] {vo.getSearchKeyword()},Integer.class );
 		}else
 			return 0;
 	}
