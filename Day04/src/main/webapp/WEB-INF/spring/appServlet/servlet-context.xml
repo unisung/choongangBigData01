@@ -21,7 +21,25 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.springbook.biz" />
+	<!-- <context:component-scan base-package="org.springbook.biz" /> -->
+	<context:component-scan base-package="com.springbook.view"/>
+	
+<beans:bean id="multipartResolver"
+		 class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <beans:property name="maxUploadSize" value="1000000"/>
+</beans:bean>
+
+<beans:bean id="exceptionResolver"
+   class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	<beans:property name="exceptionMappings">
+	   <beans:props>
+	   		<beans:prop key="java.lang.ArithmeticException">common/arithmeticError.jsp</beans:prop>
+	   		<beans:prop key="java.lang.NullPointerException">common/nullPointerError.jsp</beans:prop>
+	   </beans:props>
+	</beans:property>
+	
+	 <beans:property name="defaultErrorView" value="common/error.jsp"/> 
+</beans:bean>
 	
 	
 	

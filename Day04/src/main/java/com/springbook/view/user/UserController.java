@@ -18,8 +18,7 @@ public class UserController {
 	@RequestMapping(value="/login.do", 
 			        method=RequestMethod.GET)
 	   public String loginForm() {
-		//return new ModelAndView("login.jsp");
-		return "login.jsp";
+		return "login";
 	}
 	
 	@RequestMapping(value="/login.do", 
@@ -41,7 +40,6 @@ public class UserController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		//return new ModelAndView("login.jsp");
 		return null;
 }
 	
@@ -53,7 +51,7 @@ public class UserController {
 
 	@RequestMapping(value="membership.do",method=RequestMethod.GET)
 	public String membership() {
-		return "membership.jsp";
+		return "membership";
 	}
 	
 	
@@ -66,7 +64,7 @@ public class UserController {
 	
 		@RequestMapping(value="changePass.do",method=RequestMethod.GET)
 	public String changepassForm() {
-		return "changePass.jsp";
+		return "changePass";
 	}
 		
 		@RequestMapping(value="idPassCheck.do",method=RequestMethod.POST)
@@ -81,14 +79,14 @@ public class UserController {
 
  @RequestMapping(value="changePassForm.do",method=RequestMethod.GET)
 	public String changepassInputForm() {
-		return "changePassForm.jsp";
+		return "changePassForm";
 	}
  
 
  @RequestMapping(value="deleteUser.do",
 		                     method=RequestMethod.GET)
 	public String deleteUser() {
-		return "deleteUser.jsp";
+		return "deleteUser";
 	}
  
  @RequestMapping(value="deleteUser.do",

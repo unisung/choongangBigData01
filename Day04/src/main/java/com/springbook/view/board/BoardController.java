@@ -45,19 +45,7 @@ public class BoardController {
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, 
 			                                BoardDAO boardDAO	) throws  Exception{
-		
-	
-		System.out.println("x");
-		//vo=null;
-		
-		//String msg=null;
-	    //System.out.println(msg.length());
-		
-		System.out.println("페이지번호: " +vo.getPageNum());
-		
-		//System.out.println("searchCondition: " +vo.getSearchCondition()==null?"null":vo.getSearchCondition().length());
-		//System.out.println("searchKeyword: " +vo.getSearchKeyword()==null?"null":vo.getSearchKeyword().length());
-		
+
 		System.out.println("-----searchKeyword: "+vo.getSearchKeyword());
 		
 		if(vo.getSearchCondition()==null || vo.getSearchCondition().length()==0)  
@@ -76,11 +64,7 @@ public class BoardController {
 	   
 	   int lastPage = (int) Math.ceil(totalCount / (double)10);// 125=> 125/1.0 =>13
 	    
-	   //if(totalCount%10==0) totalCount/10;// 50/10 =5;
-	   // else if(totalCount%10!=0) totalCount/10 +1;//52/10 =5*10+2;
-	    
 	   int endPage = ((int)Math.ceil(Integer.parseInt(vo.getPageNum()) / (double)10)) * 10;
-	   // 12/10.0 =>1.2=>2*10=>20
 	   
 	   if(lastPage < endPage) endPage =lastPage;
 	   int startPage =(((int)((Integer.parseInt(vo.getPageNum())-1)/(double)10) + 1) -1)*10 +1;// 12/10.0=>1.2=>(1+1-1)*10=10+1=>11
@@ -99,20 +83,12 @@ public class BoardController {
 	     model.addAttribute("startPage",startPage);
 	     model.addAttribute("endPage",endPage);
 	     model.addAttribute("lastPage",lastPage);
-	     
-	    // boolean test=true;
-	    // if(test) 
-	 	//throw new Exception("일반오류");
 	    
-	     return "getBoardList.jsp.jsp";
+	     return "getBoardList";
 	}
 	
 	@RequestMapping("/getBoard.do")
-	public String getBoard(
-			//@RequestParam("pageNum") String pageNum,
-			//@RequestParam("searchCondition") String searchCondition,
-			//@RequestParam("searchKeyword") String searchKeyword,
-			BoardVO vo, Model model, BoardDAO boardDAO) {
+	public String getBoard(BoardVO vo, Model model, BoardDAO boardDAO) {
 		
 		System.out.println("pageNum:"+vo.getPageNum());
 		System.out.println("searchCondition:"+vo.getSearchCondition());
@@ -123,8 +99,7 @@ public class BoardController {
 		String pageNum=vo.getPageNum();
 		String searchCondition=vo.getSearchCondition();
 		String searchKeyword=vo.getSearchKeyword();
-		
-		//vo = boardDAO.getBoard(vo);
+
 		vo = service.getBoard(vo);
 		
 		vo.setPageNum(pageNum);
@@ -141,16 +116,13 @@ public class BoardController {
 		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
 		model.addAttribute("replies",replies);
-		return "getBoard.jsp";
+		return "getBoard";
 	}
 	
 	
 	@RequestMapping(value="/updateBoard.do",method=RequestMethod.POST)
 	public String updateBoard(@ModelAttribute("board") BoardVO board, BoardDAO dao) 
 			                                                throws IllegalStateException, IOException {
-		//request.setCharacterEncoding("utf-8");
-		System.out.println("board:"+board);
-		
 		//파일업로드 
 		MultipartFile uploadFile = board.getUploadFile();
 				//클라이언트에서 파일을 전송했으면
@@ -185,8 +157,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.GET)
 	public String insertBoardForm() {
-		//user.setName("홍길동");
-		return "insertBoard.jsp";
+		return "insertBoard";
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
@@ -230,8 +201,7 @@ public class BoardController {
 			method=RequestMethod.GET)
 	public String deleteBoard(@ModelAttribute("board")BoardVO board,
 			BoardDAO dao) throws UnsupportedEncodingException {
-		System.out.println("board:"+board);
-		//dao.deleteBoard(board);
+
 		service.deleteBoard(board);
 		return "redirect:getBoardList.do?pageNum="+board.getPageNum() 
 				   +"&searchCondition="+board.getSearchCondition() 
@@ -241,12 +211,8 @@ public class BoardController {
 	/* replyForm으로 이동 */
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.GET)
 	public String replyBoard(BoardVO vo, Model model) {
-		//service.getBoard(vo);
-		//vo.setRe_ref(1);
-		//vo.setRe_lev(2);
-		//vo.setRe_seq(3);
 		model.addAttribute("board",vo);
-		return "replyBoard.jsp";
+		return "replyBoard";
 	}
 	
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.POST)
