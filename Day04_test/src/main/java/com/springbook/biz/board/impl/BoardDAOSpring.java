@@ -3,19 +3,15 @@ package com.springbook.biz.board.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.springbook.biz.board.BoardVO;
-import com.springbook.biz.board.common.JDBCUtil;
 
-//@Component("dao")
-
+@Component("dao")
 public class BoardDAOSpring {
 	@Autowired
 	//private JdbcTemplate spring;

@@ -25,6 +25,7 @@ import com.springbook.biz.board.impl.BoardDAO;
 import com.springbook.biz.board.impl.BoardService;
 
 /* POJO 클래스*/
+@Controller
 @SessionAttributes("board")
 public class BoardController {
 	@Autowired
@@ -103,7 +104,7 @@ public class BoardController {
 	    // if(test) 
 	 	//throw new Exception("일반오류");
 	    
-	     return "getBoardList.jsp.jsp";
+	     return "getBoardList";
 	}
 	
 	@RequestMapping("/getBoard.do")
@@ -140,7 +141,7 @@ public class BoardController {
 		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
 		model.addAttribute("replies",replies);
-		return "getBoard.jsp";
+		return "getBoard";
 	}
 	
 	
@@ -185,7 +186,7 @@ public class BoardController {
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.GET)
 	public String insertBoardForm() {
 		//user.setName("홍길동");
-		return "insertBoard.jsp";
+		return "insertBoard";
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
@@ -245,7 +246,7 @@ public class BoardController {
 		//vo.setRe_lev(2);
 		//vo.setRe_seq(3);
 		model.addAttribute("board",vo);
-		return "replyBoard.jsp";
+		return "replyBoard";
 	}
 	
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.POST)

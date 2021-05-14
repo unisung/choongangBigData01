@@ -3,12 +3,13 @@ package com.springbook.biz.board.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.common.LogAdvice;
 
-
+@Component
 public class BoardServiceImpl 
         implements BoardService{
 	//@Autowired
