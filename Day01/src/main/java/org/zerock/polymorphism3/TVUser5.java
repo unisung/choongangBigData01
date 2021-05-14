@@ -1,6 +1,5 @@
 package org.zerock.polymorphism3;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -11,6 +10,7 @@ public class TVUser5 {
 	  AbstractApplicationContext factory = 
 			      new GenericXmlApplicationContext("applicationContext4.xml");
 	
+	   //TV tv = new SamsungTV();
 	  //dependency injection	
 	 TV tv = (TV)factory.getBean("tv"); /// id가 tv인 bean객체를 리턴.
 	 
