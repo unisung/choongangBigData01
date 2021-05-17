@@ -5,32 +5,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>로그인</title>
+<title><spring:message code='message.user.login.title'/></title>
 </head>
 <body>
 Login Page-----
 	<center>
-		<h1>로그인</h1>
-		
-		
+		<h1><spring:message code='message.user.login.title'/></h1>
+		<a href="?lang=ko"><spring:message code="message.user.login.language.ko"/></a> 
+		| 
+		<a href="?lang=en"><spring:message code='message.user.login.language.en'/></a>
 		<hr>
 		<form action="login.do" method="post">
 			<table border="1" cellpadding="0" cellspacing="0">
 				<tr>
-					<td bgcolor="orange">id</td>
-				<%-- 	<td><input type="text" name="id"  value="${userVO.id}"/></td> --%>
+					<td bgcolor="orange"><spring:message code="message.user.login.id"/> </td>
 					<td><input type="text" name="id"  value="${user.id}"/></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">패스워드</td>
-					<%-- <td><input type="password" name="password"  value="${userVO.password}"/></td> --%>
+					<td bgcolor="orange"><spring:message code="message.user.login.password"/> </td>
 					<td><input type="password" name="password"  value="${user.password}"/></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-					<input type="submit" value="로그인" />
-					<input type="button" onclick="javascript:location.href='membership.do'" value="회원가입" />
-					<input type="button" onclick="javascript:location.href='changePass.do'" value="비밀번호변경" />		
+					<input type="submit" value="<spring:message code="message.user.login.loginBtn"/>" />
+					<input type="button" onclick="javascript:location.href='membership.do'" 
+					                            value="<spring:message code="message.user.login.registerBtn"/>" />
+					<input type="button" onclick="javascript:location.href='changePass.do'" 
+					                             value="<spring:message code="message.user.login.changePassBtn"/>" />		
 						</td>
 				</tr>
 			</table>

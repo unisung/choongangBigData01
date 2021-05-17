@@ -11,8 +11,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- org.springbook.biz패키지 내의 모든 클래스는 bean 관리 대상. -->
- 	<context:component-scan 
- 	  base-package="com.springbook.biz"/>				
+ 	<context:component-scan base-package="com.springbook.biz"/>				
 
 <!--  aop 어노테이션 설정 -->
 <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
