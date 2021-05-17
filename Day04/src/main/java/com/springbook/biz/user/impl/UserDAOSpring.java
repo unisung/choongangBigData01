@@ -50,12 +50,12 @@ public class UserDAOSpring {//POJO
 
 	public int getUserCnt(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 getUserCnt() 기능 처리" );
-		return jdbcTemplate.queryForInt(USER_CNT,vo.getId());
+		return jdbcTemplate.queryForObject(USER_CNT,new Object[] {vo.getId()}, Integer.TYPE);
 	}
 	
 	public int getUserCntByPass(UserVO vo) {
 		System.out.println("===> SPRING JDBC로 getUserCntByPass() 기능 처리" );
-		return jdbcTemplate.queryForInt(USER_CNT_BYPASS,vo.getId(),vo.getPassword());
+		return jdbcTemplate.queryForObject(USER_CNT_BYPASS,new Object[] {vo.getId(),vo.getPassword()},Integer.TYPE);
 	}
 	
 	public UserVO getLogin(UserVO vo) {
