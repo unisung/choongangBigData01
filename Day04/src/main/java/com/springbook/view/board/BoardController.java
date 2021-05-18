@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springbook.biz.board.BoardListVO;
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
 import com.springbook.biz.board.impl.BoardService;
@@ -42,6 +43,22 @@ public class BoardController {
 	  return conditionMap; 
 	  }
 	 
+	 @RequestMapping("/dataTransformXml.do")
+	 @ResponseBody
+	 public BoardListVO dataTransformXml(BoardVO vo) {
+		 vo.setSearchCondition(null);
+		 if(vo.getPageNum()==null) vo.setPageNum("1");
+		 int startRow = (Integer.parseInt(vo.getPageNum())-1)*10+1;
+		 int endRow = startRow +9;
+		 vo.setStartRow(startRow);
+		 vo.setEndRow(endRow);
+		 
+		 List<BoardVO> boardList = service.getBoardList(vo);
+		 BoardListVO boardListVO = new BoardListVO();
+		 boardListVO.setBoardList(boardList);
+		 return boardListVO;
+	 }
+	  
 	@RequestMapping("/dataTransform.do")
 	@ResponseBody /* 객체를 응답 몸체(body)로 변환 */
 	public List<BoardVO> dataTransform(BoardVO vo){
