@@ -14,13 +14,12 @@ public class BoardDAOMybatis {
 	private SqlSessionTemplate mybatis;
 
 	public void insertBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 insertBoard() 기능 실행");
+		mybatis.insert("BoardDAO.insertBoard",vo);
 	}
 
 	public List<BoardVO> getBoardList(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		return mybatis.selectList("BoardDAO.getBoardList", vo);
 	}
 
 	public void updateBoard(BoardVO vo) {
