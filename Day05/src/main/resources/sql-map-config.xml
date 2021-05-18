@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration>
+<typeAliases>
+	<typeAlias type="board" type="com.springbook.biz.board.BoardVO"/>
+</typeAliases> 
+ 
+<mappers>
+     <mapper resource="mappings/board-mapping.xml"/>
+</mappers>
+</configuration>
