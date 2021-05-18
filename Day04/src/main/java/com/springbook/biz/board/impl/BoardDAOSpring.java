@@ -180,4 +180,9 @@ public class BoardDAOSpring {
 		jdbcTemplate.update(BOARD_BAD_UP, vo.getSeq());
 	}
 
+	private final String SQL_TRANSFORM="select * from board order by seq";
+	public List<BoardVO> getBoardList2(BoardVO vo) {
+		return jdbcTemplate.query(SQL_TRANSFORM, new BoardRowMapper());
+	}
+
 }

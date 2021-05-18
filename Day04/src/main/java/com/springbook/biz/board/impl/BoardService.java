@@ -16,5 +16,6 @@ public interface BoardService {
 	List<BoardVO> getReplies(BoardVO vo);
 	void upGood(BoardVO vo);
 	void upBad(BoardVO vo);
+	List<BoardVO> getBoardList2(BoardVO vo);
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,34 @@ public class BoardController {
 	  return conditionMap; 
 	  }
 	 
-	
+	@RequestMapping("/dataTransform.do")
+	@ResponseBody /* 객체를 응답 몸체(body)로 변환 */
+	public List<BoardVO> dataTransform(BoardVO vo){
+		System.out.println("--->/dataTransform.do");
+		
+		System.out.println("-----searchKeyword: "+vo.getSearchKeyword());
+		
+		if(vo.getSearchCondition()==null || vo.getSearchCondition().length()==0)  
+			   vo.setSearchCondition(null);
+		
+		if(vo.getPageNum()==null) vo.setPageNum("1");
+		int startRow= (Integer.parseInt(vo.getPageNum()) -1 )*10 +1;
+		int endRow = startRow + 9;
+		vo.setStartRow(startRow);
+		vo.setEndRow(endRow);
+		
+		
+		List<BoardVO> boardList = service.getBoardList(vo);
+		for(BoardVO board:boardList) System.out.println(board);
+		return boardList;
+	}
+	@RequestMapping("/dataTransform2.do")
+	@ResponseBody /* 객체를 응답 몸체(body)로 변환 */
+	public List<BoardVO> dataTransform2(BoardVO vo){
+		List<BoardVO> boardList = service.getBoardList2(vo);
+		return boardList;
+	}
+	  
 	@RequestMapping("/getBoardList.do")
 	public String getBoardList(BoardVO vo, Model model, 
 			                                BoardDAO boardDAO	) throws  Exception{

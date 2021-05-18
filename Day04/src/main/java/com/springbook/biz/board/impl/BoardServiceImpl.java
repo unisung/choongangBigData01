@@ -80,4 +80,9 @@ public class BoardServiceImpl
 	public void upBad(BoardVO vo) {
 	   dao.upBad(vo);
 	}
+
+	@Override
+	public List<BoardVO> getBoardList2(BoardVO vo) {
+		return dao.getBoardList2(vo);
+	}
 }

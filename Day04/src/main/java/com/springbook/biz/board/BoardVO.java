@@ -2,29 +2,65 @@ package com.springbook.biz.board;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BoardVO {
+	@XmlAttribute
 	private int seq;
 	private String title;
 	private String writer;
 	private String content;
 	private Date regdate;
 	private int cnt;
+	
+	@XmlTransient
+	@JsonIgnore
 	private MultipartFile uploadFile;
+	@XmlTransient
+	@JsonIgnore
 	private String img;
+	@XmlTransient
+	@JsonIgnore
 	private String searchCondition;
+	@XmlTransient
+	@JsonIgnore
 	private String searchKeyword;
 	
+	@XmlTransient
+	@JsonIgnore
 	private String pageNum;
+	
+	@XmlTransient
+	@JsonIgnore
 	private int startRow;
+	@XmlTransient
+	@JsonIgnore
 	private int endRow;
 	
+	@XmlTransient
+	@JsonIgnore
 	private int re_ref;
+	@XmlTransient
+	@JsonIgnore
 	private int re_lev;
+	@XmlTransient
+	@JsonIgnore
 	private int re_seq;
 	
+	@XmlTransient
+	@JsonIgnore
 	private int good;
+	@XmlTransient
+	@JsonIgnore
 	private int bad;
 	
 	public int getGood() {
