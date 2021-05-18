@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springbook.biz.board.BoardListVO;
 import com.springbook.biz.board.BoardVO;
-import com.springbook.biz.board.impl.BoardDAO;
 import com.springbook.biz.board.impl.BoardService;
 
 /* POJO 클래스*/
@@ -33,7 +32,6 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-
 	  @ModelAttribute("conditionMap") 
 	  public Map<String,String>searchConditionMap(){ 
 		  Map<String,String> conditionMap=new
@@ -88,8 +86,7 @@ public class BoardController {
 	}
 	  
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVO vo, Model model, 
-			                                BoardDAO boardDAO	) throws  Exception{
+	public String getBoardList(BoardVO vo, Model model) throws  Exception{
 
 		System.out.println("-----searchKeyword: "+vo.getSearchKeyword());
 		
@@ -133,7 +130,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/getBoard.do")
-	public String getBoard(BoardVO vo, Model model, BoardDAO boardDAO) {
+	public String getBoard(BoardVO vo, Model model) {
 		
 		System.out.println("pageNum:"+vo.getPageNum());
 		System.out.println("searchCondition:"+vo.getSearchCondition());
@@ -166,7 +163,7 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/updateBoard.do",method=RequestMethod.POST)
-	public String updateBoard(@ModelAttribute("board") BoardVO board, BoardDAO dao) 
+	public String updateBoard(@ModelAttribute("board") BoardVO board) 
 			                                                throws IllegalStateException, IOException {
 		//파일업로드 
 		MultipartFile uploadFile = board.getUploadFile();
@@ -206,7 +203,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
-	public String insertBoard(BoardVO board,	BoardDAO dao) throws Exception {
+	public String insertBoard(BoardVO board) throws Exception {
 		System.out.println("board:"+board);
 		//파일업로드 
 		MultipartFile uploadFile = board.getUploadFile();
@@ -244,8 +241,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/deleteBoard.do",
 			method=RequestMethod.GET)
-	public String deleteBoard(@ModelAttribute("board")BoardVO board,
-			BoardDAO dao) throws UnsupportedEncodingException {
+	public String deleteBoard(@ModelAttribute("board")BoardVO board) throws UnsupportedEncodingException {
 
 		service.deleteBoard(board);
 		return "redirect:getBoardList.do?pageNum="+board.getPageNum() 

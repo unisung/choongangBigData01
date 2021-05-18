@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.user.UserVO;
 
-@Repository("userDao")
+//@Repository("userDao")
 public class UserDAOSpring {//POJO
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

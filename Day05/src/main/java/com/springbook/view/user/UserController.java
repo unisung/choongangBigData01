@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.springbook.biz.user.UserVO;
 import com.springbook.biz.user.impl.UserService;
 
-@Controller
+//@Controller
 public class UserController {
-	@Autowired
+	//@Autowired
 	private UserService service;
 	
 	@RequestMapping(value="/login.do", 

@@ -22,14 +22,16 @@
 	  </repository>
 	</repositories>
 	
-	<!-- 오라클 JDBC 드라이버 -->
+
+	<dependencies>
+	
+		<!-- 오라클 JDBC 드라이버 -->
 		<dependency>
 		    <groupId>com.oracle</groupId>
 		    <artifactId>ojdbc6</artifactId>
 		    <version>12.1.0.1</version>
 		</dependency>
 		
-	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

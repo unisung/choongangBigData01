@@ -9,12 +9,9 @@ import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.common.LogAdvice;
 
 @Service("boardService")
-public class BoardServiceImpl 
-        implements BoardService{
-	//@Autowired
-	//private BoardDAO dao;
+public class BoardServiceImpl implements BoardService{
 	@Autowired
-	private BoardDAOSpring dao;
+	private BoardDAOMybatis dao;
 
 	//0번글은 등록이 안되도록 예외 처리 설정
 	@Override
