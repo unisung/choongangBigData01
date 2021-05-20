@@ -18,9 +18,12 @@ namespace="BoardDAO">
 </sql>
 
 <insert id="insertBoard">
+ <selectKey keyProperty="seq" resultType="int" order="BEFORE">
+  select nvl(max(seq),0)+1  from board
+ </selectKey>
  insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) 
- values((select nvl(max(seq),0)+1 from board),#{title},#{writer},#{content},#{img},
-            (select nvl(max(seq),0)+1 from board),${re_lev},#{re_seq})
+ values(#{seq},#{title},#{writer},#{content},#{img},
+            #{seq},${re_lev},#{re_seq})
 </insert>
 
 <select id="getBoardList" resultType="board">
@@ -67,7 +70,10 @@ update board set re_seq=re_seq+1 where re_ref=#{re_ref} and re_seq > #{re_seq}
 </update>
 
 <insert id="insertReply">
+ <selectKey keyProperty="seq" resultType="int" order="BEFORE">
+  select nvl(max(seq),0)+1  from board
+ </selectKey>
  insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) 
- values((select nvl(max(seq),0)+1 from board),#{title}, #{writer},#{content},#{img},#{re_ref}, #{re_lev}, #{re_seq})
+ values(#{seq},#{title}, #{writer},#{content},#{img},#{re_ref}, #{re_lev}, #{re_seq})
 </insert>
 </mapper>

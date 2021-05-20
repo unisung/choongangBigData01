@@ -206,7 +206,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.POST)
 	public String insertBoard(BoardVO board) throws Exception {
-		System.out.println("board:"+board);
+		System.out.println("원글 등록 전 ------board:"+board);
 		//파일업로드 
 		MultipartFile uploadFile = board.getUploadFile();
 		//클라이언트에서 파일을 전송했으면
@@ -215,8 +215,7 @@ public class BoardController {
 			//UUID.randomUUID();
 			fileName=fileName.substring(0,fileName.lastIndexOf("."));
 		     String fileName2=uploadFile.getOriginalFilename();
-		     
-		     
+
 			String extend=fileName2.substring(fileName2.lastIndexOf(".")+1);//파일명.jpg
 
 			System.out.println("파일명:"+fileName);
@@ -236,6 +235,8 @@ public class BoardController {
 		board.setRe_seq(0);
 		
 		service.insertBoard(board);
+		
+		System.out.println("원글등록 후 ------board:"+board);
 		
 		return "redirect:getBoardList.do";
 	}
@@ -298,6 +299,8 @@ public class BoardController {
 		vo.setImg(img);
 		
 		service.insertReplyBoard(vo);
+		
+		System.out.println("Reply-vo:"+vo);
 		
 		return "redirect:getBoardList.do?pageNum="+vo.getPageNum()
         +"&searchCondition="+vo.getSearchCondition()
