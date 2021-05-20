@@ -4,6 +4,19 @@
 <mapper 
 namespace="BoardDAO">
 
+<sql id="criteria">
+                <where>
+					<choose>
+						<when test="searchCondition == 'TITLE'.toString()">
+							 title like '%'||#{searchKeyword}||'%'
+						</when>
+						<when test="searchCondition == 'CONTENT'.toString()">
+						  content like '%'||#{searchKeyword}||'%'
+						</when>
+					</choose>
+				</where>
+</sql>
+
 <insert id="insertBoard">
  insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) 
  values((select nvl(max(seq),0)+1 from board),#{title},#{writer},#{content},#{img},
@@ -14,7 +27,9 @@ namespace="BoardDAO">
 	select * from 
 	( select rownum rn, a.* 
 	from 
-	(select * from board order by re_ref desc, re_seq ) a) 
+	(select * from board 
+	 <include refid="criteria"></include>
+	order by re_ref desc, re_seq ) a) 
 	where rn between #{startRow} and #{endRow}
 </select>
 </mapper>
