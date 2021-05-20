@@ -76,4 +76,9 @@ update board set re_seq=re_seq+1 where re_ref=#{re_ref} and re_seq > #{re_seq}
  insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) 
  values(#{seq},#{title}, #{writer},#{content},#{img},#{re_ref}, #{re_lev}, #{re_seq})
 </insert>
+
+<select id="getTotalCount" resultType="int">
+  select count(*)  from board
+   <include refid="criteria"></include>
+</select>
 </mapper>

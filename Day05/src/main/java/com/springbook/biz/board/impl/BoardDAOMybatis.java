@@ -39,8 +39,8 @@ public class BoardDAOMybatis {
 	}
 	
 	public int getTotalCount(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("===> Mybatis로 getTotalCount() 기능 실행");
+		return mybatis.selectOne("BoardDAO.getTotalCount", vo);
 	}
 
 	public void insertReplyBoard(BoardVO vo) {

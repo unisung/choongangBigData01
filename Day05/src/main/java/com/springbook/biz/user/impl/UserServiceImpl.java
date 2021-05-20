@@ -6,12 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springbook.biz.board.impl.BoardDAOMybatis;
 import com.springbook.biz.user.UserVO;
 
-//@Service("userService")
+@Service("userService")
 public class UserServiceImpl implements UserService {
-     @Autowired
-     private UserDAOSpring userDao;
+	@Autowired
+	private UserDAOMybatis userDao;
 	
 	@Override
 	public void insertUser(UserVO vo) throws Exception {
