@@ -259,12 +259,33 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="replyBoard.do", method=RequestMethod.POST)
-	public String replyBoard(BoardVO vo) throws UnsupportedEncodingException {
+	public String replyBoard(BoardVO vo) throws IllegalStateException, IOException {
 		System.out.println("------------- 답변 VO:"+vo);
 		System.out.println("페이지번호:"+vo.getPageNum());
 		System.out.println("조회조건:"+vo.getSearchCondition());
 		System.out.println("조회키워드:"+vo.getSearchKeyword());//"", null
 		
+		//파일업로드 
+				MultipartFile uploadFile = vo.getUploadFile();
+				//클라이언트에서 파일을 전송했으면
+				if(!uploadFile.isEmpty()) {
+					String fileName = uploadFile.getOriginalFilename();//pc에서 업로드시 파일명
+					//UUID.randomUUID();
+					fileName=fileName.substring(0,fileName.lastIndexOf("."));
+				     String fileName2=uploadFile.getOriginalFilename();
+				     
+					String extend=fileName2.substring(fileName2.lastIndexOf(".")+1);//파일명.jpg
+
+					System.out.println("파일명:"+fileName);
+					System.out.println("확장자:"+extend);
+					
+					//파일명 중복방지 처리 UUID.randomUUID()
+					fileName=fileName+"-"+UUID.randomUUID()+"."+extend;
+					System.out.println("파일명:"+fileName);
+					
+					uploadFile.transferTo(new File("c:/upload/"+fileName));
+					vo.setImg(fileName);
+				}
 		//답글 중 가장 최근 답글이 위로 올라가게 처리한다.
 		//답글의 순서인 seq를 1증가시킴.
 		service.updateReSeq(vo);
@@ -272,6 +293,9 @@ public class BoardController {
 		vo.setRe_ref(vo.getRe_ref());//부모글의 re_ref번호를 답변글의 re_ref에 저장
 		vo.setRe_lev(vo.getRe_lev()+1);//부모글에 대비 들여쓰기 레벨 증가
 		vo.setRe_seq(vo.getRe_seq()+1);//부모글 대비 등록 순서 + 1
+		
+		String img = vo.getImg()==null?"":vo.getImg();
+		vo.setImg(img);
 		
 		service.insertReplyBoard(vo);
 		

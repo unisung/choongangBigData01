@@ -44,13 +44,13 @@ public class BoardDAOMybatis {
 	}
 
 	public void insertReplyBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 insertReplyBoard() 기능 실행");
+		mybatis.insert("BoardDAO.insertReply",vo);
 	}
 
 	public void updateReSeq(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 updateReSeq() 기능 실행");
+		mybatis.update("BoardDAO.updateReSeq", vo);
 	}
 
 	public List<BoardVO> getReplies(BoardVO vo) {

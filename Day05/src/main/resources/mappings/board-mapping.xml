@@ -62,4 +62,12 @@ update board set title=#{title}, content=#{content} , uploadfile=#{img} where se
   delete board where seq=#{seq}
 </delete>
 
+<update id="updateReSeq">
+update board set re_seq=re_seq+1 where re_ref=#{re_ref} and re_seq > #{re_seq}
+</update>
+
+<insert id="insertReply">
+ insert into board(seq, title, writer,content,uploadfile,re_ref, re_lev, re_seq) 
+ values((select nvl(max(seq),0)+1 from board),#{title}, #{writer},#{content},#{img},#{re_ref}, #{re_lev}, #{re_seq})
+</insert>
 </mapper>
