@@ -27,19 +27,17 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void updateBoard(BoardVO vo) {
-;
 		dao.updateBoard(vo);
 	}
 
 	@Override
 	public void deleteBoard(BoardVO vo) {
-
 		dao.delete(vo);
 	}
 
 	@Override
 	public BoardVO getBoard(BoardVO vo) {
-       //  dao.updateBoardCount(vo);
+		      updateBoardCnt(vo);
 		return dao.getBoard(vo);
 	}
 
@@ -78,5 +76,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> getBoardList2(BoardVO vo) {
 		return dao.getBoardList2(vo);
+	}
+
+	@Override
+	public void updateBoardCnt(BoardVO vo) {
+		dao.updateBoardCnt(vo);
+	}
+
+	@Override
+	public BoardVO getBoard(BoardVO vo, String flag) {
+		if(flag==null | "".equals(flag))  updateBoardCnt(vo);
+	return dao.getBoard(vo);
 	}
 }

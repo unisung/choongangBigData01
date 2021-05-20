@@ -19,24 +19,25 @@ public class BoardDAOMybatis {
 	}
 
 	public List<BoardVO> getBoardList(BoardVO vo) {
+		System.out.println("===> Mybatis로 getBoardList() 기능 실행");
 		return mybatis.selectList("BoardDAO.getBoardList", vo);
 	}
 
 	public void updateBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 updateBoard() 기능 실행");
+		 mybatis.update("BoardDAO.updateBoard", vo);
 	}
 
 	public void delete(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 updateBoard() 기능 실행");
+		mybatis.delete("BoardDAO.deleteBoard",vo);
 	}
 
 	public BoardVO getBoard(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("===> Mybatis로 getBoard() 기능 실행");
+		return mybatis.selectOne("BoardDAO.getBoard", vo);
 	}
-
+	
 	public int getTotalCount(BoardVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -53,23 +54,28 @@ public class BoardDAOMybatis {
 	}
 
 	public List<BoardVO> getReplies(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("===> Mybatis로 getReplies() 기능 실행");
+		return mybatis.selectList("BoardDAO.getReplies", vo);
 	}
 
 	public void upGood(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 upGood() 기능 실행");
+		mybatis.update("BoardDAO.upGood",vo);
 	}
 
 	public void upBad(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("===> Mybatis로 upBad() 기능 실행");
+		mybatis.update("BoardDAO.upBad",vo);
 	}
 
 	public List<BoardVO> getBoardList2(BoardVO vo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void updateBoardCnt(BoardVO vo) {
+		System.out.println("===> Mybatis로 updateBoardCnt() 기능 실행");
+		mybatis.update("BoardDAO.updateBoardCnt", vo);
 	}
 
 }

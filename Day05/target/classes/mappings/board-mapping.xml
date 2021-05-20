@@ -32,4 +32,34 @@ namespace="BoardDAO">
 	order by re_ref desc, re_seq ) a) 
 	where rn between #{startRow} and #{endRow}
 </select>
+
+<select id="getBoard" resultType="board">
+  select * from board where seq=#{seq}
+</select>
+
+
+<select id="getReplies" resultType="board">
+  select * from board where re_ref=#{re_ref} and seq != re_ref
+</select>
+
+<update id="updateBoardCnt">
+   update board set cnt=cnt+1 where seq=#{seq}
+</update>
+
+<update id="upGood">
+  update board set good=good+1 where seq=#{seq}
+</update>
+
+<update id="upBad">
+ update board set bad=bad+1 where seq=#{seq}
+</update>
+
+<update id="updateBoard">
+update board set title=#{title}, content=#{content} , uploadfile=#{img} where seq=#{seq}
+</update>
+
+<delete id="deleteBoard">
+  delete board where seq=#{seq}
+</delete>
+
 </mapper>

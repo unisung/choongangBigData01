@@ -8,14 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class CommonExceptionHandler {
 	@ExceptionHandler(ArithmeticException.class)
 	public ModelAndView handleArithmeticException(Exception e) {
-		 ModelAndView mav = new ModelAndView("/common/arithmeticError.jsp");
+		 ModelAndView mav = new ModelAndView("/common/arithmeticError");
 		 mav.addObject("exception", e);
 		 return mav;
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception e) {
-		 ModelAndView mav = new ModelAndView("/common/error.jsp");
+		 ModelAndView mav = new ModelAndView("/common/error");
 		 mav.addObject("exception", e);
 		 return mav;
 	}

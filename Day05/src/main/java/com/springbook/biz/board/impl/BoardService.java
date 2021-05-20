@@ -17,5 +17,7 @@ public interface BoardService {
 	void upGood(BoardVO vo);
 	void upBad(BoardVO vo);
 	List<BoardVO> getBoardList2(BoardVO vo);
+	void updateBoardCnt(BoardVO vo);
+	BoardVO getBoard(BoardVO vo, String flag);
 
 }

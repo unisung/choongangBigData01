@@ -130,8 +130,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/getBoard.do")
-	public String getBoard(BoardVO vo, Model model) {
+	public String getBoard(BoardVO vo, Model model, 
+			                          @RequestParam(value="flag", defaultValue="") String flag) {
 		
+		System.out.println("flag:"+flag);
 		System.out.println("pageNum:"+vo.getPageNum());
 		System.out.println("searchCondition:"+vo.getSearchCondition());
 		System.out.println("searchKeyword:"+vo.getSearchKeyword());
@@ -142,7 +144,7 @@ public class BoardController {
 		String searchCondition=vo.getSearchCondition();
 		String searchKeyword=vo.getSearchKeyword();
 
-		vo = service.getBoard(vo);
+		vo = service.getBoard(vo,flag);
 		
 		vo.setPageNum(pageNum);
 		vo.setSearchCondition(searchCondition);
@@ -216,9 +218,7 @@ public class BoardController {
 		     
 		     
 			String extend=fileName2.substring(fileName2.lastIndexOf(".")+1);//파일명.jpg
-		//	String extend = 
-//uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf(".")+1);
-			
+
 			System.out.println("파일명:"+fileName);
 			System.out.println("확장자:"+extend);
 			
@@ -296,7 +296,8 @@ public class BoardController {
 		return "redirect:getBoard.do?seq="+vo.getSeq()
 		+"&pageNum="+vo.getPageNum()
         +"&searchCondition="+vo.getSearchCondition()
-        +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8");
+        +"&searchKeyword="+URLEncoder.encode(vo.getSearchKeyword(), "UTF-8")
+        +"&flag="+flag;
 	}
 	
 }
