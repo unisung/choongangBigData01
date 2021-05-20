@@ -31,7 +31,9 @@ Login Page-----
 					<input type="button" onclick="javascript:location.href='membership.do'" 
 					                            value="<spring:message code="message.user.login.registerBtn"/>" />
 					<input type="button" onclick="javascript:location.href='changePass.do'" 
-					                             value="<spring:message code="message.user.login.changePassBtn"/>" />		
+					                             value="<spring:message code="message.user.login.changePassBtn"/>" />	
+					<input type="button" onclick="javascript:location.href='deleteUser.do?id=${user.id}'" 
+					                             value="<spring:message code="message.user.login.retire"/>" />		
 						</td>
 				</tr>
 			</table>

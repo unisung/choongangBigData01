@@ -1,5 +1,7 @@
 package com.springbook.view.user;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.springbook.biz.user.UserVO;
 import com.springbook.biz.user.impl.UserService;
 
-//@Controller
+@Controller
 public class UserController {
-	//@Autowired
+	@Autowired
 	private UserService service;
 	
 	@RequestMapping(value="/login.do", 
@@ -54,9 +56,9 @@ public class UserController {
 		return "membership";
 	}
 	
-	
 	@RequestMapping(value="insertMember.do",method=RequestMethod.POST)
 	public String insertMember(UserVO user) throws Exception {
+		System.out.println("user:"+user);
 		service.insertUser(user);
 		return "redirect:login.do";
 	}
@@ -98,6 +100,13 @@ public String deleteUser(UserVO user) throws Exception{
 	 }else {
 			return "redirect:deleteUser.do";
 	 }
+ } 
+		 
+	@RequestMapping(value="updatePassword.do",
+         method=RequestMethod.POST)
+public String updateUser(UserVO user) throws Exception{
+	 service.updateUser(user);
+	 return "redirect:login.do";
 }
 		
 }

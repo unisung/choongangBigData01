@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserDAO">
+<insert id="insert">
+insert into users(id, password,name,postcode, roadAddress,jubunAddress,detailAddress,extraAddress)
+values(#{id}, #{password},#{name},#{postcode}, #{roadAddress},#{jubunAddress},#{detailAddress},#{extraAddress})
+</insert>
+
+<select id="getUser"  resultType="user">
+  select * from users where id=#{id}
+</select>
+
+<update id="update">
+   update users set password=#{password} where id=#{id}
+</update>
+
+<select id="getCnt" resultType="int">
+  select count(*) from users where id=#{id}
+</select>
+
+<select id="getLogin" resultType="user">
+    select * from users where id=#{id} and password=#{password}
+</select>
+
+<select id="getUserCntByPass" resultType="int">
+   select count(*) from users where id=#{id} and password=#{password}
+</select>
+
+<select id="getUsers" resultType="user">
+    select * from users order by id
+</select>
+
+<delete id="delete">
+  delete users where id=#{id}
+</delete>
+</mapper>

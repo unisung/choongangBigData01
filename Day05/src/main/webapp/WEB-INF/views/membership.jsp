@@ -1,15 +1,15 @@
-<%@page contentType="text/html; charset=EUC-KR"%>
+<%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>È¸¿ø°¡ÀÔ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>íšŒì›ê°€ì…</title>
 </head>
 <body>
 	<center>
-		<h1>È¸¿ø°¡ÀÔ</h1>
+		<h1>íšŒì›ê°€ì…</h1>
 		
 		
 		<hr>
@@ -20,42 +20,42 @@
 					<td><input name="id" /></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">ÆĞ½º¿öµå</td>
+					<td bgcolor="orange">íŒ¨ìŠ¤ì›Œë“œ</td>
 					<td><input type="password" name="password" /></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">ÀÌ¸§</td>
+					<td bgcolor="orange">ì´ë¦„</td>
 					<td><input name="name" /></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">¿ìÆí¹øÈ£</td>
-					<td><input id="postcode" name="postcode" placeholder="¿ìÆí¹øÈ£">
+					<td bgcolor="orange">ìš°í¸ë²ˆí˜¸</td>
+					<td><input id="postcode" name="postcode" placeholder="ìš°í¸ë²ˆí˜¸">
 					<input type="button" onclick="execDaumPostcode()" 
-					     value="¿ìÆí¹øÈ£ Ã£±â"><br>
+					     value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°"><br>
 					</td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">µµ·Î¸íÁÖ¼Ò</td>
-					<td><input id="roadAddress" name="roadAddress" placeholder="µµ·Î¸íÁÖ¼Ò"></td>
+					<td bgcolor="orange">ë„ë¡œëª…ì£¼ì†Œ</td>
+					<td><input id="roadAddress" name="roadAddress" placeholder="ë„ë¡œëª…ì£¼ì†Œ"></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">Áö¹øÁÖ¼Ò</td>
-					<td><input id="jibunAddress" name="jubunAddress" placeholder="Áö¹øÁÖ¼Ò"></td>
+					<td bgcolor="orange">ì§€ë²ˆì£¼ì†Œ</td>
+					<td><input id="jibunAddress" name="jubunAddress" placeholder="ì§€ë²ˆì£¼ì†Œ"></td>
 					<span id="guide" style="color:#999;display:none"></span>
 				</tr>
 				<tr>
-					<td bgcolor="orange">»ó¼¼ÁÖ¼Ò</td>
-					<td><input  id="detailAddress" name="detailAddress" placeholder="»ó¼¼ÁÖ¼Ò"></td>
+					<td bgcolor="orange">ìƒì„¸ì£¼ì†Œ</td>
+					<td><input  id="detailAddress" name="detailAddress" placeholder="ìƒì„¸ì£¼ì†Œ"></td>
 				</tr>
 				<tr>
-					<td bgcolor="orange">Âü°íÇ×¸ñ</td>
-					<td><input id="extraAddress" name="extraAddress" placeholder="Âü°íÇ×¸ñ"></td>
+					<td bgcolor="orange">ì°¸ê³ í•­ëª©</td>
+					<td><input id="extraAddress" name="extraAddress" placeholder="ì°¸ê³ í•­ëª©"></td>
 				</tr>
 				
 				<tr>
 					<td colspan="2" align="center">
-					<input type="submit" value="°¡ÀÔÇÏ±â" />
-					<input type="reset" value="´Ù½ÃÀÔ·Â" />	
+					<input type="submit" value="ê°€ì…í•˜ê¸°" />
+					<input type="reset" value="ë‹¤ì‹œì…ë ¥" />	
 						</td>
 				</tr>
 			</table>
@@ -65,37 +65,37 @@
 	
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    //º» ¿¹Á¦¿¡¼­´Â µµ·Î¸í ÁÖ¼Ò Ç¥±â ¹æ½Ä¿¡ ´ëÇÑ ¹ı·É¿¡ µû¶ó, ³»·Á¿À´Â µ¥ÀÌÅÍ¸¦ Á¶ÇÕÇÏ¿© ¿Ã¹Ù¸¥ ÁÖ¼Ò¸¦ ±¸¼ºÇÏ´Â ¹æ¹ıÀ» ¼³¸íÇÕ´Ï´Ù.
+    //ë³¸ ì˜ˆì œì—ì„œëŠ” ë„ë¡œëª… ì£¼ì†Œ í‘œê¸° ë°©ì‹ì— ëŒ€í•œ ë²•ë ¹ì— ë”°ë¼, ë‚´ë ¤ì˜¤ëŠ” ë°ì´í„°ë¥¼ ì¡°í•©í•˜ì—¬ ì˜¬ë°”ë¥¸ ì£¼ì†Œë¥¼ êµ¬ì„±í•˜ëŠ” ë°©ë²•ì„ ì„¤ëª…í•©ë‹ˆë‹¤.
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // ÆË¾÷¿¡¼­ °Ë»ö°á°ú Ç×¸ñÀ» Å¬¸¯ÇßÀ»¶§ ½ÇÇàÇÒ ÄÚµå¸¦ ÀÛ¼ºÇÏ´Â ºÎºĞ.
+                // íŒì—…ì—ì„œ ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì‘ì„±í•˜ëŠ” ë¶€ë¶„.
 
-                // µµ·Î¸í ÁÖ¼ÒÀÇ ³ëÃâ ±ÔÄ¢¿¡ µû¶ó ÁÖ¼Ò¸¦ Ç¥½ÃÇÑ´Ù.
-                // ³»·Á¿À´Â º¯¼ö°¡ °ªÀÌ ¾ø´Â °æ¿ì¿£ °ø¹é('')°ªÀ» °¡Áö¹Ç·Î, ÀÌ¸¦ Âü°íÇÏ¿© ºĞ±â ÇÑ´Ù.
-                var roadAddr = data.roadAddress; // µµ·Î¸í ÁÖ¼Ò º¯¼ö
-                var extraRoadAddr = ''; // Âü°í Ç×¸ñ º¯¼ö
+                // ë„ë¡œëª… ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ í‘œì‹œí•œë‹¤.
+                // ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
+                var roadAddr = data.roadAddress; // ë„ë¡œëª… ì£¼ì†Œ ë³€ìˆ˜
+                var extraRoadAddr = ''; // ì°¸ê³  í•­ëª© ë³€ìˆ˜
 
-                // ¹ıÁ¤µ¿¸íÀÌ ÀÖÀ» °æ¿ì Ãß°¡ÇÑ´Ù. (¹ıÁ¤¸®´Â Á¦¿Ü)
-                // ¹ıÁ¤µ¿ÀÇ °æ¿ì ¸¶Áö¸· ¹®ÀÚ°¡ "µ¿/·Î/°¡"·Î ³¡³­´Ù.
-                if(data.bname !== '' && /[µ¿|·Î|°¡]$/g.test(data.bname)){
+                // ë²•ì •ë™ëª…ì´ ìˆì„ ê²½ìš° ì¶”ê°€í•œë‹¤. (ë²•ì •ë¦¬ëŠ” ì œì™¸)
+                // ë²•ì •ë™ì˜ ê²½ìš° ë§ˆì§€ë§‰ ë¬¸ìê°€ "ë™/ë¡œ/ê°€"ë¡œ ëë‚œë‹¤.
+                if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
                     extraRoadAddr += data.bname;
                 }
-                // °Ç¹°¸íÀÌ ÀÖ°í, °øµ¿ÁÖÅÃÀÏ °æ¿ì Ãß°¡ÇÑ´Ù.
+                // ê±´ë¬¼ëª…ì´ ìˆê³ , ê³µë™ì£¼íƒì¼ ê²½ìš° ì¶”ê°€í•œë‹¤.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
-                // Ç¥½ÃÇÒ Âü°íÇ×¸ñÀÌ ÀÖÀ» °æ¿ì, °ıÈ£±îÁö Ãß°¡ÇÑ ÃÖÁ¾ ¹®ÀÚ¿­À» ¸¸µç´Ù.
+                // í‘œì‹œí•  ì°¸ê³ í•­ëª©ì´ ìˆì„ ê²½ìš°, ê´„í˜¸ê¹Œì§€ ì¶”ê°€í•œ ìµœì¢… ë¬¸ìì—´ì„ ë§Œë“ ë‹¤.
                 if(extraRoadAddr !== ''){
                     extraRoadAddr = ' (' + extraRoadAddr + ')';
                 }
 
-                // ¿ìÆí¹øÈ£¿Í ÁÖ¼Ò Á¤º¸¸¦ ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
+                // ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
                 document.getElementById('postcode').value = data.zonecode;
                 document.getElementById("roadAddress").value = roadAddr;
                 document.getElementById("jibunAddress").value = data.jibunAddress;
                 
-                // Âü°íÇ×¸ñ ¹®ÀÚ¿­ÀÌ ÀÖÀ» °æ¿ì ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
+                // ì°¸ê³ í•­ëª© ë¬¸ìì—´ì´ ìˆì„ ê²½ìš° í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
                 if(roadAddr !== ''){
                     document.getElementById("extraAddress").value = extraRoadAddr;
                 } else {
@@ -103,15 +103,15 @@
                 }
 
                 var guideTextBox = document.getElementById("guide");
-                // »ç¿ëÀÚ°¡ '¼±ÅÃ ¾ÈÇÔ'À» Å¬¸¯ÇÑ °æ¿ì, ¿¹»ó ÁÖ¼Ò¶ó´Â Ç¥½Ã¸¦ ÇØÁØ´Ù.
+                // ì‚¬ìš©ìê°€ 'ì„ íƒ ì•ˆí•¨'ì„ í´ë¦­í•œ ê²½ìš°, ì˜ˆìƒ ì£¼ì†Œë¼ëŠ” í‘œì‹œë¥¼ í•´ì¤€ë‹¤.
                 if(data.autoRoadAddress) {
                     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(¿¹»ó µµ·Î¸í ÁÖ¼Ò : ' + expRoadAddr + ')';
+                    guideTextBox.innerHTML = '(ì˜ˆìƒ ë„ë¡œëª… ì£¼ì†Œ : ' + expRoadAddr + ')';
                     guideTextBox.style.display = 'block';
 
                 } else if(data.autoJibunAddress) {
                     var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(¿¹»ó Áö¹ø ÁÖ¼Ò : ' + expJibunAddr + ')';
+                    guideTextBox.innerHTML = '(ì˜ˆìƒ ì§€ë²ˆ ì£¼ì†Œ : ' + expJibunAddr + ')';
                     guideTextBox.style.display = 'block';
                 } else {
                     guideTextBox.innerHTML = '';
