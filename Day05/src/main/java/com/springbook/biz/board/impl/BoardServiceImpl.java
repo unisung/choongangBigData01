@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbook.biz.board.BoardVO;
+import com.springbook.biz.board.BoardVO2;
 import com.springbook.biz.board.common.LogAdvice;
 
 @Service("boardService")
@@ -87,5 +88,11 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO getBoard(BoardVO vo, String flag) {
 		if(flag==null | "".equals(flag))  updateBoardCnt(vo);
 	return dao.getBoard(vo);
+	}
+
+	@Override
+	public BoardVO2 getBoard2(BoardVO vo, String flag) {
+		if(flag==null | "".equals(flag))  updateBoardCnt(vo);
+		return dao.getBoard2(vo);
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.springbook.biz.board.BoardVO;
+import com.springbook.biz.board.BoardVO2;
 
 @Repository
 public class BoardDAOMybatis {
@@ -76,6 +77,11 @@ public class BoardDAOMybatis {
 	public void updateBoardCnt(BoardVO vo) {
 		System.out.println("===> Mybatis로 updateBoardCnt() 기능 실행");
 		mybatis.update("BoardDAO.updateBoardCnt", vo);
+	}
+
+	public BoardVO2 getBoard2(BoardVO vo) {
+		System.out.println("===> Mybatis로 getBoard2() 기능 실행");
+		return mybatis.selectOne("BoardDAO.getBoard2", vo);
 	}
 
 }

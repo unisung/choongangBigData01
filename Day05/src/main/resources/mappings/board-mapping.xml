@@ -81,4 +81,19 @@ update board set re_seq=re_seq+1 where re_ref=#{re_ref} and re_seq > #{re_seq}
   select count(*)  from board
    <include refid="criteria"></include>
 </select>
+
+
+<resultMap type="com.springbook.biz.board.BoardVO2" id="boardResult">
+   <collection property="replies" javaType="ArrayList" 
+                    column="{re_ref=RE_REF}"  select="selectReplies"/>
+</resultMap>
+
+<select id="getBoard2"  resultMap="boardResult">
+select * from board where seq=#{seq}
+</select>
+
+<select id="selectReplies" resultType="com.springbook.biz.board.BoardVO2">
+    select * from board where re_ref=#{re_ref} and seq != re_ref
+</select>
+
 </mapper>

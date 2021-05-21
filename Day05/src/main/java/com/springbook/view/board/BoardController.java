@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springbook.biz.board.BoardListVO;
 import com.springbook.biz.board.BoardVO;
+import com.springbook.biz.board.BoardVO2;
 import com.springbook.biz.board.impl.BoardService;
 
 /* POJO 클래스*/
@@ -144,7 +145,8 @@ public class BoardController {
 		String searchCondition=vo.getSearchCondition();
 		String searchKeyword=vo.getSearchKeyword();
 
-		vo = service.getBoard(vo,flag);
+		 vo = service.getBoard(vo,flag);
+		//BoardVO2 vo2 = service.getBoard2(vo,flag);
 		
 		vo.setPageNum(pageNum);
 		vo.setSearchCondition(searchCondition);
@@ -152,7 +154,7 @@ public class BoardController {
 		
 		System.out.println("vo:"+vo);
 		
-		//
+		
 		List<BoardVO> replies=new ArrayList<BoardVO>();
 		if(vo.getRe_seq()==0) {
 			replies = service.getReplies(vo);

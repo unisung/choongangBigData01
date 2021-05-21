@@ -3,6 +3,7 @@ package com.springbook.biz.board.impl;
 import java.util.List;
 
 import com.springbook.biz.board.BoardVO;
+import com.springbook.biz.board.BoardVO2;
 
 public interface BoardService {
 	void insertBoard(BoardVO vo);
@@ -19,5 +20,6 @@ public interface BoardService {
 	List<BoardVO> getBoardList2(BoardVO vo);
 	void updateBoardCnt(BoardVO vo);
 	BoardVO getBoard(BoardVO vo, String flag);
+	BoardVO2 getBoard2(BoardVO vo, String flag);
 
 }
