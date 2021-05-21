@@ -28,6 +28,7 @@ public class BoardVO {
 	
     @Transient
 	private MultipartFile uploadFile;
+    @Transient
 	private String img;
 	@Transient
 	private String searchCondition;
@@ -35,7 +36,9 @@ public class BoardVO {
 	private String searchKeyword;
 	@Transient
 	private String pageNum;
+	@Transient
 	private int startRow;
+	@Transient
 	private int endRow;
 	private int re_ref;
 	private int re_lev;

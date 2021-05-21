@@ -12,7 +12,8 @@ import com.springbook.biz.board.common.LogAdvice;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
 	@Autowired
-	private BoardDAOMybatis dao;
+	private BoardDAOJPA dao;
+	//private BoardDAOMybatis dao;
 
 	//0번글은 등록이 안되도록 예외 처리 설정
 	@Override

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.BoardVO2;
 
-@Repository
+//@Repository
 public class BoardDAOMybatis {
 	@Autowired
 	private SqlSessionTemplate mybatis;
