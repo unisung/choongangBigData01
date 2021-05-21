@@ -3,6 +3,7 @@ package com.springbook.biz.board.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,8 @@ public class BoardDAOJPA {
 	private EntityManager em;
 
 	public void insertBoard(BoardVO vo) {
-		
+		System.out.println("===> JPA로 insertBoard() 기능 실행");
+		em.persist(vo);
 	}
 
 	public List<BoardVO> getBoardList(BoardVO vo) {
@@ -24,7 +26,7 @@ public class BoardDAOJPA {
 		String jpql="from BoardVO b order by b.re_ref, b.seq";
 		return em.createQuery(jpql).getResultList();
 	}
-
+	
 	public void updateBoard(BoardVO vo) {
 		// TODO Auto-generated method stub
 		
