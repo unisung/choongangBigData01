@@ -89,12 +89,19 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO getBoard(BoardVO vo, String flag) {
 		if(flag==null | "".equals(flag))  updateBoardCnt(vo);
-	return dao.getBoard(vo);
+		vo = dao.getBoard(vo);
+		System.out.println("service:----------vo:"+vo);
+	return vo;
 	}
 
 	@Override
 	public BoardVO2 getBoard2(BoardVO vo, String flag) {
 		if(flag==null | "".equals(flag))  updateBoardCnt(vo);
 		return dao.getBoard2(vo);
+	}
+
+	@Override
+	public long selectNewSeq(BoardVO vo) {
+		return dao.selectNewSeq(vo);
 	}
 }

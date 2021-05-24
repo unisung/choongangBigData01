@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class BoardController {
 		System.out.println("-----searchKeyword: "+vo.getSearchKeyword());
 		
 		if(vo.getSearchCondition()==null || vo.getSearchCondition().length()==0)  
-			   vo.setSearchCondition(null);
+			   vo.setSearchCondition("");
 		
 		if(vo.getPageNum()==null) vo.setPageNum("1");
 		
@@ -152,16 +153,16 @@ public class BoardController {
 		vo.setSearchCondition(searchCondition);
 		vo.setSearchKeyword(searchKeyword);
 		
-		System.out.println("vo:"+vo);
+		System.out.println("getBoard의 vo---------------------:"+vo);
 		
 		
-		List<BoardVO> replies=new ArrayList<BoardVO>();
-		if(vo.getRe_seq()==0) {
-			replies = service.getReplies(vo);
-		}
+		/*
+		 * List<BoardVO> replies=new ArrayList<BoardVO>(); if(vo.getRe_seq()==0) {
+		 * replies = service.getReplies(vo); }
+		 */
 		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
-		model.addAttribute("replies",replies);
+		//model.addAttribute("replies",replies);
 		return "getBoard";
 	}
 	
@@ -202,7 +203,7 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/insertBoard.do",method=RequestMethod.GET)
-	public String insertBoardForm() {
+	public String insertBoardForm(BoardVO board,Model model) {
 		return "insertBoard";
 	}
 	
@@ -236,6 +237,7 @@ public class BoardController {
 		board.setRe_lev(0);
 		board.setRe_seq(0);
 		
+		board.setRegdate(new Date());
 		service.insertBoard(board);
 		
 		System.out.println("원글등록 후 ------board:"+board);
@@ -267,6 +269,7 @@ public class BoardController {
 		System.out.println("페이지번호:"+vo.getPageNum());
 		System.out.println("조회조건:"+vo.getSearchCondition());
 		System.out.println("조회키워드:"+vo.getSearchKeyword());//"", null
+		
 		
 		//파일업로드 
 				MultipartFile uploadFile = vo.getUploadFile();

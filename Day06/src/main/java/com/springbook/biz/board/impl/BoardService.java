@@ -21,5 +21,5 @@ public interface BoardService {
 	void updateBoardCnt(BoardVO vo);
 	BoardVO getBoard(BoardVO vo, String flag);
 	BoardVO2 getBoard2(BoardVO vo, String flag);
-
+	long selectNewSeq(BoardVO vo);
 }

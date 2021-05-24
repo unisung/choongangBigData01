@@ -45,7 +45,7 @@
          <prop key="hibernate.format_sql">true</prop>
          <prop key="hibernate.use_sql_comments">false</prop>
          <prop key="hibernate.id.new_generator_mappings">true</prop>
-         <prop key="hibernate.hbm2ddl.auto">update</prop>
+         <prop key="hibernate.hbm2ddl.auto">create</prop>
       </props>
     </property>                                              
 </bean>
@@ -62,9 +62,15 @@
 
 
 <!--  transactionManager -->
-<bean id="txManager"
+<!-- <bean id="txManager"
 	     class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	    <property name="dataSource" ref="dataSource"></property>
+</bean> -->
+
+<!-- JPA transactionManager -->
+<bean id="txManager"
+	class="org.springframework.orm.jpa.JpaTransactionManager">
+	<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 </bean>
 
 <!--  txAdvice  -->
