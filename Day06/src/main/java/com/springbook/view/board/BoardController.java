@@ -134,12 +134,36 @@ public class BoardController {
 	@RequestMapping("/getBoard.do")
 	public String getBoard(BoardVO vo, Model model, 
 			                          @RequestParam(value="flag", defaultValue="") String flag) {
+		System.out.println("flag:"+flag);
+		System.out.println("pageNum:"+vo.getPageNum());
+		System.out.println("searchCondition:"+vo.getSearchCondition());
+		System.out.println("searchKeyword:"+vo.getSearchKeyword());
+		 
+		System.out.println("vo:"+vo);
+		
+		String pageNum=vo.getPageNum();
+		String searchCondition=vo.getSearchCondition();
+		String searchKeyword=vo.getSearchKeyword();
+
 		 vo = service.getBoard(vo,flag);
-		System.out.println("getBoard의 vo---------------------:"+vo);
+		
+		vo.setPageNum(pageNum);
+		vo.setSearchCondition(searchCondition);
+		vo.setSearchKeyword(searchKeyword);
+		
+		System.out.println("vo:"+vo);
+		
+		if(flag==null | "".equals(flag)) service.updateBoardCnt(vo);
+		
+	//	List<BoardVO> replies=new ArrayList<BoardVO>();
+	//	if(vo.getRe_seq()==0) {
+	//		replies = service.getReplies(vo);
+	//	}
+		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
+		//model.addAttribute("replies",replies);
 		return "getBoard";
 	}
-	
 	
 	@RequestMapping(value="/updateBoard.do",method=RequestMethod.POST)
 	public String updateBoard(@ModelAttribute("board") BoardVO board) 
@@ -275,12 +299,14 @@ public class BoardController {
 		//답글의 순서인 seq를 1증가시킴.
 		service.updateReSeq(vo);
 		
+		vo.setSeq(0);
 		vo.setRe_ref(vo.getRe_ref());//부모글의 re_ref번호를 답변글의 re_ref에 저장
 		vo.setRe_lev(vo.getRe_lev()+1);//부모글에 대비 들여쓰기 레벨 증가
 		vo.setRe_seq(vo.getRe_seq()+1);//부모글 대비 등록 순서 + 1
 		
 		String img = vo.getImg()==null?"":vo.getImg();
 		vo.setImg(img);
+		vo.setRegdate(new Date());
 		
 		service.insertReplyBoard(vo);
 		

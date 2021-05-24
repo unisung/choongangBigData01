@@ -24,7 +24,6 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> getBoardList(BoardVO vo) {
-
 		return dao.getBoardList(vo);
 	}
 
@@ -58,7 +57,6 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void updateReSeq(BoardVO vo) {
 		dao.updateReSeq(vo);
-		
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO getBoard(BoardVO vo, String flag) {
 		vo = dao.getBoard(vo);
-		if(flag==null | "".equals(flag))  dao.updateBoardCnt(vo);
+	//	if(flag==null | "".equals(flag)) updateBoardCnt(vo);
 		System.out.println("service:----------vo:"+vo);
 	return vo;
 	}
