@@ -134,35 +134,9 @@ public class BoardController {
 	@RequestMapping("/getBoard.do")
 	public String getBoard(BoardVO vo, Model model, 
 			                          @RequestParam(value="flag", defaultValue="") String flag) {
-		
-		System.out.println("flag:"+flag);
-		System.out.println("pageNum:"+vo.getPageNum());
-		System.out.println("searchCondition:"+vo.getSearchCondition());
-		System.out.println("searchKeyword:"+vo.getSearchKeyword());
-		 
-		System.out.println("vo:"+vo);
-		
-		String pageNum=vo.getPageNum();
-		String searchCondition=vo.getSearchCondition();
-		String searchKeyword=vo.getSearchKeyword();
-
 		 vo = service.getBoard(vo,flag);
-		//BoardVO2 vo2 = service.getBoard2(vo,flag);
-		
-		vo.setPageNum(pageNum);
-		vo.setSearchCondition(searchCondition);
-		vo.setSearchKeyword(searchKeyword);
-		
 		System.out.println("getBoard의 vo---------------------:"+vo);
-		
-		
-		/*
-		 * List<BoardVO> replies=new ArrayList<BoardVO>(); if(vo.getRe_seq()==0) {
-		 * replies = service.getReplies(vo); }
-		 */
-		/* model저장시 sessionAttributes에도 저장 */
 		model.addAttribute("board",vo);
-		//model.addAttribute("replies",replies);
 		return "getBoard";
 	}
 	
@@ -238,6 +212,11 @@ public class BoardController {
 		board.setRe_seq(0);
 		
 		board.setRegdate(new Date());
+		
+		//int seq=service.selectNewSeq(board);
+		//board.setSeq(seq);
+		//board.setRe_ref(seq);
+		
 		service.insertBoard(board);
 		
 		System.out.println("원글등록 후 ------board:"+board);

@@ -24,54 +24,18 @@ public class BoardDAOJPA {
 		em.merge(board);
 	}
 	
-	public long selectNewSeq(BoardVO vo) {
-		System.out.println("===> JPA로 selectNewSeq() 기능 실행");
-		String jpql="select max(b)+1 from BoardVO b";	
-		TypedQuery<Integer> query =em.createQuery(jpql,Integer.class);
-	     long newSeq = (long)query.getSingleResult();
-		 System.out.println("newSeq:"+newSeq);
-		return newSeq;
-	}
-	
 	public void updateRef(BoardVO vo) {
 		System.out.println("===> JPA로 updateRe_Ref() 기능 실행");
 		vo.setRe_ref(vo.getSeq());
 		em.merge(vo);
 	}
 	
-	/*
-	 * public List<BoardVO> getBoardList(BoardVO vo) {
-	 * System.out.println("===> JPA로 getBoardList() 기능 실행"); String
-	 * jpql="from BoardVO b order by b.re_ref, b.seq"; return
-	 * em.createQuery(jpql).getResultList(); }
-	 */
-	public List<BoardVO> getBoardList(BoardVO vo) {
-	    em.clear();
-	    System.out.println("===> JPA로 getBoardList() 기능 실행");
-		String jpql="from BoardVO b ";
-		
-		/*
-		 * switch (vo.getSearchCondition()) { case "TITLE":
-		 * jpql=jpql+" where b.title like '%'||:searchKeyword||'%'"; break; case
-		 * "CONTENT": jpql=jpql+" where b.content like '%'||:searchKeyword||'%'"; break;
-		 * }
-		 */
-		
-		 jpql = jpql +" order by b.re_ref desc, b.re_seq ";
-
-		 System.out.println("getBoardListJPADAO-jpql:"+jpql);
-		 
-		TypedQuery<BoardVO> query =em.createQuery(jpql,BoardVO.class);
-		
-	//	if(vo.getSearchCondition().equals("TITLE") || vo.getSearchCondition().equals("CONTENT"))
-		//	query.setParameter("searchKeyword", vo.getSearchKeyword());
-		
-		//1~10번 데이터 조회
-		//query.setFirstResult(vo.getStartRow());//조회 시작 위치
-		//query.setMaxResults(vo.getEndRow() - vo.getStartRow() + 1);//조회할 데이터 수
-		//em.flush();
-		return query.getResultList();
-	}
+	
+public List<BoardVO> getBoardList(BoardVO vo) {
+	  System.out.println("===> JPA로 getBoardList() 기능 실행"); 
+	  String jpql="from BoardVO b order by b.re_ref, b.seq"; 
+	  return em.createQuery(jpql).getResultList(); 
+}
 	
 	public void updateBoard(BoardVO vo) {
 		System.out.println("===> JPA로 updateBoard() 기능 실행");
@@ -85,17 +49,8 @@ public class BoardDAOJPA {
 
 	public BoardVO getBoard(BoardVO vo) {
 		System.out.println("===> JPA로 getBoard() 기능 실행");
-		 BoardVO board = em.find(BoardVO.class, vo.getSeq());
-		 em.detach(board);
-		 return board;
-         //return em.find(BoardVO.class, vo.getSeq());
-		//BoardVO board = em.find(BoardVO.class, vo.getSeq());
-		/*
-		 * String jpql="select b from BoardVO b where b.seq=:seq"; TypedQuery<BoardVO>
-		 * query =em.createQuery(jpql,BoardVO.class); query.setParameter("seq",
-		 * vo.getSeq()); BoardVO board=query.getSingleResult();
-		 * System.out.println("JPA------------VO:"+board); return board;
-		 */
+		System.out.println("vo.getSeq()---------:"+vo.getSeq());
+		return em.find(BoardVO.class, vo.getSeq());
 	}
 
 	public int getTotalCount(BoardVO vo) {
@@ -166,7 +121,6 @@ public class BoardDAOJPA {
 		System.out.println("===> JPA로 updateBoardCnt() 기능 실행");
 	    vo.setCnt(vo.getCnt()+1);
 		em.merge(vo);
-		
 	}
 
 	public BoardVO2 getBoard2(BoardVO vo) {
