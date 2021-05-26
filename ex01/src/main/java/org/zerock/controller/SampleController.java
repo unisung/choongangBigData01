@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.function.Consumer;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
 import org.zerock.domain.TodoDTO;
@@ -133,4 +136,32 @@ public ResponseEntity<String> ex07(){
 		return new ResponseEntity<String>(msg, header, HttpStatus.BAD_GATEWAY);
 		
 	}
+
+  /* 파일 업로드 */
+  @GetMapping("/exUpload")
+  public void exUpload() {
+	  log.info("/exUpload");
+  }
+  
+  @PostMapping("/exUploadPost")
+  public void exUploadPost(ArrayList<MultipartFile> files) {
+	 // for(MultipartFile file:files) {
+	//	   log.info("---------------------------");
+	//	   log.info("name:" + file.getOriginalFilename());
+	//	   log.info("size:"+file.getSize());
+	 // }
+	/*  
+	  files.forEach(new Consumer<MultipartFile>() {
+		@Override
+		public void accept(MultipartFile file) {
+            log.info("name:"+file.getOriginalFilename());
+			log.info("size:"+file.getSize());
+		}
+	});
+	*/
+	  files.forEach(t-> {
+	            log.info("name:"+t.getOriginalFilename());
+				log.info("size:"+t.getSize());
+		});
+  }
 }
