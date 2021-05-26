@@ -6,14 +6,18 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
 import org.zerock.domain.TodoDTO;
@@ -94,5 +98,39 @@ public class SampleController {
 		log.info("todo:"+todo);
 	}
 	
+	/* 기본타입의 값 선언시 @ModelAttribute()로 선언하면 
+	 *  view페이지(.jsp)까지 전달 됨
+	 * */
+	@GetMapping("/ex04") /* /sample/ex04 */
+	/*public void ex04(SampleDTO dto, int page, Model model) {*/
+	public void ex04(SampleDTO dto, @ModelAttribute("page") int page) {
+		log.info("dto:"+dto);
+		log.info("page:"+page);
+		//model.addAttribute("page",page);
+	}
 	
+	/* pom.xml에 jackson-databind 추가 후 */
+	@GetMapping("/ex06")
+	public @ResponseBody SampleDTO ex06() {
+		log.info("/ex06......");
+		
+		SampleDTO dto = new SampleDTO();
+		dto.setAge(10);
+		dto.setName("홍길동");
+		
+		return dto;
+	}
+	
+@GetMapping("/ex07")
+public ResponseEntity<String> ex07(){
+		log.info("/ex07....");
+		
+		String msg ="{\"name\":\"홍길동\"}";
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "application/json;charset=UTF-8");
+		
+		return new ResponseEntity<String>(msg, header, HttpStatus.BAD_GATEWAY);
+		
+	}
 }
