@@ -34,8 +34,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public boolean remove(Long bno) {
-		// TODO Auto-generated method stub
-		return false;
+		return mapper.remove(bno)>0;
 	}
 
 	@Override

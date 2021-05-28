@@ -26,4 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                updatedate=#{updateDate}
      where bno=#{bno}
   </update>
+  
+  <delete id="remove">
+     delete from tbl_board where bno=#{bno}
+  </delete>
+  
 </mapper>

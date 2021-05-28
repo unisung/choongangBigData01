@@ -5,7 +5,7 @@
 <%@include file="../includes/header.jsp" %>
 <div class="row">
 	<div class="col-lg-12">
-	    <h1 class="page-header">Board Register</h1>
+	    <h1 class="page-header">Board Modify</h1>
 	</div>
 	<!--  /.col-lg-12 -->
 </div>
@@ -25,12 +25,12 @@
 	   			   </div>
 	   			   
 	   			    <div class="form-group">
-	   			    	<label>Title</label><input class="form-control" name="title" value="${board.title}" readonly="readonly">
+	   			    	<label>Title</label><input class="form-control" name="title" value="${board.title}">
 	   			    </div>
 	   			   
 	   			   <div class="form-group">
 	   			    	<label>Text Area</label>
-	   			    	<textarea rows="3" cols="form-control" name='content' readonly="readonly"><c:out value="${board.content}"/></textarea>
+	   			    	<textarea rows="3" cols="form-control" name='content'><c:out value="${board.content}"/></textarea>
 	   			    </div>
 	   			    
 	   			    <div class="form-group">
@@ -84,8 +84,6 @@ $(document).ready(function(){
 			
 			/* form요소의 input 요소들을 모두 제거 */
 			formObj.empty();
-		}else if(operation==='modify'){
-			formObj.attr("method","get");
 		}
 		/* 액션으로 이동처리 */
 		formObj.submit();
