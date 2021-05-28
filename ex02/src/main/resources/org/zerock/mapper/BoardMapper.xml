@@ -6,4 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="getList" resultType="org.zerock.domain.BoardVO">
     select * from tbl_board where bno > 0
   </select>
+  
+  <insert id="register">
+  <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+    select board_seq.nextval from dual
+  </selectKey>
+   insert into tbl_board(bno,title,content,writer)
+   values(#{bno},#{title},#{content},#{writer})
+  </insert>
+  
+  <select id="get" resultType="org.zerock.domain.BoardVO">
+    select * from tbl_board where bno =#{bno}
+  </select>
 </mapper>

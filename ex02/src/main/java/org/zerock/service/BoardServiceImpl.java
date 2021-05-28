@@ -18,14 +18,13 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void register(BoardVO board) {
-		// TODO Auto-generated method stub
+		mapper.register(board);
 		
 	}
 
 	@Override
 	public BoardVO get(Long bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.get(bno);
 	}
 
 	@Override
