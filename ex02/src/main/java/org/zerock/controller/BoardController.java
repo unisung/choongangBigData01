@@ -59,6 +59,7 @@ public class BoardController {
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
+		service.modify(board);
 		return "redirect:/board/list";
 	}
 	

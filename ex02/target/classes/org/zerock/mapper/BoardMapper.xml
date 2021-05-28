@@ -18,4 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="get" resultType="org.zerock.domain.BoardVO">
     select * from tbl_board where bno =#{bno}
   </select>
+  
+  <update id="modify">
+    update tbl_board
+          set title=#{title},
+               content=#{content},
+               updatedate=#{updateDate}
+     where bno=#{bno}
+  </update>
 </mapper>

@@ -13,4 +13,6 @@ public interface BoardMapper {
 	public void register(BoardVO board);
 
 	public BoardVO get(Long bno);
+
+	public int modify(BoardVO board);
 }

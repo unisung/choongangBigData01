@@ -17,22 +17,45 @@
 	   			
 	   			<div class="panel-heading">Board Register</div>
 	   			<div class="panel-body">
-	   			   <form role="form" action="/board/register" method="post">
+	   			   <form role="form" action="/board/modify" method="post">
+	   			   <div class="form-group">
+	   			     <label>Bno</label>
+	   			     <input class="form-control" name='bno' 
+	   			                value='<c:out value="${board.bno}"/>' readonly="readonly">
+	   			   </div>
+	   			   
 	   			    <div class="form-group">
 	   			    	<label>Title</label><input class="form-control" name="title" value="${board.title}">
 	   			    </div>
 	   			   
 	   			   <div class="form-group">
 	   			    	<label>Text Area</label>
-	   			    	<textarea rows="3" cols="form-control" name='content'></textarea>
+	   			    	<textarea rows="3" cols="form-control" name='content'><c:out value="${board.content}"/></textarea>
 	   			    </div>
 	   			    
 	   			    <div class="form-group">
-	   			    	<label>Writer</label><input class="form-control" name="writer">
+	   			    	<label>Writer</label>
+	   			    	<input class="form-control" name="writer" 
+	   			    	           value="<c:out value="${board.writer}"/>" readonly="readonly">
+	   			    </div>
+	   			    <div class="form-group">
+	   			    	<label>RegDate</label>
+	   			    	<input class="form-control" name="regdate" 
+	   			    	           value="<fmt:formatDate pattern="yyyy/MM/dd" 
+	   			    	            value="${board.regdate}"/>" readonly="readonly">
+	   			    </div>
+	   			    <div class="form-group">
+	   			    	<label>Update Date</label>
+	   			    	<input class="form-control" name="updateDate" 
+	   			    	           value="<fmt:formatDate pattern="yyyy/MM/dd" 
+	   			    	            value="${board.updateDate}"/>" 
+	   			    	            readonly="readonly">
 	   			    </div>
 	   			    
-	   			    <button type="submit" class="btn btn-default">Submit Button</button>
-	   			    <button type="reset" class="btn btn-default">Reset Button</button>
+	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>
+	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Rmove</button>
+	   			    <button type="submit" data-oper='list' class="btn btn-info">List</button>
+	   			    
 	   			   </form>
 	   			
 	   			</div>
@@ -42,4 +65,29 @@
 	 </div>
 </div>
 <!--  /. row -->
+<script>
+$(document).ready(function(){
+	/* 태그 선택자 */
+	var formObj = $("form");//form 요소의 정보 
+	$('button').on('click',function(e){
+		/* 기본동작 해제 */
+		e.preventDefault();
+		var operation = $(this).data("oper");
+		
+		console.log(operation);
+		
+		if(operation==='remove'){
+			formObj.attr("action","/board/remove");
+		}else if(operation==='list'){
+			formObj.attr("action","/board/list");
+			formObj.attr("method","get");
+			
+			/* form요소의 input 요소들을 모두 제거 */
+			formObj.empty();
+		}
+		/* 액션으로 이동처리 */
+		formObj.submit();
+	});
+});
+</script>
 <%@include file="../includes/footer.jsp"%>
