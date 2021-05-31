@@ -41,6 +41,35 @@
   		        </tr>
   		      </c:forEach>
   		      </table>
+  		      
+  		      
+  		      <ul class="pagination">
+  		      
+  		      <c:if test="${pageMaker.prev}">
+  		      <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+  		      <a href="${pageMaker.startPage -1}">Previous</a></li>
+  		      </c:if>
+  		       <c:if test="${!pageMaker.prev}">
+  		      <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+  		      <a href="${pageMaker.startPage -1}">Previous</a></li>
+  		      </c:if>
+  		      
+  		      <c:forEach var="num"  begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	  		       <c:if test="${num==pageMaker.cri.pageNum}">
+	  		       <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+	  		        <a href="${num}">${num}</a></li>
+	  		       </c:if>
+	  		       <c:if test="${num!=pageMaker.cri.pageNum}">
+	  		       <li class="paginate_button" aria-controls="dataTables-example" tabindex="0">
+	  		        <a href="${num}">${num}</a></li>
+	  		       </c:if>
+  		      </c:forEach>
+  		      
+  		      <c:if test="${pageMaker.next}">
+  		      <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+  		      <a href="${pageMaker.endPage + 1}">Next</a></li>
+  		      </c:if>
+  		      </ul>
   		     
   		     </div>
   		</div>
@@ -51,6 +80,8 @@
 </table>
 
 <form id="actionForm" action="/board/list" method="get">
+ <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
+ <input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
 </form>
 
                             <!-- Modal -->
@@ -92,6 +123,17 @@ $(document).ready(function(){
 		actionForm.attr("action","/board/get");
 		actionForm.submit();
 	});	
+	
+	/* 페이지 네비게이션 버튼 클릭시 */
+	$('.paginate_button a').on("click",function(e){
+		e.preventDefault();
+		
+		console.log('click');
+		/* 클릭한 <a>태그의 페이지번호를 actionForm의 input tage 에 설정 val(값); */
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();//action으로 전송처리
+	});
+	
 });
 </script>                            
 <script>

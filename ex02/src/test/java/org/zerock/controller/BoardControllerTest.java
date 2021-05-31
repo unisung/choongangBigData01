@@ -1,6 +1,7 @@
 package org.zerock.controller;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,20 @@ public class BoardControllerTest {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
+	@Ignore
 	@Test
 	public void testList() throws Exception{
 		
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
 				    .andReturn().getModelAndView().getModelMap()
 				);
+	}
+	
+	@Test
+	public void testListWithPaging() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+				     .param("pageNum", "2")
+				     .param("amount", "10"))
+				     .andReturn().getModelAndView().getModelMap());
 	}
 }

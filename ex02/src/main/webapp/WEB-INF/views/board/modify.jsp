@@ -15,9 +15,12 @@
 	 <div class="col-lg-12">
 	   	<div class="panel panel-default">
 	   			
-	   			<div class="panel-heading">Board Register</div>
+	   			<div class="panel-heading">Board Modify</div>
 	   			<div class="panel-body">
 	   			   <form role="form" action="/board/modify" method="post">
+	   			       <input type='hidden' name='pageNum' value='${cri.pageNum}'>
+	   			       <input type='hidden' name='amount' value='${cri.amount}'>
+	   			       
 	   			   <div class="form-group">
 	   			     <label>Bno</label>
 	   			     <input class="form-control" name='bno' 
@@ -53,7 +56,7 @@
 	   			    </div>
 	   			    
 	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>
-	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Rmove</button>
+	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
 	   			    <button type="submit" data-oper='list' class="btn btn-info">List</button>
 	   			    
 	   			   </form>
@@ -74,16 +77,23 @@ $(document).ready(function(){
 		e.preventDefault();
 		var operation = $(this).data("oper");
 		
+		
 		console.log(operation);
 		
 		if(operation==='remove'){
 			formObj.attr("action","/board/remove");
 		}else if(operation==='list'){
-			formObj.attr("action","/board/list");
-			formObj.attr("method","get");
+          //move to list
+          formObj.attr("action","/board/list").attr("method","get");
+	
+           var pageNumTag = $("input[name='pageNum']").clone();
+           var amountTag = $("input[name='amount']").clone();
 			
 			/* form요소의 input 요소들을 모두 제거 */
 			formObj.empty();
+			
+			formObj.append(pageNumTag);//<form><input type='hidden' name='pageNum' value='값'>
+			formObj.append(amountTag);//                <input type='hidden' name='amount' value='10'></form>
 		}
 		/* 액션으로 이동처리 */
 		formObj.submit();

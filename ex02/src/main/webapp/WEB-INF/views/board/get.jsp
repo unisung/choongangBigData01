@@ -17,7 +17,7 @@
 	   			
 	   			<div class="panel-heading">Board Register</div>
 	   			<div class="panel-body">
-	   			   <form role="form" action="/board/modify" method="post">
+	   <form role="form" action="/board/modify" method="post">
 	   			   <div class="form-group">
 	   			     <label>Bno</label>
 	   			     <input class="form-control" name='bno' 
@@ -53,7 +53,7 @@
 	   			    </div>
 	   			    
 	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>
-	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Rmove</button>
+	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
 	   			    <button type="submit" data-oper='list' class="btn btn-info">List</button>
 	   			    
 	   			   </form>
@@ -63,33 +63,33 @@
 	   	</div>
 	   	<!--  end panel -->
 	 </div>
+	  <form id='operForm' action='/board/modify' method='get'>
+	       <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+	       <input type='hidden' id='pageNum' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+	       <input type='hidden' id='amount' name='amount' value='<c:out value="${cri.amount}"/>'>
+	  </form>
 </div>
 <!--  /. row -->
 <script>
 $(document).ready(function(){
 	/* 태그 선택자 */
-	var formObj = $("form");//form 요소의 정보 
-	$('button').on('click',function(e){
-		/* 기본동작 해제 */
+	//var formObj = $("form");//form 요소의 정보 
+	var operForm = $("#operForm");
+	
+	$("button[data-oper='modify']").on('click',function(e){
+		alert("modify");
 		e.preventDefault();
-		var operation = $(this).data("oper");
+		 operForm.attr("action","/board/modify").submit();
+	 });	 
 		
-		console.log(operation);
+	$("button[data-oper='list']").on('click',function(e){
+		alert("list");
+		e.preventDefault();
+		operForm.find("#bno").remove(); 
+		operForm.attr("action","/board/list");
+		operForm.submit();
+	 });
 		
-		if(operation==='remove'){
-			formObj.attr("action","/board/remove");
-		}else if(operation==='list'){
-			formObj.attr("action","/board/list");
-			formObj.attr("method","get");
-			
-			/* form요소의 input 요소들을 모두 제거 */
-			formObj.empty();
-		}else if(operation==='modify'){
-			formObj.attr("method","get");
-		}
-		/* 액션으로 이동처리 */
-		formObj.submit();
-	});
 });
 </script>
 <%@include file="../includes/footer.jsp"%>

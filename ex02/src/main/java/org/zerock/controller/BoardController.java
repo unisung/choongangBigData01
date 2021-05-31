@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
+import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -24,9 +26,16 @@ public class BoardController {
 	
 	/* 게시글 리스트 */
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Model model, Criteria cri) {
 		log.info("list");
-		model.addAttribute("list",service.getList());
+		//model.addAttribute("list",service.getList());
+		model.addAttribute("list", service.getListWithPaging(cri));
+		//model.addAttribute("pageMaker", new PageDTO(cri, 123));
+		
+		int total = service.getTotal(cri);
+		
+		log.info("total:"+total);
+		model.addAttribute("pageMaker", new PageDTO(cri, total)); 
 	}
 	
 	/* 게시글 등록 폼*/
@@ -49,20 +58,36 @@ public class BoardController {
 	
 	/* 게시글 상세보기 */
 	@GetMapping("/get")
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, Model model, 
+			                @ModelAttribute("cri") Criteria cri
+			                ,RedirectAttributes rttr) {
 		BoardVO board=service.get(bno);
 		model.addAttribute("board",board);
+		rttr.addFlashAttribute("result", "");
+		
 	}
 	
 	/* 수정페이지 이동 */
 	@GetMapping("/modify")
-	public void modify(@ModelAttribute("board")BoardVO board) {}
+	public void modify(@ModelAttribute("board")BoardVO board, Model model,
+			                      @ModelAttribute("cri") Criteria cri) {
+		System.out.println("cri:"+cri.getPageNum());
+		model.addAttribute("board",service.get(board.getBno()));
+	}
 	
 	/* 게시글 수정 처리 */
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri,
+			                          RedirectAttributes rttr) {
 		if(service.modify(board))
 			rttr.addFlashAttribute("result","success");
+		
+		System.out.println("modify-cri:" +cri.getPageNum());
+		
+		//수정처리 후 리다이렉트한 페이지로 원래페이지번호, 페이지당 글 수 값 전달
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	
@@ -71,10 +96,16 @@ public class BoardController {
 	
 	/* 게시글 삭제 처리 */
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, 
+									 @ModelAttribute("cri") Criteria cri,
+			  RedirectAttributes  rttr) {
 		System.out.println("bno: "+bno);
 		if(service.remove(bno))
 		   rttr.addFlashAttribute("result","success");
+		
+		//수정처리 후 리다이렉트한 페이지로 원래페이지번호, 페이지당 글 수 값 전달
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		return "redirect:/board/list";
 	}
 	

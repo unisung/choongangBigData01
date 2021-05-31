@@ -31,4 +31,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      delete from tbl_board where bno=#{bno}
   </delete>
   
+  <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+  <![CDATA[
+   select 
+     bno, title, content, writer, regdate, updatedate
+   from 
+       (
+       select /*+INDEX_DESC(tbl_board pk_board) */
+         rownum rn, bno, title, content, writer, regdate, updatedate 
+       from 
+         tbl_board
+      where rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} -1) * #{amount}   
+  ]]>
+  </select>
+  
+  <select id="getTotalCount" resultType="int">
+    select count(*) from tbl_board where bno > 0
+  </select>
 </mapper>
