@@ -28,10 +28,8 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Model model, Criteria cri) {
 		log.info("list");
-		//model.addAttribute("list",service.getList());
+
 		model.addAttribute("list", service.getListWithPaging(cri));
-		//model.addAttribute("pageMaker", new PageDTO(cri, 123));
-		
 		int total = service.getTotal(cri);
 		
 		log.info("total:"+total);
@@ -61,6 +59,7 @@ public class BoardController {
 	public void get(@RequestParam("bno") Long bno, Model model, 
 			                @ModelAttribute("cri") Criteria cri
 			                ,RedirectAttributes rttr) {
+		System.out.println("cri:"+cri);
 		BoardVO board=service.get(bno);
 		model.addAttribute("board",board);
 		rttr.addFlashAttribute("result", "");
@@ -71,7 +70,7 @@ public class BoardController {
 	@GetMapping("/modify")
 	public void modify(@ModelAttribute("board")BoardVO board, Model model,
 			                      @ModelAttribute("cri") Criteria cri) {
-		System.out.println("cri:"+cri.getPageNum());
+		System.out.println("modify-get-cri:"+cri);
 		model.addAttribute("board",service.get(board.getBno()));
 	}
 	
@@ -82,31 +81,24 @@ public class BoardController {
 		if(service.modify(board))
 			rttr.addFlashAttribute("result","success");
 		
-		System.out.println("modify-cri:" +cri.getPageNum());
+		System.out.println("modify-post-cri:" +cri);
 		
 		//수정처리 후 리다이렉트한 페이지로 원래페이지번호, 페이지당 글 수 값 전달
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		
-		return "redirect:/board/list";
+		return "redirect:/board/list"+cri.getListLink();
 	}
 	
-	@GetMapping("/remove")
-	public void remove() {}
 	
 	/* 게시글 삭제 처리 */
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, 
 									 @ModelAttribute("cri") Criteria cri,
 			  RedirectAttributes  rttr) {
-		System.out.println("bno: "+bno);
+		System.out.println("remove-post-cri: "+cri);
 		if(service.remove(bno))
 		   rttr.addFlashAttribute("result","success");
 		
 		//수정처리 후 리다이렉트한 페이지로 원래페이지번호, 페이지당 글 수 값 전달
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		return "redirect:/board/list";
+		return "redirect:/board/list" +cri.getListLink();
 	}
 	
 	

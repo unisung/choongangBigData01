@@ -53,7 +53,7 @@
 	   			    </div>
 	   			    
 	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>
-	   			    <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
+	   			    <button type="submit" data-oper='remove' class="btn btn-danger" disabled>Remove</button>
 	   			    <button type="submit" data-oper='list' class="btn btn-info">List</button>
 	   			    
 	   			   </form>
@@ -67,6 +67,8 @@
 	       <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 	       <input type='hidden' id='pageNum' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 	       <input type='hidden' id='amount' name='amount' value='<c:out value="${cri.amount}"/>'>
+	       <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+           <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 	  </form>
 </div>
 <!--  /. row -->
@@ -77,13 +79,11 @@ $(document).ready(function(){
 	var operForm = $("#operForm");
 	
 	$("button[data-oper='modify']").on('click',function(e){
-		alert("modify");
 		e.preventDefault();
 		 operForm.attr("action","/board/modify").submit();
 	 });	 
 		
 	$("button[data-oper='list']").on('click',function(e){
-		alert("list");
 		e.preventDefault();
 		operForm.find("#bno").remove(); 
 		operForm.attr("action","/board/list");
