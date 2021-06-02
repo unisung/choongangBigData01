@@ -118,6 +118,7 @@
                 <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
               </div>
             </div>
+            
     <div class="modal-footer">
         <button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
         <button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
@@ -150,6 +151,51 @@
 	 console.log("JS TEST");
 	 
 	 var bnoValue = '<c:out value="${board.bno}"/>';
+	 var replyUL =$(".chat");
+	 
+	 showList(1);
+	 
+	 function showList(page){
+		 replyService.getList({bno:bnoValue, page:page||1}, function(list){
+			  var str="";
+			  /* 댓글 리스트가 넘어오지 않았거나, 빈 리스트가 넘어왔다면 return */
+			  if(list ==null|| list.length==0){
+				  replyUL.html("");
+				  return;
+			  }
+			  /* 댓글 리스트가 넘어왔으면 처리 */
+			  for(var i=0,len=list.length||0; i<len; i++){
+				  str+="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+				  str+="<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+				  str+="   <small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
+				  str+="   <p>"+list[i].reply+"</p></div>";
+				  str+="</li>";
+			  }
+			  
+			  replyUL.html(str);
+			 
+		 });//end function
+	 }// end showList.
+	 
+	 var modal = $(".modal");
+	 var modalInputReply = modal.find("input[name='reply']");
+	 var modalInputReplyer = modal.find("input[name='replyer']");
+	 var modalInputReplyDate = modal.find("input[name='replyDate']");
+	 
+	 var modalModBtn = $("#modalModBtn");
+	 var modalRemoveBtn = $("#modalRemoveBtn");
+	 var modalRegisterBtn = $("#modalRegisterBtn");
+	 
+	 /* 댓글 등록 버튼 클릭 이벤트 처리 */
+	 $("#addReplyBtn").on("click",function(e){
+		 modal.find("input").val("");
+		 modalInputReplyDate.closest("div").hide();
+		 modal.find("button[id != 'modalCloseBtn']").hide();
+		 
+		 modalRegisterBtn.show();
+		 
+		 $(".modal").modal("show");
+	 });
 	 
 	 replyService.add({reply:"JS Test", replyer:"tester", bno:bnoValue},
 			                     function(result){alert("RESULT: " +result);});
