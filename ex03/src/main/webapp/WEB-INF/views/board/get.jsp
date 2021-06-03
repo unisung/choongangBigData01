@@ -212,6 +212,63 @@
 		   showList(1);
 		   });
 		 });
+	 /*--------------------------*/
+	 
+	 //댓글 조회 클릭 이벤트 처리
+	 $(".chat").on("click","li",function(e){
+		 var rno=$(this).data("rno");// this<- <li>
+		 
+		 replyService.get(rno,function(reply){
+			 // 모달창에 데이타 세팅
+			 modalInputReply.val(reply.reply);
+			 modalInputReplyer.val(reply.replyer);
+			 modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
+			                                 .attr("readonly","readonly");
+			 modal.data("rno",reply.rno);
+			 
+			 //모달창 버튼 초기화
+			 modal.find("button[id!='modalCloseBtn']").hide();//클로즈버튼 외 숨김처리
+			 modalModBtn.show();//수정버튼 보이기
+			 modalRemoveBtn.show();//삭제버튼 보이기
+			 
+			 //모달 화면에 나타내기
+			 $(".modal").modal("show");
+		 });
+	 });
+	 
+/*------------------------------------------------------*/
+	 
+	//댓글 조회 화면의 수정버튼 이벤트 처리
+	 modalModBtn.on("click",function(e){
+		 //수정할 JSON데이타 처리
+		 var reply = {rno:modal.data("rno"), reply:modalInputReply.val()};
+		 
+		 //update()함수 호출
+		 replyService.update(reply,function(result){
+			 alert(result);
+			 modal.modal("hide");
+			 showList(1);//댓글영역 refresh
+		 });
+	 });
+
+/*------------------------------------------------------*/
+
+//댓글 조회 화면의 삭제버튼 이벤트 처리
+	 modalRemoveBtn.on("click", function(e){
+		 //삭제할 댓글 번호 얻기
+		 var rno = modal.data("rno");
+		  
+		 //삭제처리메소드 호출
+		 replyService.remove(rno, function(result){
+			 alert(result);
+			 modal.modal("hide");
+			 showList(1);
+		 });
+	 });
+
+ 
+ 
+ 
  });
 </script>
 <script>
