@@ -167,7 +167,7 @@
 			  for(var i=0,len=list.length||0; i<len; i++){
 				  str+="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
 				  str+="<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
-				  str+="   <small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
+				  str+="   <small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
 				  str+="   <p>"+list[i].reply+"</p></div>";
 				  str+="</li>";
 			  }
@@ -197,34 +197,21 @@
 		 $(".modal").modal("show");
 	 });
 	 
-	 replyService.add({reply:"JS Test", replyer:"tester", bno:bnoValue},
-			                     function(result){alert("RESULT: " +result);});
-	 
-	 replyService.getList({bno:bnoValue,page:1},function(list){
-		 for(var i=0, len=list.length||0; i<len;i++){
-			 console.log(list[i]);
-		 }
-	 });
-	 
-	 replyService.remove(42, function(count){
-		    console.log(count);
-		    
-		    if(count==='success'){
-		    	alert('REMOVED');
-		    }
-	      }
-		    ,
-		    function(err){
-		    	alert("ERROR....");
-		    }
-        );
-	 
-	 replyService.update({rno:43, bno:bnoValue, reply:"Modified Reply...."},
-			                       function(result){alert("수정완료");}
-	                               );
-	 
-	 replyService.get(43, function(data){console.log(data);});
-	 
+	 /* 댓글 등록 모달내 등록 버튼 클릭 이벤트 처리 */
+	 modalRegisterBtn.on("click",function(e){
+		   var reply={reply:modalInputReply.val(),
+				             replyer:modalInputReplyer.val(),
+				             bno:bnoValue};
+		   
+		   replyService.add(reply, function(result){
+			    alert(result);
+			    modal.find("input").val("");//모달창의 input태그 초기화
+			    modal.modal("hide");//모달창 숨기기
+			    
+		   //등록후 댓글 리스트 재 출력
+		   showList(1);
+		   });
+		 });
  });
 </script>
 <script>
