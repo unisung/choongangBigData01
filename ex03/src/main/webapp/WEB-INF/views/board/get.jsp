@@ -82,9 +82,12 @@
         </ul>
         <!-- ./ end ul -->
       </div>
+      
       <!-- /.panel .chat-panel -->
 
-	<div class="panel-footer"></div>
+	<div class="panel-footer">
+	
+	</div>
 
 
 		</div>
@@ -155,9 +158,86 @@
 	 
 	 showList(1);
 	 
+   var pageNum = 1;
+   var replyPageFooter = $(".panel-footer");
+   
+   function showReplyPage(replyCnt){
+	   //끝페이지 번호
+	   var endNum = Math.ceil(pageNum / 10.0) * 10;
+	   //시작페이지 번호
+	   var startNum = endNum - 9;
+	   
+	   //이전 페이지 그룹 버튼 활성화 여부처리
+	   var prev = startNum  !=1;
+	   //다음 페이지 그룹 버튼 활성화 여부처리
+	   var next = false;
+	   
+	   //종료페이지 보정처리
+	   if(endNum * 10 >= replyCnt){
+		   endNum = Math.ceil(replyCnt/10.0);
+	   }
+	   //다음 페이지 그룹 활성화 처리
+	   if(endNum*10 < replyCnt) {
+		   next = true;
+	   }
+	   //
+	  var str = "<ul class='pagination pull-right'>";
+	  
+	  if(prev){
+		  str+="<li class='page-item'><a class='page-link' href='"
+		                                                +(startNum - 1)+"'>Previous</a></li>"; 
+	  }
+	  for(var i=startNum; i<=endNum; i++){
+		  var active = pageNum==i?"active":"";
+		  str +="<li class='page-item " +active +"' ><a class='page-link' href='" +i+"'>"+i+"</a></li>"; 
+	  }
+	 if(next){
+		 str +="<li class='page-item'><a class='page-link' href='"+(endNum +1) +"'></a></li>";
+	 } 
+	 str += "</ul>";
+	
+	 //콘솔에 출력
+	 console.log(str);
+	 
+	 //footer영역에 붙이기
+	 replyPageFooter.html(str);
+   }
+	 
+	 
+// repyPageFooter클릭시 이벤트 처리
+replyPageFooter.on("click","li a",function(e){
+	e.preventDefault();
+	
+	console.log("page click");
+	
+	var targetPageNum = $(this).attr("href");
+	
+	console.log("targetNum: ", targetPageNum);
+	
+	pageNum = targetPageNum;
+	
+	showList(pageNum);
+	
+});
+
+/****************************************/	 
+	 //callback함수 파라미터 처리
 	 function showList(page){
-		 replyService.getList({bno:bnoValue, page:page||1}, function(list){
+		 replyService.getList({bno:bnoValue, page:page||1}, function(replyCnt, list){
 			  var str="";
+			  
+			  console.log("replyCnt",replyCnt);
+			  console.log("list: ", list);
+			  console.log(list);
+			  
+			  //-1이 전달되면 마지막 페이지 보여주기
+			  if(page == -1){
+				  pageNum = Math.ceil(replyCnt/10.0);
+				  showList(pageNum);
+				  return;
+			  }
+			  
+			  
 			  /* 댓글 리스트가 넘어오지 않았거나, 빈 리스트가 넘어왔다면 return */
 			  if(list ==null|| list.length==0){
 				  replyUL.html("");
@@ -173,6 +253,9 @@
 			  }
 			  
 			  replyUL.html(str);
+			  
+			  //페이지 네이게이션 부분 추가
+			  showReplyPage(replyCnt);
 			 
 		 });//end function
 	 }// end showList.
@@ -209,7 +292,8 @@
 			    modal.modal("hide");//모달창 숨기기
 			    
 		   //등록후 댓글 리스트 재 출력
-		   showList(1);
+		  // showList(1);
+			  showList(-1);
 		   });
 		 });
 	 /*--------------------------*/
@@ -247,7 +331,7 @@
 		 replyService.update(reply,function(result){
 			 alert(result);
 			 modal.modal("hide");
-			 showList(1);//댓글영역 refresh
+			 showList(pageNum);//댓글영역 refresh
 		 });
 	 });
 
@@ -262,7 +346,7 @@
 		 replyService.remove(rno, function(result){
 			 alert(result);
 			 modal.modal("hide");
-			 showList(1);
+			 showList(pageNum);
 		 });
 	 });
 

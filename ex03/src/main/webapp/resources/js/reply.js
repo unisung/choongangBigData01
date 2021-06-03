@@ -20,6 +20,7 @@ var replyService = (function(){
 })
 } /* end-add. */
 
+/* page Navigation 처리 */
 function getList(param, callback, errror){
 var bno = param.bno;
 var page = param.page || 1;
@@ -27,7 +28,10 @@ var page = param.page || 1;
     $.getJSON("/replies/pages/" + bno + "/" + page + ".json",
         function(data) {
           if (callback) {
-            callback(data);
+            //callback(data);
+            //ReplyPageDTO-cnt, list 추출
+            callback(data.replyCnt, data.list);
+            
           }
         }).fail(function(xhr, status, err) {
       if (error) {

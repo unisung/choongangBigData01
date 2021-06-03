@@ -20,5 +20,7 @@ public interface ReplyMapper {
 			   @Param("cri") Criteria cri,
 			   @Param("bno") Long bno
 			);
+	
+	public int getCountByBno(Long bo);
 
 }

@@ -24,11 +24,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </update>
   
   
-  <select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
-    select rno, bno, reply, replyer, replyDate, updatedate
+<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
+<![CDATA[
+select rno, bno, reply, replyer, replyDate, updatedate
+  from
+    (select /*+index(tbl_reply idx_reply) */ 
+              rownum rn, rno, bno, reply, replyer, replyDate, updatedate
       from tbl_reply
     where bno =#{bno}
-     order by rno asc
-  </select>
+        and rno> 0
+        and rownum <= #{cri.pageNum}*#{cri.amount} 
+     ) where rn > (#{cri.pageNum}-1) *#{cri.amount}
+     ]]>   
+ </select>
+ 
+ <select id="getCountByBno" resultType="int">
+    select count(*) from tbl_reply where bno =#{bno}
+ </select>
   
 </mapper>
