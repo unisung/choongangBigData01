@@ -257,7 +257,7 @@ replyPageFooter.on("click","li a",function(e){
 			  //페이지 네이게이션 부분 추가
 			  showReplyPage(replyCnt);
 			 
-		 });//end function
+		 },function(err){alert(err);});//end function
 	 }// end showList.
 	 
 	 var modal = $(".modal");

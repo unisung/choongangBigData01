@@ -55,11 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
   <![CDATA[
    select 
-     bno, title, content, writer, regdate, updatedate
+     bno, title, content, writer, regdate, updatedate, replycnt
    from 
        (
        select /*+INDEX_DESC(tbl_board pk_board) */
-         rownum rn, bno, title, content, writer, regdate, updatedate 
+         rownum rn, bno, title, content, writer, regdate, updatedate, replycnt 
        from 
          tbl_board
       where 
@@ -77,4 +77,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     <include refid="criteria"></include>
 	    bno > 0
   </select>
+  
+  <!--  댓글 갯수 update -->
+  <update id="updateReplyCnt">
+    update tbl_board set replycnt = replycnt +#{amount} where bno=#{bno}
+  </update>
+  
 </mapper>
