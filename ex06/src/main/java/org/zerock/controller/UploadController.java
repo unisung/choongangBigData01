@@ -1,7 +1,9 @@
 package org.zerock.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,19 +52,50 @@ public class UploadController {
 		
 		String uploadDir = "c:\\upload";
 		
+		//maker folder
+		File uploadPath = new File(uploadDir, getFolder());
+		log.info("upload path: "+uploadPath);
+		
+    if(uploadPath.exists()==false) {uploadPath.mkdirs();}// yyyy/MM/dd folder 생성 로직
+		
 		for(MultipartFile multipart: uploadFile) {
 			log.info("----------------------------------");
 			log.info("upload File Name: " + multipart.getOriginalFilename());
 			log.info("upload File Size: "+multipart.getSize());
 			
-			File saveFile = new File(uploadDir, multipart.getOriginalFilename());
+			String uploadFileName = multipart.getOriginalFilename();
 			
+			// IE 
+			uploadFileName = 
+			uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			log.info("파일명: "+uploadFileName);
+			
+			//업로드된 파일명 중복처리
+			UUID uuid = UUID.randomUUID();
+			
+			uploadFileName = uuid.toString()+"_"+uploadFileName;
+			
+			log.info("uuid-uploadFileName: "+uploadFileName);
+			
+			//File saveFile = new File(uploadDir, multipart.getOriginalFilename());
+			File saveFile = new File(uploadPath, uploadFileName);
+
 			try {
 				   multipart.transferTo(saveFile);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+ //c:\\upload폴더 아래 yyyy/MM/dd폴더 생성
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		
+		String str = sdf.format(date);
+		return str.replace("-", File.separator);
 	}
 	
 }
