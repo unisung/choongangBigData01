@@ -1,8 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
+<style>
+ .uploadResult{
+ width:100%;
+ background-color:gray;
+ }
+ 
+ .uploadResult ul{
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+ }
+ 
+ .uploadResult ul li {
+ list-style: none; /* li의 bullet제거 */ 
+ padding:10px;/* 안쪽 여백 10px */
+ }
+ 
+ .uploadResult ul li img{
+ width:20px;
+ }
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -44,15 +65,31 @@ function checkExtension(fileName, fileSize){
 
 var uploadResult =$(".uploadResult ul");
 //upload결과 출력함수
-function showUploadedFile(uploadResultArr){
-	var str ="";
-	
-	$(uploadResultArr).each(function(i,obj){
-		str +="<li>"+obj.fileName+"</li>";
-	});
-	
-	uploadResult.append(str);
-}
+
+		 
+		 function showUploadedFile(uploadResultArr){
+			    
+		    var str = "";
+		    
+		    $(uploadResultArr).each(function(i, obj){
+		      
+		      if(!obj.image){
+		        str += "<li><img src='/resources/img/attach.png'>"+obj.fileName+"</li>";
+		      }else{
+		        //str += "<li>"+ obj.fileName+"</li>";
+		        
+		        var fileCallPath =  encodeURIComponent(obj.uploadPath+ "/s_"+obj.uuid+"_"+obj.fileName);
+                 var originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName; 
+                 originPath = originPath.replace(new RegExp(/\\/g),"/");
+                 console.log(fileCallPath);
+                 console.log(originPath);
+		        str += "<li><img src='/display?fileName="+fileCallPath+"'><li>";
+		      }
+		    });
+		    
+		    uploadResult.append(str);
+		  } 
+
 
 $(document).ready(function(){
 	//요소 복제

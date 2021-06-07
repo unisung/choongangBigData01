@@ -2,6 +2,7 @@ package org.zerock.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,11 +10,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,11 +68,13 @@ public class UploadController {
 		AttachFileDTO attachFileDTO = null;
 		
 		String uploadDir = "c:\\upload";
+		//폴더경로 2021\\6\\07 정보
+		String uploadFolderPath = getFolder();
 		
 		List<AttachFileDTO> list=new ArrayList<AttachFileDTO>();
 		
 		//maker folder
-		File uploadPath = new File(uploadDir, getFolder());
+		File uploadPath = new File(uploadDir, uploadFolderPath);
 		log.info("upload path: "+uploadPath);
 		
     if(uploadPath.exists()==false) {uploadPath.mkdirs();}// yyyy/MM/dd folder 생성 로직
@@ -81,12 +86,16 @@ public class UploadController {
 			log.info("----------------------------------");
 			log.info("upload File Name: " + multipart.getOriginalFilename());
 			log.info("upload File Size: "+multipart.getSize());
-			
+
 			String uploadFileName = multipart.getOriginalFilename();
-			
+
 			// IE 
 			uploadFileName = 
-			uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+					uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			//upload된 파일명변경 전에 파일명 설정
+			attachFileDTO.setFileName(uploadFileName);
+			
 			
 			log.info("파일명: "+uploadFileName);
 			
@@ -97,11 +106,16 @@ public class UploadController {
 			
 			log.info("uuid-uploadFileName: "+uploadFileName);
 			
+
 			//File saveFile = new File(uploadDir, multipart.getOriginalFilename());
 			try {
 			File saveFile = new File(uploadPath, uploadFileName);
 			attachFileDTO.setUuid(uuid.toString());
-			attachFileDTO.setUploadPath(uploadDir);
+			attachFileDTO.setUploadPath(uploadFolderPath);//getFolder()에 의해 얻어온 경로
+			
+			/*
+			 * attachFileDTO.setUploadPath(uploadDir);
+			 */			attachFileDTO.setImage(checkImageType(saveFile));
 		
 			///썸네일 생성
 			if(checkImageType(saveFile))
@@ -115,7 +129,6 @@ public class UploadController {
 				
 				thumbnail.close();//자원해제
 			}
-			attachFileDTO.setFileName(uploadFileName);
 			  //list에 저장
 			System.out.println("attachFileDTO:  "+attachFileDTO);   
 			list.add(attachFileDTO);
@@ -131,6 +144,31 @@ public class UploadController {
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(String fileName) {
+
+		log.info("fileName: " + fileName);
+
+		File file = new File("c:\\upload\\" + fileName);
+
+		log.info("file: " + file);
+
+		ResponseEntity<byte[]> result = null;
+
+		try {
+			HttpHeaders header = new HttpHeaders();
+
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
  //c:\\upload폴더 아래 yyyy/MM/dd폴더 생성
 	private String getFolder() {
