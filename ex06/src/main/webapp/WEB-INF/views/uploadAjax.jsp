@@ -13,8 +13,12 @@
 <div class='uploadDiv'>
 <input type='file' name='uploadFile' multiple>
 </div>
-
 <button id='uploadBtn'>Upload</button>
+
+<div class="uploadResult">
+  <ul>
+  </ul>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -38,7 +42,22 @@ function checkExtension(fileName, fileSize){
 	return true;
 }
 
+var uploadResult =$(".uploadResult ul");
+//upload결과 출력함수
+function showUploadedFile(uploadResultArr){
+	var str ="";
+	
+	$(uploadResultArr).each(function(i,obj){
+		str +="<li>"+obj.fileName+"</li>";
+	});
+	
+	uploadResult.append(str);
+}
+
 $(document).ready(function(){
+	//요소 복제
+	var cloneObj = $(".uploadDiv").clone();
+	
 	$("#uploadBtn").on("click",function(e){
 		//동적을 FormData요소 객체 생성
 		var formData = new FormData();//<form></form>
@@ -63,9 +82,16 @@ $(document).ready(function(){
 			contentType:false,
 			data:formData,
 			type:'post',
-			success:function(result){alert("Uploaded");}
+			dataType:'json',//응답 데이타 json타입
+			success:function(result){
+				//alert("Uploaded");
+				console.log(result);
+				
+				showUploadedFile(result);
+				
+				$(".uploadDiv").html(cloneObj.html());
+			}
 		});
-		
 	});
 });
 </script>

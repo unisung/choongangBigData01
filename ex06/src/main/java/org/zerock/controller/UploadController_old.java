@@ -1,31 +1,25 @@
 package org.zerock.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.zerock.domain.AttachFileDTO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
-@Controller
+//@Controller
 @Log4j
-public class UploadController {
+public class UploadController_old {
 	
 	@GetMapping("/uploadForm")
 	public void uploadForm() {log.info("uploadForm");}
@@ -56,17 +50,11 @@ public class UploadController {
 		log.info("upload ajax");
 	}
 	
-	@PostMapping(value="/uploadAjaxAction", 
-			               produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxAction(MultipartFile[] uploadFile) {
+	@PostMapping("/uploadAjaxAction")
+	public void uploadAjaxAction(MultipartFile[] uploadFile) {
 		log.info("upload ajax post.........");
 		
-		AttachFileDTO attachFileDTO = null;
-		
 		String uploadDir = "c:\\upload";
-		
-		List<AttachFileDTO> list=new ArrayList<AttachFileDTO>();
 		
 		//maker folder
 		File uploadPath = new File(uploadDir, getFolder());
@@ -75,9 +63,6 @@ public class UploadController {
     if(uploadPath.exists()==false) {uploadPath.mkdirs();}// yyyy/MM/dd folder 생성 로직
 		
 		for(MultipartFile multipart: uploadFile) {
-			   
-			attachFileDTO = new AttachFileDTO();
-			
 			log.info("----------------------------------");
 			log.info("upload File Name: " + multipart.getOriginalFilename());
 			log.info("upload File Size: "+multipart.getSize());
@@ -98,11 +83,10 @@ public class UploadController {
 			log.info("uuid-uploadFileName: "+uploadFileName);
 			
 			//File saveFile = new File(uploadDir, multipart.getOriginalFilename());
+			
 			try {
 			File saveFile = new File(uploadPath, uploadFileName);
-			attachFileDTO.setUuid(uuid.toString());
-			attachFileDTO.setUploadPath(uploadDir);
-		
+			
 			///썸네일 생성
 			if(checkImageType(saveFile))
 			{
@@ -115,23 +99,14 @@ public class UploadController {
 				
 				thumbnail.close();//자원해제
 			}
-			attachFileDTO.setFileName(uploadFileName);
-			  //list에 저장
-			System.out.println("attachFileDTO:  "+attachFileDTO);   
-			list.add(attachFileDTO);
-
 			try {
 				   multipart.transferTo(saveFile);
-				   
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		  }catch(Exception e) {e.printStackTrace();}
-		}//for문 끝.
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		}
 	}
-	
  //c:\\upload폴더 아래 yyyy/MM/dd폴더 생성
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
