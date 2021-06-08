@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -120,11 +121,12 @@ public class UploadController {
 			/*
 			 * attachFileDTO.setUploadPath(uploadDir);
 			 */			
-			attachFileDTO.setImage(checkImageType(saveFile));
 		
 			///썸네일 생성
 			if(checkImageType(saveFile))
 			{
+				attachFileDTO.setImage(true);
+
 				//썸네일 저장할 경로로 OutputStream생성
 				FileOutputStream thumbnail =
 						new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
@@ -227,7 +229,33 @@ public class UploadController {
 		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+
+//파일삭제처리
+@PostMapping("/deleteFile")
+@ResponseBody
+public ResponseEntity<String> deleteFile(String fileName, String type){
+	log.info("deleteFile: " + fileName);
 	
+	File file;
+	try {
+		
+		   file = new File("c:\\upload\\" +URLDecoder.decode(fileName, "UTF-8"));
+		   
+		   file.delete();
+		   
+		   if(type.equals("image")) {
+			   String largeFileName = file.getAbsolutePath().replace("s_","");
+			   log.info("largeFileName: " + largeFileName);
+			   
+			   file = new File(largeFileName);
+			   file.delete();
+		   }
+	}catch(Exception e) {
+		e.printStackTrace();
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	return new ResponseEntity<String>("deleted",HttpStatus.OK);
+}
 	
  //c:\\upload폴더 아래 yyyy/MM/dd폴더 생성
 	private String getFolder() {
@@ -243,7 +271,10 @@ public class UploadController {
 	private boolean checkImageType(File file) {
 		try {
 			    String contentType=Files.probeContentType(file.toPath());
-			    return contentType.startsWith("image");
+			    System.out.println("contentType: " +contentType);
+			    
+			    return contentType==null?false:contentType.startsWith("image");
+			    
 		}catch(Exception e){
 			e.printStackTrace();
 		}
