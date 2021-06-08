@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.AttachFileDTO;
@@ -115,7 +119,8 @@ public class UploadController {
 			
 			/*
 			 * attachFileDTO.setUploadPath(uploadDir);
-			 */			attachFileDTO.setImage(checkImageType(saveFile));
+			 */			
+			attachFileDTO.setImage(checkImageType(saveFile));
 		
 			///썸네일 생성
 			if(checkImageType(saveFile))
@@ -167,6 +172,60 @@ public class UploadController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	
+/* download 처리 */
+	@GetMapping(value="/download", 
+			       produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent,
+    		String fileName){
+		log.info("download file: " + fileName);
+		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		
+		log.info("resource: "+resource);
+		
+		
+		HttpHeaders headers = new HttpHeaders();
+		
+		//download할 자원이 없으면 NOT_FOUND 메세지 출력
+		if(resource.exists()==false) {
+			 return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		//download할 자원이 있으면 파일명 얻기
+		String resourceName = resource.getFilename();
+		
+		//uuid제거
+		//downoald시 파일명을 원래 업로드시 파일명으로 변환하도록 처리
+		String resourceOriginalName = resourceName.substring(resourceName.lastIndexOf("_")+1);
+		
+		log.info("resourceOriginalName: "+resourceOriginalName);
+		try {
+			    //IE 한글깨짐 방지 처리
+			    String downloadName=null;
+			    
+			    if(userAgent.contains("Trident")) {
+			    	log.info("IE browser");
+			    	downloadName = URLEncoder.encode(resourceOriginalName,"UTF-8").replaceAll("\\"," ");
+			    }else if(userAgent.contains("Edge")) {
+			    	log.info("Edge browser");
+			    	downloadName = URLEncoder.encode(resourceOriginalName,"UTF-8");
+			    }else {
+			    	 log.info("Chrome browser");
+			    	 downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			    }
+			    log.info("downloadName: " +downloadName);
+				
+				 // headers.add("Content-Disposition","attachment; filename=" 
+				 //    + new String(resourceName.getBytes("UTF-8"),"ISO-8859-1"));
+			    
+			    headers.add("Content-Disposition","attachment; filename="+downloadName); 
+		      }catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
 	
