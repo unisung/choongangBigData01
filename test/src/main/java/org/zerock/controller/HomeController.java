@@ -1,6 +1,7 @@
 package org.zerock.controller;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -100,4 +101,30 @@ public class HomeController {
 		return "redirect:/login";
 	}
 	
+	@RequestMapping("/monthly")
+	public void monthly( Model model) {
+		LocalDate date = LocalDate.now();
+		
+		System.out.println(date.getYear());
+		System.out.println(date.getMonthValue()<10?"0"+date.getMonthValue():date.getMonthValue());
+		System.out.println(date.getDayOfMonth()<10?"0"+date.getDayOfMonth():date.getDayOfMonth());
+		
+		LocalDate date2 = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+		
+		System.out.println(date2.getYear()+"-"+(date2.getMonthValue()-1)+"-"+date2.getDayOfMonth());
+		model.addAttribute("currentYear", date.getYear());
+		model.addAttribute("currentMonth",date.getMonthValue());
+		model.addAttribute("currentDate", date.getDayOfMonth());
+		
+		LocalDate date3=date.minusMonths(7);
+		System.out.println(date3.getYear()+"-"+date3.getMonthValue()+"-"+date3.getDayOfMonth());
+		
+		LocalDate date4=date.plusMonths(7);
+		System.out.println(date4.getYear()+"-"+date4.getMonthValue()+"-"+date4.getDayOfMonth());
+		
+		model.addAttribute("currentYear", date3.getYear());
+		model.addAttribute("currentMonth",date3.getMonthValue());
+		model.addAttribute("currentDate", date3.getDayOfMonth());
+		
+	}
 }
