@@ -1,5 +1,8 @@
 package org.zerock.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -125,14 +128,54 @@ public class BoardController {
 									 @ModelAttribute("cri") Criteria cri,
 			  RedirectAttributes  rttr) {
 		System.out.println("remove-post-cri: "+cri);
-		if(service.remove(bno))
+		
+		/* 게시글 삭제 전 - 해당 글번호의 첨부파일 정보 얻기 */
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		
+		if(service.remove(bno)) {
+		// 게시글 삭제 후, 첨부파일도 삭제처리 	
+		   deleteFiles(attachList);	
 		   rttr.addFlashAttribute("result","success");
+		  }
 		
 		//수정처리 후 리다이렉트한 페이지로 원래페이지번호, 페이지당 글 수 값 전달
 		return "redirect:/board/list" +cri.getListLink();
 	}
 	
-	
+	/* bno에 해당하는 첨부파일 삭제 c:/upload/파일들 */
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		//첨부파일 리스트가 없거나 첨부파일리스트 사이즈가 0이면 리턴.
+		if(attachList == null || attachList.size()==0) return;
+		
+		log.info("delete attach files..................");
+		log.info(attachList);
+		
+		attachList.forEach(new Consumer<BoardAttachVO>() {
+			@Override
+			public void accept(BoardAttachVO attach) {
+				 try {
+					 /* 파일 삭제*/
+					  Path file = Paths.get("c:\\upload\\"+attach.getUploadPath()+"\\" 
+				                                      + attach.getUuid()+"_"+attach.getFileName());
+					 Files.deleteIfExists(file);
+					 
+					 /* 이미지면 썸네일도 삭제 */
+					 if(Files.probeContentType(file).startsWith("image")) {
+						 Path thumbnail = Paths.get("c:\\upload\\"+attach.getUploadPath()+"\\s_"
+					                                  +attach.getUuid()+"_"+attach.getFileName());
+						 
+					 Files.deleteIfExists(thumbnail);
+					 }
+					  
+				 }catch(Exception e) {
+					 e.printStackTrace();
+					 log.error("delete file error" + e.getMessage());
+				 }//end try-catch.
+			}//end accept
+		});//end forEach
+		
+		
+	}
 	
 
 }

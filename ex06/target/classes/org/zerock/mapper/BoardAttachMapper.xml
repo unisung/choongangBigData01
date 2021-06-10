@@ -20,4 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select * from tbl_attach where bno = #{bno}
   </select>
   
+  <!-- bno에 해당하는 첨부파일 모두 삭제 -->
+  <delete id="deleteAll">
+    delete from tbl_attach where bno=#{bno}
+  </delete>
+  
 </mapper>
