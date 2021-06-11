@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<h1>링크 전송하기<br>
+<a id="kakao-link-btn">
+	<img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+	  width="195" height="195" style="max-midth:500%;height:auto;">
+</a>전송버튼</h1>
+<script type="text/javascript">
+  Kakao.init();
+  Kakao.Link.createCustomButton({container:'#kakao-link-btn',templateId:55055});
+</script>
+</body>
+</html>

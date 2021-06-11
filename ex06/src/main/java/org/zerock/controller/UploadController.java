@@ -149,6 +149,7 @@ public class UploadController {
 		  }catch(Exception e) {e.printStackTrace();}
 		}//for문 끝.
 		
+		System.out.println("list.size():"+list.size());
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	

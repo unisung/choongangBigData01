@@ -53,9 +53,29 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.get(bno);
 	}
 
+	/* 게시글 수정시 첨부파일  수정 처리-첨부파일 테이블의 기존 데이타 삭제 후 재입력 */
+	@Transactional
 	@Override
 	public boolean modify(BoardVO board) {
-		return mapper.modify(board)==1;
+		log.info("modify........ "+board);
+		/* 게시글 번호에 해당하는 첨부파일 모두 삭제*/
+		attachMapper.deleteAll(board.getBno());
+		
+		/* 게시글테이블에 해당글번호 내용 수정 처리 */
+		boolean modifyResult = mapper.modify(board)==1;
+		
+		/* 게시글 등록 성공하고, 첨부파일이 존재하면 개별 첨부파일을 tbl_attach테이블에 입력처리 */
+		if(modifyResult && board.getAttachList()!=null && board.getAttachList().size()>0) {
+			board.getAttachList().forEach(new Consumer<BoardAttachVO>() {
+				@Override
+				public void accept(BoardAttachVO attach) {
+					attach.setBno(board.getBno());
+					attachMapper.insert(attach);
+				}
+			});
+		}
+		
+		return modifyResult;
 	}
 
 	@Transactional

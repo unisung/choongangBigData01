@@ -326,9 +326,9 @@ function showUploadResult(uploadResultArr){
 			 str+="</button><br><img src='/resources/img/attach.png'></a></div></li>";
 		}
 		
-		uploadUL.append(str);
 	});
-	
+	  /* each() 밖에서 처리 */
+		uploadUL.append(str);
 };
 
 </script>
