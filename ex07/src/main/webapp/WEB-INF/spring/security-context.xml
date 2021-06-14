@@ -5,6 +5,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security 
 						http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 사용자 정의 accessDenied 핸들러 -->
+<bean id="customAccessDeniedHandler" 
+        class="org.zerock.security.CustomAccessDeniedHandler">
+</bean>
+
 <!-- 리소스 접근 제한 설정 -->
 <security:http>
    <security:intercept-url pattern="/sample/all" access="permitAll"/>
@@ -13,9 +18,14 @@
    
    <security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 
-   <security:form-login/>
+<!-- 커스텀 로그인 페이지 처리시 주석처리 -->
+  <!--  <security:form-login/> -->
+  <security:form-login login-page="/customLogin"/>
    
-   <security:access-denied-handler error-page="/accessError"/>
+   <!-- CustomAccessDeniedHandler 로 처리시 주석처리 -->
+<!--    <security:access-denied-handler error-page="/accessError"/> -->
+<security:access-denied-handler ref="customAccessDeniedHandler"/>
+
 </security:http>
 
 <security:authentication-manager>
