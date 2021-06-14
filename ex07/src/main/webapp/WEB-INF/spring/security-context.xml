@@ -9,6 +9,7 @@
 <bean id="customAccessDeniedHandler" 
         class="org.zerock.security.CustomAccessDeniedHandler">
 </bean>
+<bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"/>
 
 <!-- 리소스 접근 제한 설정 -->
 <security:http>
@@ -18,9 +19,14 @@
    
    <security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 
+
+<security:logout logout-url="/customLogout" invalidate-session="true"/>
+
+
 <!-- 커스텀 로그인 페이지 처리시 주석처리 -->
   <!--  <security:form-login/> -->
-  <security:form-login login-page="/customLogin"/>
+  <security:form-login login-page="/customLogin" 
+                     authentication-success-handler-ref="customLoginSuccess"/>
    
    <!-- CustomAccessDeniedHandler 로 처리시 주석처리 -->
 <!--    <security:access-denied-handler error-page="/accessError"/> -->
