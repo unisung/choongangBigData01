@@ -10,7 +10,11 @@
         class="org.zerock.security.CustomAccessDeniedHandler">
 </bean>
 <bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"/>
-
+<!-- <bean id="customPasswordEncoder" 
+               class="org.zerock.security.CustomNoOpPasswordEncoder"/> -->
+<bean id="bcryptPasswordEncoder"
+  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>               
+               
 <!-- 리소스 접근 제한 설정 -->
 <security:http>
    <security:intercept-url pattern="/sample/all" access="permitAll"/>
@@ -36,12 +40,17 @@
 
 <security:authentication-manager>
 	<security:authentication-provider>
-		<security:user-service>
+<!-- 		<security:user-service>
 					<security:user name="member" password="{noop}member" 
 					                        authorities="ROLE_MEMBER"/>
 					<security:user name="admin"  password="{noop}admin" 
 					                       authorities="ROLE_ADMIN, ROLE_MEMBER"/>
-		</security:user-service>
+		</security:user-service> -->
+<security:jdbc-user-service data-source-ref="dataSource"
+  users-by-username-query="select userid, userpw, enabled from tbl_member where userid=?"
+  authorities-by-username-query="select userid, auth from tbl_member_auth where userid=?"
+/>		
+<security:password-encoder ref="bcryptPasswordEncoder"/>		
 	
 	</security:authentication-provider>
 </security:authentication-manager>
