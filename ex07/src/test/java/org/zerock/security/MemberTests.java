@@ -2,6 +2,7 @@ package org.zerock.security;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.function.Consumer;
 
 import javax.sql.DataSource;
 
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.zerock.domain.AuthVO;
+import org.zerock.domain.MemberVO;
+import org.zerock.mapper.MemberMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -27,6 +31,25 @@ public class MemberTests {
 	
 	@Setter(onMethod_=@Autowired)
 	private DataSource ds;
+	
+	@Setter(onMethod_=@Autowired)
+	private MemberMapper mapper;
+	
+	
+	@Test
+	public void testRead() {
+		MemberVO vo = mapper.read("admin90");
+		
+		log.info("member info: "+vo);
+		
+		vo.getAuthList().forEach(new Consumer<AuthVO>() {
+
+			@Override
+			public void accept(AuthVO auth) {
+				log.info(auth);
+			}
+		});
+	}
 	
 	@Ignore
 	@Test
@@ -58,6 +81,7 @@ public class MemberTests {
 	}	
 	
 	/* 권한 등록*/
+ @Ignore
  @Test
   public void testInsertAuth() {
 	  String sql="insert into tbl_member_auth(userid,auth) values(?,?)";
