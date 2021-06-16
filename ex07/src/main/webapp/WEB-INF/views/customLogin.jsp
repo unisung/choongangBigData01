@@ -19,6 +19,12 @@
  <div>
  	<input type='password' name='password' value='admin'>
  </div>
+ <div class="checkbox">
+ 	  <label>
+ 	  		<input name="remember-me" type="checkbox">Remember Me
+ 	  </label>
+ </div>
+ 
  <div>
  	<input type='submit'>
  </div>

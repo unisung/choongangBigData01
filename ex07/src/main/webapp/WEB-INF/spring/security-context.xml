@@ -25,7 +25,8 @@
    <security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 
 
-<security:logout logout-url="/customLogout" invalidate-session="true"/>
+<security:logout logout-url="/customLogout" invalidate-session="true" 
+                         delete-cookies="remember-me, JSESSION_ID"/>
 
 
 <!-- 커스텀 로그인 페이지 처리시 주석처리 -->
@@ -36,6 +37,9 @@
    <!-- CustomAccessDeniedHandler 로 처리시 주석처리 -->
 <!--    <security:access-denied-handler error-page="/accessError"/> -->
 <security:access-denied-handler ref="customAccessDeniedHandler"/>
+
+<security:remember-me data-source-ref="dataSource" 
+                     token-validity-seconds="604800"/>
 
 </security:http>
 
