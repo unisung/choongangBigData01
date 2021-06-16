@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %><!-- security 태그 추가  -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -257,8 +259,19 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                       
+                        
+                        <li>
+                        
+	   			           <sec:authorize access="isAuthenticated()">
+                           <a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                           </sec:authorize>
+                           <sec:authorize access="isAnonymous()">
+							<a href=" /customLogin"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                           </sec:authorize>
                         </li>
+                       
+                        
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -362,7 +375,7 @@
                                     <a href="blank.html">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="/customLogin">Login Page</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

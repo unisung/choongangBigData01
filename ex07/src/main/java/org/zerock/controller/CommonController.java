@@ -1,15 +1,26 @@
 package org.zerock.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.zerock.domain.MemberVO;
+import org.zerock.service.MemberService;
 
+import lombok.Data;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
+@Data
 public class CommonController {
+
+	@Setter(onMethod_=@Autowired)
+	private MemberService memberService;
 	
 	@GetMapping("/accessError")
 	public void accessError(Authentication auth, Model model) {
@@ -34,6 +45,16 @@ public class CommonController {
 		log.info("custom logout");
 	}
 	
+	@GetMapping("/registerMember")
+	public void registerMameber() {}
+	
+	@PostMapping("/registerMember")
+	public void registerMameber(MemberVO member) {
+		log.info("registerMember........");
+		log.info("member: "+member);
+		memberService.registerMember(member);
+		
+	}
 	
 	
 }

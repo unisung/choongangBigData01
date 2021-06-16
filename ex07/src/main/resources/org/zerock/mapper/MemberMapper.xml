@@ -26,4 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           and mem.userid=#{userid} ]]>
   </select>
   
+  <insert id="registerMember">
+  insert into tbl_member(userid, userpw, username) 
+     values(#{userid},#{userpw},#{userName})
+  </insert>
+  
+ <insert id="registerAuth">
+ insert into tbl_member_auth(userid,auth) 
+    values(#{userid},#{auth})
+ </insert>
+  
 </mapper>
