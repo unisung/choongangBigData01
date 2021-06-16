@@ -9,7 +9,7 @@
 <bean id="customAccessDeniedHandler" 
         class="org.zerock.security.CustomAccessDeniedHandler">
 </bean>
-<bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"/>
+<!-- <bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"/> -->
 <!-- <bean id="customPasswordEncoder" 
                class="org.zerock.security.CustomNoOpPasswordEncoder"/> -->
 <bean id="bcryptPasswordEncoder"
@@ -31,8 +31,7 @@
 
 <!-- 커스텀 로그인 페이지 처리시 주석처리 -->
   <!--  <security:form-login/> -->
-  <security:form-login login-page="/customLogin" 
-                     authentication-success-handler-ref="customLoginSuccess"/>
+  <security:form-login login-page="/customLogin" />
    
    <!-- CustomAccessDeniedHandler 로 처리시 주석처리 -->
 <!--    <security:access-denied-handler error-page="/accessError"/> -->

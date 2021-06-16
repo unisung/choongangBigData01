@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService{
 		//mapper.register(board);
 		mapper.insertSelectKey(board);
 		//파일첨부하지않았으면
-		if(board.getAttachList()==null | board.getAttachList().size()<=0) {
+		if(board.getAttachList()==null || board.getAttachList().size()<=0) {
 			return;
 		}
 		

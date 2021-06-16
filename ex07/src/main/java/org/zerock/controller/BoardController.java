@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import oracle.jdbc.proxy.annotation.Pre;
 
 @Controller
 @RequestMapping("/board/*")
@@ -49,11 +51,13 @@ public class BoardController {
 	
 	/* 게시글 등록 폼*/
 	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public void registerForm(BoardVO board) {
 	}
 	
 	/* 등록 처리 */
 	@PostMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public String register(BoardVO board, RedirectAttributes rttr ) {
 	  log.info("==================");
 	  log.info("register:"+board);
@@ -109,6 +113,7 @@ public class BoardController {
 	}
 	
 	/* 게시글 수정 처리 */
+	@PreAuthorize("principal.username==#board.writer")
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri,
 			                          RedirectAttributes rttr) {
@@ -123,10 +128,14 @@ public class BoardController {
 	
 	
 	/* 게시글 삭제 처리 */
+	// #writer 파라미터 writer값 비교
+	@PreAuthorize("principal.username==#writer")
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, 
 									 @ModelAttribute("cri") Criteria cri,
-			  RedirectAttributes  rttr) {
+									 			RedirectAttributes  rttr,
+									 String writer
+			  ) {
 		System.out.println("remove-post-cri: "+cri);
 		
 		/* 게시글 삭제 전 - 해당 글번호의 첨부파일 정보 얻기 */

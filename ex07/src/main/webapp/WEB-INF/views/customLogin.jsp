@@ -64,10 +64,7 @@
 					 	  		<input name="remember-me"  value="Remember Me" type="checkbox">Remember Me
 					 	  </label>
 					 </div>
-					 
-					 <div>
-					 	<input type='submit'>
-					 </div>
+
 					<!-- csrf 토큰 설정 -->
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					

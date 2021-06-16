@@ -39,6 +39,10 @@ create table tbl_member_auth (
      constraint fk_member_auth foreign key(userid) references tbl_member(userid)
 );
 
+insert into tbl_member(userid,userpw,username) values('hong','1234','홍길동');
+insert into tbl_member_auth('hong','ROLE_USER');
+insert into tbl_member_auth('hong','ROLE_MEMBER');
+insert into tbl_member_auth('hong','ROLE_ADMIN');
 
 
 

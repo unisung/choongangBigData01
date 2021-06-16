@@ -1,6 +1,7 @@
 <%@ page  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@include file="../includes/header.jsp" %>
 
@@ -98,8 +99,14 @@
 	   			    	            readonly="readonly">
 	   			    </div>
 	   			    
-	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>
+	   			    <sec:authentication property="principal" var="pinfo"/>
+	   			    <sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq board.writer}">
+	   			    <button type="submit"  data-oper='modify' class="btn btn-default">Modify</button>						     
 	   			    <button type="submit" data-oper='remove' class="btn btn-danger" disabled>Remove</button>
+						</c:if>	   			    
+	   			    </sec:authorize>
+	   			    
 	   			    <button type="submit" data-oper='list' class="btn btn-info">List</button>
 	   			    
 	   			   </form>

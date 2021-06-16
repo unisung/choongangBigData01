@@ -36,6 +36,7 @@ public class MemberTests {
 	private MemberMapper mapper;
 	
 	
+	@Ignore
 	@Test
 	public void testRead() {
 		MemberVO vo = mapper.read("admin90");
@@ -62,11 +63,14 @@ public class MemberTests {
 			try {
 				     con=ds.getConnection();
 				     pstmt=con.prepareStatement(sql);
-				     pstmt.setString(2, pwencoder.encode("pw"+i));
-				     
-				     if(i<80) {pstmt.setString(1, "user"+i); pstmt.setString(3,"일반사용자"+i);}
-		     else if(i<90) {pstmt.setString(1, "manager"+i); pstmt.setString(3,"운영자"+i);}
-		     else if(i<100) {pstmt.setString(1, "admin"+i); pstmt.setString(3,"관리자"+i);}	 
+				     pstmt.setString(2, pwencoder.encode("1234"));
+				     pstmt.setString(1, "hong"); 
+				     pstmt.setString(3,"홍길동");
+						/*
+						 * if(i<80) {pstmt.setString(1, "user"+i); pstmt.setString(3,"일반사용자"+i);} else
+						 * if(i<90) {pstmt.setString(1, "manager"+i); pstmt.setString(3,"운영자"+i);} else
+						 * if(i<100) {pstmt.setString(1, "admin"+i); pstmt.setString(3,"관리자"+i);}
+						 */
 				     //insert
 				     pstmt.executeUpdate();
 			}catch(Exception e) {
@@ -81,31 +85,35 @@ public class MemberTests {
 	}	
 	
 	/* 권한 등록*/
- @Ignore
+ //@Ignore
  @Test
   public void testInsertAuth() {
 	  String sql="insert into tbl_member_auth(userid,auth) values(?,?)";
 	  
-	  for(int i=0;i<100;i++) {
+	  //for(int i=0;i<100;i++) {
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			try {
 				     con=ds.getConnection();
 				     pstmt=con.prepareStatement(sql);
-				     
-				     if(i<80) {pstmt.setString(1, "user"+i); pstmt.setString(2,"ROLE_USER");}
-		     else if(i<90) {pstmt.setString(1, "manager"+i); pstmt.setString(2,"ROLE_MANAGER");}
-		     else if(i<100) {pstmt.setString(1, "admin"+i); pstmt.setString(2,"ROLE_ADMIN");}	
+				     pstmt.setString(1, "hong"); 
+				     pstmt.setString(2,"ROLE_MEMBER");
+						/*
+						 * if(i<80) {pstmt.setString(1, "user"+i); pstmt.setString(2,"ROLE_USER");} else
+						 * if(i<90) {pstmt.setString(1, "manager"+i);
+						 * pstmt.setString(2,"ROLE_MANAGER");} else if(i<100) {pstmt.setString(1,
+						 * "admin"+i); pstmt.setString(2,"ROLE_ADMIN");}
+						 */
 				     pstmt.executeUpdate();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}finally {
-				if(pstmt!=null) {try {pstmt.close();}catch(Exception e) {}
+				if(pstmt!=null) {try {pstmt.close();}catch(Exception e) {e.printStackTrace();}
 				if(con!=null) {try {con.close();}catch(Exception e) {}
 				}
 			}
 		}
-	 }  
+	 //}  
   }
 	
 }
