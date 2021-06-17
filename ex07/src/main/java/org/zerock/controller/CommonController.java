@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Data
 public class CommonController {
-
+   /* 회원정보 db저장 서비스 */
 	@Setter(onMethod_=@Autowired)
 	private MemberService memberService;
 	
@@ -46,10 +46,10 @@ public class CommonController {
 	}
 	
 	@GetMapping("/registerMember")
-	public void registerMameber() {}
+	public void registerMemeber() {}
 	
 	@PostMapping("/registerMember")
-	public void registerMameber(MemberVO member) {
+	public void registerMemeber(MemberVO member) {
 		log.info("registerMember........");
 		log.info("member: "+member);
 		memberService.registerMember(member);

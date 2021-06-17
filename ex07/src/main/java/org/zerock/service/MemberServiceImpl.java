@@ -23,9 +23,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	@Transactional
 	public void registerMember(MemberVO member) {
+		/* 회원 비밀번호 암호화 처리 */
     member.setUserpw(pwencoder.encode(member.getUserpw()));
-    
-	AuthVO auth = new AuthVO(member.getUserid(), "ROLE_USER");
+       /* 기본 권한 부여 처리 */
+	AuthVO auth = new AuthVO(member.getUserid(), "ROLE_MEMBER");
 	
 	memberMapper.registerMember(member);
 	memberMapper.registerAuth(auth);	

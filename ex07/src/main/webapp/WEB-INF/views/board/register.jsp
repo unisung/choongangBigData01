@@ -85,7 +85,13 @@ $(document).ready(function(){
 		}
 		return true;
 	}
+
 	
+	/* ajax csrf토큰 처리   */
+	
+ var csrfHeaderName = "${_csrf.headerName}";
+ var csrfTokenValue ="${_csrf.token}";
+
 //파일 선택 변경시이벤트 처리	
  $("input[type='file']").change(function(e){
 	 var formData = new FormData();//<form>요소 생성
@@ -105,6 +111,11 @@ $(document).ready(function(){
 		 url:'/uploadAjaxAction',
 		 processData:false,
 		 contentType:false,
+		 
+		 beforeSend:function(xhr){
+			 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		 }
+		 ,
 		 data:formData,
 		 type:'POST',
 		 dataType:'json',
