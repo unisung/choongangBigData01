@@ -191,7 +191,7 @@
               </div>      
               <div class="form-group">
                 <label>Replyer</label> 
-                <input class="form-control" name='replyer' value='replyer'>
+                <input class="form-control" name='replyer' value='replyer' readonly="readonly">
               </div>
               <div class="form-group">
                 <label>Reply Date</label> 
@@ -413,15 +413,34 @@ replyPageFooter.on("click","li a",function(e){
 	 var modalRemoveBtn = $("#modalRemoveBtn");
 	 var modalRegisterBtn = $("#modalRegisterBtn");
 	 
+	 /* 로그인한 작성자만 댓글 작성하게 처리 */
+     var replyer = null;
+	 
+	 <sec:authorize access="isAuthenticated()">
+	     replyer ='<sec:authentication property="principal.username"/>';
+	 </sec:authorize>
+	 
+	 var csrfHeaderName="${_csrf.headerName}";
+	 var csrfTokenValue="${_csrf.token}";
+	 
+	 
 	 /* 댓글 등록 버튼 클릭 이벤트 처리 */
 	 $("#addReplyBtn").on("click",function(e){
 		 modal.find("input").val("");
+		 /* 댓글 작성자 모달에 로그인 유저의 id 등록처리 */
+		 modal.find("input[name='replyer']").val(replyer);
+		 
 		 modalInputReplyDate.closest("div").hide();
 		 modal.find("button[id != 'modalCloseBtn']").hide();
 		 
 		 modalRegisterBtn.show();
 		 
 		 $(".modal").modal("show");
+	 });
+	 
+	 //Ajax security header 전송처리....
+	 $(document).ajaxSend(function(e, xhr, options){
+		 xhr.setRequestHeader(csrfHeaderName,csrfTokenValue)
 	 });
 	 
 	 /* 댓글 등록 모달내 등록 버튼 클릭 이벤트 처리 */
@@ -441,6 +460,12 @@ replyPageFooter.on("click","li a",function(e){
 		   });
 		 });
 	 /*--------------------------*/
+	 
+ /* 모달 닫기 버튼 클릭 이벤트 처리 */
+ $("#modalCloseBtn").on("click",function(e){
+	 modal.modal('hide');
+ });
+ 
 	 
 	 //댓글 조회 클릭 이벤트 처리
 	 $(".chat").on("click","li",function(e){

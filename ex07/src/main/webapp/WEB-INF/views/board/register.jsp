@@ -179,6 +179,12 @@ $(".uploadResult").on("click","button",function(e){
 		url:'/deleteFile',
 		data:{fileName:targetFile, type:type},
 		dataType:'text',
+		
+		/* 보안토큰 header값으로 전송  */
+		beforeSend:function(xhr){
+			xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+		},
+		
 		type:'POST',
 		success:function(result){alert(result); 
 		                                      targetLi.remove();}

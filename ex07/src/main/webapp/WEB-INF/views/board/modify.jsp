@@ -263,6 +263,8 @@ $(document).ready(function(){
 		return true;
 	}
 	
+var csrfHeaderName ="${_csrf.headerName}";
+var csrfTokenValue="${_csrf.token}";
 	
 	$("input[type='file']").change(function(e){
 		var formData = new FormData();
@@ -283,6 +285,12 @@ $(document).ready(function(){
 					url:'/uploadAjaxAction',
 					processData:false,
 					contentType:false,
+					
+					/* 보안토큰 전송  */
+					beforeSend:function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					
 					data:formData,
 					type:'POST',
 					dataType:'json',
