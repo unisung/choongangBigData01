@@ -71,15 +71,20 @@ public ResponseEntity<ReplyPageDTO> getList(
 	}
 	
 	/*  댓글 삭제 */
+	@PreAuthorize("principal.username ==#vo.replyer")
 	@DeleteMapping(value="/{rno}", produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
+	public ResponseEntity<String> remove(@RequestBody ReplyVO vo,
+			@PathVariable("rno") Long rno){
 		log.info("remove: " + rno);
+		
+		log.info("replyer: " + vo.getReplyer());
 		
 		return service.remove(rno)==1? new ResponseEntity<>("success",HttpStatus.OK)
 				:new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	/* 댓글 수정 */
+@PreAuthorize("principal.username == #vo.replyer")
 @RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, /*전송방식*/
                                               value="/{rno}", /* uri - pathvariable */
                                              consumes="application/json",  /* 파라미터 타입*/
@@ -89,6 +94,7 @@ public ResponseEntity<ReplyPageDTO> getList(
 	vo.setRno(rno);
 	
 	log.info("rno: "+rno);
+	log.info("modify:"+vo);
 	
 	return service.modify(vo)==1? new ResponseEntity<>("success",HttpStatus.OK)
 			: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

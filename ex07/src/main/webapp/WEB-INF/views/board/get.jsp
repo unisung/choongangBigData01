@@ -490,11 +490,34 @@ replyPageFooter.on("click","li a",function(e){
 	 });
 	 
 /*------------------------------------------------------*/
-	 
+	/* secure 적용 후 수정... */ 
 	//댓글 조회 화면의 수정버튼 이벤트 처리
 	 modalModBtn.on("click",function(e){
+		 
+		 var originalReplyer = modalInputReplyer.val();
+		 
 		 //수정할 JSON데이타 처리
-		 var reply = {rno:modal.data("rno"), reply:modalInputReply.val()};
+		 /* var reply = {rno:modal.data("rno"), reply:modalInputReply.val()}; */
+		 var reply = {rno:modal.data("rno"), reply:modalInputReply.val(), replyer:originalReplyer};
+		 
+		 
+		 console.log("RNO: "+modal.data("rno"));
+		 console.log("REPLYER:" +replyer);
+		 
+		 //미로그인시 삭제불가 처리
+		 if(!replyer){
+			 alert("로그인 후 수정가능합니다.");
+			 modal.modal("hide");
+			 return;
+		 }
+		 
+		 console.log("Original Replyer: " + originalReplyer);
+		 
+		 if(replyer !=originalReplyer){
+			 alert("자신이 작성한 댓글만 수정 가능합니다.");
+			 modal.modal("hide");
+			 return;
+		 }
 		 
 		 //update()함수 호출
 		 replyService.update(reply,function(result){
@@ -511,8 +534,35 @@ replyPageFooter.on("click","li a",function(e){
 		 //삭제할 댓글 번호 얻기
 		 var rno = modal.data("rno");
 		  
+		 console.log("RNO: "+rno);
+		 console.log("REPLYER:" +replyer);
+		 
+		 //미로그인시 삭제불가 처리
+		 if(!replyer){
+			 alert("로그인 후 삭제가능합니다.");
+			 modal.modal("hide");
+			 return;
+		 }
+		 
+		 //로그인 작성자
+		 var originalReplyer = modalInputReplyer.val();
+		 
+		 console.log("Original Replyer: " + originalReplyer);
+		 
+		 if(replyer !=originalReplyer){
+			 alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+			 modal.modal("hide");
+			 return;
+		 }
+		 
 		 //삭제처리메소드 호출
-		 replyService.remove(rno, function(result){
+		 //originalReplyer 전송처리 -reply.js파일의 remove()함수 수정처리
+/* 		 replyService.remove(rno, function(result){
+			 alert(result);
+			 modal.modal("hide");
+			 showList(pageNum);
+		 }); */
+		 replyService.remove(rno, originalReplyer, function(result){
 			 alert(result);
 			 modal.modal("hide");
 			 showList(pageNum);

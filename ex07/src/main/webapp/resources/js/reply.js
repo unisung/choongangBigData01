@@ -41,10 +41,14 @@ var page = param.page || 1;
 
 } /* end-getList. */
 
-
-function remove(rno, callback, error){
+/* replyer 추가후 수정.... */
+function remove(rno, replyer, callback, error){
 	$.ajax({type:'delete', 
 	            url:'/replies/'+rno, 
+	            
+	            data:JSON.stringify({rno:rno, replyer:replyer}),
+	            contentType:"application/json; charset=utf-8",
+	            
 	            success:function(deleteResult, status, xhr){
 	                 if(callback){callback(deleteResult);}
 	                 }, 
