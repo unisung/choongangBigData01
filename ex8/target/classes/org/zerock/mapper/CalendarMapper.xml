@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 인터페이스에 설정된 경로명과 같이 설정 -->
+<mapper namespace="org.zerock.mapper.CalendarMapper">
+
+ <select id="getList" resultType="org.zerock.domain.CalendarVO">
+   <![CDATA[ select * 
+                    from calendar 
+                   where id=#{id} and y=#{y} and m=#{m} 
+                   order by d, seq 
+                  ]]>
+ </select>
+
+ 
+ <resultMap id="scheduleList" type="org.zerock.domain.ScheduleListVO">
+    <result property="id" column="id"/>
+    <result property="y" column="y"/>
+    <result property="m" column="m"/>
+    <result property="d" column="d"/>
+    <collection property="scheduleList" column="{id=ID,y=Y,m=M,d=D}" 
+                   javaType="java.util.ArrayList" ofType="org.zerock.domain.ScheduleVO" select="getScheduleListByDate"/>
+</resultMap>
+ 
+<select id="getScheduleList" resultMap="scheduleList">
+   <![CDATA[ select distinct id,y,m,d 
+                    from calendar 
+                   where id=#{id} and y=#{y} and m=#{m} 
+                   order by d
+                  ]]>
+</select>
+<select id="getScheduleListByDate" resultType="org.zerock.domain.ScheduleVO">
+  <![CDATA[ select seq,startTime,endTime,title,content
+                    from calendar 
+                   where id=#{id} and y=#{y} and m=#{m} and d=#{d} 
+                   order by d, seq 
+                  ]]>
+</select>
+
+
+<select id="getScheduleByDate" resultType="org.zerock.domain.ScheduleVO">
+  <![CDATA[ select seq,startTime,endTime,title,content
+                    from calendar 
+                   where id=#{id} and y=#{y} and m=#{m} and d=#{d}  and seq=#{seq} 
+                  ]]>
+</select>
+
+ <insert id="insertSelectKey">
+  <selectKey keyProperty="seq" order="BEFORE" resultType="int">
+  		 select nvl(max(seq),0)+1 
+  		  from calendar 
+  	    where id=#{id} and y=#{y} and m=#{m} and d=#{d}  
+  </selectKey>
+ 	insert into calendar(id,y,m,d,seq,title,content,startTime,endTime)
+          values(#{id}, #{y},#{m},#{d},#{seq},#{title},#{content},#{startTime},#{endTime})
+ </insert>
+ 
+ 
+ <update id="modify">
+ update calendar
+      set startTime=#{startTime},
+           endTime=#{endTime},
+           title=#{title},
+           content=#{content}
+  where id=#{id} and y=#{y} and m=#{m} and d=#{d}  and seq=#{seq} 
+ </update>
+ 
+ <delete id="remove">
+   delete 
+     from calendar 
+   where id=#{id} and y=#{y} and m=#{m} and d=#{d}  and seq=#{seq} 
+ </delete>
+ 
+</mapper>
