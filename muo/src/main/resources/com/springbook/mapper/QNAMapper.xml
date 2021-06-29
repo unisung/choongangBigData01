@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.springbook.mapper.QNAMapper">  
+
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString() ">
+						qna_title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'C'.toString() ">
+						qna_content like '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'W'.toString() ">
+						qna_type like '%'||#{keyword}||'%'
+					</when>					
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+  
+  
+  <select id="getList" resultType="com.springbook.domain.QNAVO">
+  	select * from mu_qna where qna_bno > 0
+  </select>
+  
+  <insert id="register">
+  	<selectKey keyProperty="qna_bno" order="BEFORE" resultType="long">
+  		select mu_qna_seq.nextval from dual
+  	</selectKey>
+  	insert into mu_qna(qna_bno, member_bno, order_bno, qna_type, qna_title, qna_content,
+  					   qna_img, qna_check)
+  	values(#{qna_bno}, #{member_bno}, #{order_bno}, #{qna_type}, #{qna_title}, #{qna_content},
+  		   #{qna_img}, #{qna_check})
+  	
+  </insert>
+  
+  <select id="getQNA" resultType="com.springbook.domain.QNAVO">
+  	select * from mu_qna where qna_bno=#{qna_bno}
+  </select>
+  
+  <update id="modify">
+  	update mu_qna 
+  	set	qna_type = #{qna_type},
+  		order_bno = #{order_bno},
+  		qna_title = #{qna_title},
+  		qna_img = #{qna_img},
+  		qna_content = #{qna_content}
+  		where qna_bno = #{qna_bno}
+  		
+  </update>
+  
+  <delete id="remove">
+  	delete from mu_qna where qna_bno=#{qna_bno}
+  </delete>
+  
+  <select id="getListWithPaging" resultType="com.springbook.domain.QNAVO">
+  <![CDATA[
+  	select
+  		qna_bno, qna_title, qna_type, qna_check, qna_regdate
+  	from
+  		(
+       select /*+INDEX_DESC(mu_qna pk_qna) */
+         rownum rn, qna_bno, qna_title, qna_type, qna_check, qna_regdate
+       from 
+         mu_qna
+      where 
+     ]]> 
+     <include refid="criteria"></include> 
+    <![CDATA[ 
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} -1) * #{amount}   
+  ]]>
+  </select>
+  
+  <select id="getTotalCount" resultType="int">
+  	select count(*) from mu_qna where
+  	<include refid="criteria"></include>
+  	qna_bno > 0
+  </select>
+  
+</mapper>

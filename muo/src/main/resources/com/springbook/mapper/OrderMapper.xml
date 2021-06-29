@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ <mapper namespace="com.springbook.mapper.OrderMapper">  
+  
+<!-- 주문 정보 -->
+<insert id="orderInfo">
+ insert into orderManager(od_num, mb_seq, od_date, od_price, od_amount, od_status, od_userName,od_recipientName)
+     values(#{od_num}, #{mb_seq}, #{od_date}, #{od_price}, #{od_amount}, #{od_status}, #{od_userName},#{od_recipientName})
+</insert>
+   
+<!-- 주문 상세 정보 --> 
+<insert id="orderInfo_Details">
+ insert into tbl_order_details(odd_num, od_num, it_number, cp_number,odd_quantity,odd_itemName,it_saleprice)
+    values(#{odd_num}, #{od_num}, #{it_number}, #{cp_number}, #{odd_quantity}, #{odd_itemName}, #{it_saleprice})
+</insert> 
+
+<select id="orderList" resultType="com.springbook.domain.OrderVO">
+  select * from orderManager
+</select>
+
+</mapper>
+
+<!-- <select id="getList" resultType="com.springbook.domain.OrderVO">
+	select * from mu_order 
+</select> -->

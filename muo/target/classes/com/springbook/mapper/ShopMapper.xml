@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springbook.mapper.ShopMapper">
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString() ">
+							it_name like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<select id="getList"
+		resultType="com.springbook.domain.ProductVO">
+  <![CDATA[
+   select 
+     it_number, it_category1, it_category2, it_img1, it_img2, it_img3,
+     it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount
+   from 
+       (
+       select /*+INDEX_DESC(mu_item pk_board) */
+         rownum rn, it_number, it_category1, it_category2, it_img1, it_img2,
+         it_img3, it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount
+       from 
+         mu_item
+      where 
+   ]]>
+		<include refid="criteria"></include>
+   <![CDATA[
+      it_category1 = #{it_category1} and it_category2 = #{it_category2} 
+      
+      and it_remaincount > 0  and
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} - 1) * #{amount}
+  ]]>
+	</select>
+
+	<select id="getListNew"
+		resultType="com.springbook.domain.ProductVO">
+  <![CDATA[
+   select 
+     it_number, it_category1, it_category2, it_img1, it_img2, it_img3,
+     it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate
+   from 
+       (
+       select /*+INDEX_DESC(mu_item pk_board) */
+         rownum rn, it_number, it_category1, it_category2, it_img1, it_img2,
+         it_img3, it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate
+       from 
+         mu_item
+      where 
+   ]]>
+		<include refid="criteria"></include>
+   <![CDATA[
+    it_regdate >= to_date(sysdate-30,'YY/mm/dd')
+		and it_regdate < to_date(sysdate,'YY/mm/dd')+1 and
+   
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} - 1) * #{amount}
+  order by it_regdate desc
+  ]]>
+	</select>
+
+
+	<select id="getListBest"
+		resultType="com.springbook.domain.ProductVO">
+  <![CDATA[
+   select 
+     it_number, it_category1, it_category2, it_img1, it_img2, it_img3,
+     it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate
+   from 
+       (
+       select /*+INDEX_DESC(mu_item pk_board) */
+         rownum rn, it_number, it_category1, it_category2, it_img1, it_img2,
+         it_img3, it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate
+       from 
+         mu_item
+      where 
+   ]]>
+		<include refid="criteria"></include>
+   <![CDATA[
+    it_salecount >= 100
+    and
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} - 1) * #{amount}
+  ]]>
+	</select>
+
+
+	<select id="getListSale"
+		resultType="com.springbook.domain.ProductVO">
+  <![CDATA[
+   select 
+     it_number, it_category1, it_category2, it_img1, it_img2, it_img3,
+     it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate, it_sale
+   from 
+       (
+       select /*+INDEX_DESC(mu_item pk_board) */
+         rownum rn, it_number, it_category1, it_category2, it_img1, it_img2,
+         it_img3, it_name, it_baseprice, it_saleprice, it_remaincount, it_salecount, it_regdate, it_sale
+       from 
+         mu_item
+      where 
+   ]]>
+		<include refid="criteria"></include>
+   <![CDATA[
+    it_sale != 0
+    and
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} - 1) * #{amount}
+  ]]>
+	</select>
+
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from mu_item where
+		<include refid="criteria"></include>
+		it_category1 = #{it_category1} and it_category2 = #{it_category2} and
+		it_remaincount > 0
+	</select>
+
+
+	<select id="getTotalCountNew" resultType="int">
+		select count(*) from mu_item where
+		<include refid="criteria"></include>
+		<![CDATA[
+		it_regdate >= to_date(sysdate-30,'YY/mm/dd')
+		and it_regdate < to_date(sysdate,'YY/mm/dd')+1 and
+		it_remaincount > 0
+		]]>
+	</select>
+	
+	<select id="getTotalCountBest" resultType="int">
+		select count(*) from mu_item where
+		<include refid="criteria"></include>
+		<![CDATA[
+		it_salecount >= 100 and
+		it_remaincount > 0
+		]]>
+	</select>
+	
+	<select id="getTotalCountSale" resultType="int">
+		select count(*) from mu_item where
+		<include refid="criteria"></include>
+		<![CDATA[
+		it_sale != 0 and
+		it_remaincount > 0
+		]]>
+	</select>
+
+
+
+	<select id="get" resultType="com.springbook.domain.ProductVO">
+		select * from mu_item where
+		it_number = #{it_number}
+	</select>
+
+	<insert id="payment">
+		<selectKey keyProperty="od_num" order="BEFORE"
+			resultType="Integer">
+			select
+			's'||to_char(sysdate,'yymmdd')||round(dbms_random.value(10,99)) from
+			dual
+		</selectKey>
+		insert into mu_order(
+
+	</insert>
+
+</mapper>

@@ -90,4 +90,66 @@ public class HomeController {
 		//메일 발송
 		Transport.send(mimeMessage);
 	}
+	
+	
+	@RequestMapping("/sendGmail")
+	public void sendGmail(HttpServletRequest request, 
+			                           HttpServletResponse response) throws Exception{
+		
+		//지메일관련정보
+		String host ="smtp.gmail.com";
+		final String username="unisung001@gmail.com"; //gmail주소
+		final String password="tempPassword!"; //gmail 비밀번호
+		int port=465;                  //gmail SMTP 포트 번호
+		
+		//메일내용
+		String recipient = "vctor@naver.com";//메일 발송할 이메일 주소
+		String subject ="단체 메일을 발송합니다.";//
+		String body ="6월30일 프로젝트발표회가 있습니다. \n\n"; //메일 작성시 내용
+		
+		//SMTP 서버 설정
+		Properties props = new Properties();
+		
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.port", port);
+		props.put("mail.smtp.auth","true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust",host);
+		
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			String un=username;
+			String pw=password;
+			protected  PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(un, pw);
+			}
+		});
+		
+		
+		session.setDebug(true);//디버그 설정
+		
+		//다중메일 발송
+		InternetAddress[] addArray = new InternetAddress[3];
+		addArray[0]=new InternetAddress("vctor@naver.com");
+		addArray[1]=new InternetAddress("user001@gmail.com");
+		addArray[2]=new InternetAddress("coolkh2@naver.com");
+		
+		
+		//메일 객체 생성
+		Message mimeMessage = new MimeMessage(session);
+		mimeMessage.setFrom(new InternetAddress(username));//발신자
+		
+		
+		/*
+		 * mimeMessage.setRecipient(Message.RecipientType.TO, new
+		 * InternetAddress(recipient)); //수신자
+		 */		
+		mimeMessage.setRecipients(Message.RecipientType.TO, addArray); //수신자
+		
+		mimeMessage.setSubject(subject);//메일 제목
+		
+		mimeMessage.setText(body);//메일 내용
+		
+		//메일 발송
+		Transport.send(mimeMessage);
+	}
 }

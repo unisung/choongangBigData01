@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.springbook.mapper.ProductMapper">  
+  
+<insert id="register">
+	<selectKey keyProperty="it_number" order="BEFORE" resultType="long" >
+		select mu_item_seq.nextval from dual
+	</selectKey>
+	insert into mu_item(it_number,it_category1,it_category2, it_img1, it_img2, it_img3,
+	it_name, it_baseprice, it_saleprice, it_option1, it_option2, it_option3, it_option4,
+	it_content, it_sale, it_remainCount, it_saleCount) 
+	values(#{it_number}, #{it_category1}, #{it_category2}, #{it_img1}, #{it_img2}, #{it_img3},
+		   #{it_name}, #{it_baseprice}, #{it_saleprice}, #{it_option1}, #{it_option2},
+		   #{it_option3}, #{it_option4}, #{it_content}, #{it_sale}, #{it_remainCount},
+		   #{it_saleCount})
+</insert>
+
+<select id="getList" resultType="com.springbook.domain.ProductVO">
+	select * from mu_item where it_number > 0
+</select>
+
+<update id="modify">
+	update mu_item 
+	set it_category1 = #{it_category1},
+	 it_category2 = #{it_category2},
+	 it_img1 = #{it_img1},
+	 it_img2 = #{it_img2},
+	 it_img3 = #{it_img3},
+	 it_name = #{it_name},
+	 it_baseprice = #{it_baseprice},
+	 it_saleprice = #{it_saleprice},
+	 it_option1 = #{it_option1},
+	 it_option2 = #{it_option2},
+	 it_option3 = #{it_option3},
+	 it_option4 = #{it_option4},
+	 it_content = #{it_content},
+	 it_sale = #{it_sale},
+	 it_remainCount = #{it_remainCount}
+	 where it_number = #{it_number}
+</update>
+
+<update id="listModify">
+	update mu_item 
+	set it_category1 = #{it_category1},
+		it_category2 = #{it_category2},
+		it_sale = #{it_sale}
+		where it_number=#{it_number}
+</update>
+
+<select id="getProduct" resultType="com.springbook.domain.ProductVO">
+	select * from mu_item where it_number=#{it_number}
+</select>
+
+<delete id="remove">
+	delete from mu_item
+	where it_number=#{it_number}
+</delete>
+
+<select id="getTotalCount" resultType="int">
+	select count(*) from mu_item where it_number > 0
+</select>
+
+<select id="getListWithPaging" resultType="com.springbook.domain.ProductVO">
+  <![CDATA[
+   select 
+    it_number,it_category1,it_category2, it_img1, it_img2, it_img3,
+	it_name, it_baseprice, it_saleprice, it_option1, it_option2, it_option3, it_option4,
+	it_content, it_sale, it_remainCount, it_saleCount
+   from 
+       (
+       select /*+INDEX_DESC(mu_item pk_mu) */
+         rownum rn, it_number,it_category1,it_category2, it_img1, it_img2, it_img3,
+		 it_name, it_baseprice, it_saleprice, it_option1, it_option2, it_option3, it_option4,
+		 it_content, it_sale, it_remainCount, it_saleCount
+       from 
+         mu_item
+      where 
+     ]]> 
+    <![CDATA[ 
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} -1) * #{amount}   
+  ]]>
+  </select>
+
+</mapper>

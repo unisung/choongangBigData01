@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+						http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 사용자 정의 accessDenied 핸들러 -->
+<bean id="customAccessDeniedHandler" 
+        class="com.springbook.security.CustomAccessDeniedHandler">
+</bean>
+
+<bean id="bcryptPasswordEncoder"
+  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>               
+<bean id="customUserDetailsService" class="com.springbook.security.CustomUserDetailService"  />
+            
+<!-- 리소스 접근 제한 설정 -->
+<security:http>
+   
+<security:logout logout-url="/customLogout" invalidate-session="true" 
+                         delete-cookies="remember-me, JSESSION_ID"/>
+
+
+<!-- 커스텀 로그인 페이지 처리시 주석처리 -->
+ 
+  <security:form-login login-page="/customLogin" />
+   
+   <!-- CustomAccessDeniedHandler 로 처리시 주석처리 -->
+<!--    <security:access-denied-handler error-page="/accessError"/> -->
+<security:access-denied-handler ref="customAccessDeniedHandler"/>
+
+<security:remember-me data-source-ref="dataSource" 
+                     token-validity-seconds="604800"/>
+
+</security:http>
+
+<security:authentication-manager>
+	<security:authentication-provider user-service-ref="customUserDetailsService">
+
+<security:password-encoder ref="bcryptPasswordEncoder"/>		
+	
+	</security:authentication-provider>
+</security:authentication-manager>
+</beans>

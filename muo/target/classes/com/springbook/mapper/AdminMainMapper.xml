@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.springbook.mapper.AdminMainMapper">  
+  
+	<select id="getRemainCount" resultType="Integer">
+	<![CDATA[
+		select count(it_remainCount) from mu_item
+		where it_remainCount > 0 and it_remainCount <= 10
+	]]>
+	</select>
+	
+	<select id="getSoldOut" resultType="Integer">
+	<![CDATA[
+		select count(it_remainCount) from mu_item
+		where it_remainCount = 0
+	]]>
+	</select>
+	
+	<select id="getSale" resultType="Integer">
+	<![CDATA[
+		select count(it_remainCount) from mu_item
+		where it_remainCount > 10
+	]]>
+	</select>
+	
+	<select id="getNewOrder" resultType="Integer">
+	<![CDATA[
+		select count(od_status) from mu_order
+		where od_status = '1'
+	]]>
+	</select>
+	
+	<select id="getProgress" resultType="Integer">
+		select count(od_status) from mu_order
+		where od_status = '2'
+	</select>
+	
+	<select id="getArrival" resultType="Integer">
+		select count(od_status) from mu_order
+		where od_status = '3'
+	</select>
+	
+	<select id="getChange" resultType="Integer">
+		select count(od_status) from mu_order
+		where od_status = '4'
+	</select>
+	
+	<select id="getRefund" resultType="Integer">
+
+		select count(od_status) from mu_order
+		where od_status = '5'
+
+	</select>
+	
+	<select id="getQnaList" resultType="com.springbook.domain.QNAVO">
+		select qna_title, qna_bno from mu_qna order by qna_regdate desc
+	</select>
+	
+	<select id="getNoticeList" resultType="com.springbook.domain.NoticeVO">
+		select nt_num, nt_title from mu_notice order by nt_date desc
+	</select>
+	
+
+</mapper>

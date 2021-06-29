@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springbook.mapper.MemberMapper">
+
+
+
+
+
+
+
+<!--AuthVO 와 조인한 vo -->
+
+ 
+ <resultMap type="com.springbook.domain.MemberVO" id="memberMap">
+  <id property="mb_id" column="mb_id"/>
+  <result property="mb_id" column="mb_id"/>
+  <result property="mb_pw" column="mb_pw"/>
+  <result property="mb_name" column="mb_name"/>
+  <result property="mb_nickname" column="mb_nickname"/>
+  <result property="mb_phone" column="mb_phone"/>
+  <result property="mb_gender" column="mb_gender"/>
+  <result property="mb_email" column="mb_email"/>
+  <result property="mb_zipcode" column="mb_zipcode"/>
+  <result property="mb_addr" column="mb_addr"/>
+  <result property="mb_detailAddr" column="mb_detailAddr"/>
+  <result property="mb_notes" column="mb_notes"/>
+  <result property="mb_point" column="mb_point"/>
+  <result property="mb_grade" column="mb_grade"/>
+  <result property="mb_eventNum" column="mb_eventNum"/>
+  <result property="mb_joinDate" column="mb_joinDate"/>
+  <result property="enabled" column="enabled"/>
+  <collection property="authList" resultMap="authMap"/> 
+ </resultMap>
+ 
+ <resultMap type="com.springbook.domain.AuthVO" id="authMap">
+      <result property="mb_id" column="mb_id"/>
+      <result property="auth" column="auth"/>
+ </resultMap>
+  
+  <select id="read"  resultMap="memberMap">
+      <![CDATA[ select mem.mb_id, mb_pw, mb_name, enabled, mb_joinDate, auth
+        from member mem, member_auth auth
+      where mem.mb_id(+) = auth.mb_id
+          and mem.mb_id=#{mb_id} ]]>
+  </select>
+  
+<!--   <insert id="registerMember"> 아래 회원가입때 사용하는 register있어서 주석처리함  -->
+<!--   insert into member(mb_id, mb_pw, mb_name)  -->
+<!--      values(#{userid},#{userpw},#{userName}) -->
+<!--   </insert> -->
+  
+ <insert id="registerAuth">
+ insert into member_auth(mb_id,auth) 
+    values(#{mb_id},#{auth})
+ </insert>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 회원가입 때 -->
+<insert id="registerMember">
+<selectKey keyProperty="mb_seq" order="BEFORE"
+	resultType="int">
+	select member_sequence.nextval from dual
+</selectKey>
+insert into member(mb_seq,mb_id,mb_pw,mb_name,mb_nickname,mb_phone,mb_gender,mb_email,mb_zipcode,mb_addr,mb_detailAddr,mb_notes,mb_point,mb_grade,mb_eventNum,mb_joinDate,enabled)
+values(#{mb_seq},#{mb_id},#{mb_pw},#{mb_name},#{mb_nickname},#{mb_phone},#{mb_gender},#{mb_email},#{mb_zipcode},#{mb_addr},#{mb_detailAddr},#{mb_notes},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+
+<select id="getList" resultType="com.springbook.domain.MemberVO">
+select mb_seq,mb_id,mb_name,mb_nickname,mb_phone,mb_joinDate,mb_grade,mb_point,mb_eventNum 
+from member 
+where mb_seq>0
+order by mb_seq asc
+</select>
+
+<select id="get" resultType="com.springbook.domain.MemberVO">
+select * from member where mb_seq=#{mb_seq}
+</select>
+
+<delete id="delete">
+delete from member where mb_seq=#{mb_seq}	
+</delete>
+
+<update id="update">
+update member set mb_grade=#{mb_grade}, mb_point=#{mb_point}, mb_notes=#{mb_notes}
+where mb_seq=#{mb_seq}
+</update>
+
+<select id="getListWithPaging" resultType="com.springbook.domain.MemberVO">
+<![CDATA[
+select mb_seq,mb_id,mb_name,mb_nickname,mb_phone,mb_joinDate,mb_grade,mb_point,mb_eventNum 
+   from 
+       (
+       select /*+INDEX_DESC(member pk_member) */
+         rownum rn,mb_seq,mb_id,mb_name,mb_nickname,mb_phone,mb_joinDate,mb_grade,mb_point,mb_eventNum
+       from 
+         member
+      where 
+     ]]> 
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<if test="type=='id'.toString()">
+		mb_id like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='name'.toString()">
+		mb_name like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='nickname'.toString()">
+		mb_nickname like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='grade'.toString()">
+		mb_grade like '%'||#{keyword}||'%'
+		</if>
+		
+	</trim>
+    <![CDATA[ 
+    rownum <= #{pageNum} * #{amount}
+      )
+  where rn > (#{pageNum} -1) * #{amount}
+  ]]>
+  </select>
+
+<select id="getTotalCount" resultType="int">
+select count(*) from member where 
+<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<if test="type=='id'.toString()">
+		mb_id like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='name'.toString()">
+		mb_name like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='nickname'.toString()">
+		mb_nickname like '%'||#{keyword}||'%'
+		</if>
+		<if test="type=='grade'.toString()">
+		mb_grade like '%'||#{keyword}||'%'
+		</if>
+		
+	</trim>
+mb_seq>0
+</select>
+
+<select id="findPW" resultType="String">
+select mb_pw from member
+where
+<trim prefix="(" suffix=")" prefixOverrides="OR">
+<if test="findPWType=='phone'.toString()">
+mb_id like '%'||#{mb_id}||'%' and mb_name like '%'||#{mb_name}||'%' and mb_phone like '%'||#{mb_phone}||'%'
+</if>
+<if test="findPWType=='email'.toString()">
+mb_id like '%'||#{mb_id}||'%' and mb_email like '%'||#{mb_email}||'%'
+</if>
+</trim>
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
